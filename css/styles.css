@@ -132,11 +132,33 @@
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@200;400&family=Righteous&display=swap');
+@import url('../fonts/Bangers-Regular.ttf?family=Bangers');
 
-.bebas
+.f-bangers
 {
-    font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Bangers', cursive;
+}
+
+.f-bebas
+{
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+
+.f-poppins
+{
+  font-family: 'Poppins', sans-serif;
+}
+
+.f-righteous
+{
+  font-family: 'Righteous', cursive;
+}
+
+.shadow_header
+{
+  text-shadow: 2px 2px 0px rgba(84, 76, 76, 0.962);
 }
 
 body {
