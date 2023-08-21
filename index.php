@@ -32,10 +32,10 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="navbar-nav ms-auto me-lg-5">
 
-                                    <li class="nav-item"><a class="nav-link" href="index.php">Inicio</a></li>
+                                    <li class="nav-item"><a class="nav-link f-poppins" href="index.php">Inicio</a></li>
 
                                     <li class="nav-item dropdown dropdown-xl no-caret">
-                                        <a class="nav-link dropdown-toggle" id="navbarDropdownDemos" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="f-poppins nav-link dropdown-toggle" id="navbarDropdownDemos" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Tienda
                                             <i class="fas fa-chevron-right dropdown-arrow"></i>
                                         </a>
@@ -45,7 +45,7 @@
                                                     <div class="d-flex h-100 w-100 align-items-center justify-content-center">
                                                         <div class="text-white text-center z-1">
                                                             <div class="mb-3">Gran variedad de productos con vendedores confiables.</div>
-                                                            <a class="btn btn-white btn-sm text-primary fw-500" href="index.html">Ver todo</a>
+                                                            <a class="btn btn-white btn-sm text-primary fw-500" href="tienda">Ver todo</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -94,12 +94,18 @@
                                         </div>
                                     </li>
                                     
-                                    <li class="nav-item"><a class="nav-link" href="#layoutDefault_footer">Contacto</a></li>
+                                    <li class="nav-item f-poppins "><a class="nav-link" href="#layoutDefault_footer">Contacto</a></li>
 
                                 </ul>
-                                <a class="btn fw-500 ms-lg-4 btn-primary" href="#">
+                                
+                                <!-- <a class="btn fw-500 ms-lg-4 mb-2 me-1 btn-primary" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">
                                     Registrarme                                    
+                                </a> -->
+                                
+                                <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="#">
+                                    Iniciar sesión                                    
                                 </a>
+
                             </div>
                         </div>
                     </nav>
@@ -112,11 +118,11 @@
                                     <div class="col-lg-6 mb-3" data-aos="zoom-out-down">
                                         <div class="f-bangers text-white display-1 shadow_header mb-2">Conejón<br> Navideño 2023</div>
                                         
-                                        <div class="text-dark mb-1"><i class="far fa-calendar-alt me-1"></i> 15 y 16 de Diciembre</div>
-                                        <div class="text-dark mb-5"><i class="fas fa-map-marker-alt me-1"></i> Av. Avila Camacho 28</div>
+                                        <div class="text-white mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 15 y 16 de Diciembre</div>
+                                        <div class="text-white mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i> Av. Avila Camacho 28</div>
                                         
                                         <div class="d-flex flex-column flex-sm-row">
-                                            <a class="btn btn-lg f-poppins fa-beat btn-pink fw-500 fs-4 me-sm-3 mb-3 mb-sm-0" style="--fa-beat-scale: 0.9; --fa-animation-duration: 2s;" href="#explore">
+                                            <a class="btn btn-lg f-poppins fa-beat btn-pink fw-500 fs-4 me-sm-3 mb-3 mb-sm-0" style="--fa-beat-scale: 0.9; --fa-animation-duration: 2s;" href="registro.php">
                                                 ¡Quiero asistir!
                                             </a>
                                             <a class="btn btn-lg btn-white fw-500" href="#evento">
@@ -235,6 +241,14 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="text-center text-white f-bangers display-1 py-5" data-aos="fade-in">
+                                Entrada GRATIS
+                                
+                                <a class="btn btn-lg f-poppins fa-beat btn-pink fw-500 fs-4 me-sm-3 mb-3 mt-2  mb-sm-0" style="--fa-beat-scale: 0.9; --fa-animation-duration: 2s;" href="registro.php">
+                                    ¡Quiero asistir!
+                                </a>
+
+                            </div>
                         </div>
                         <div class="svg-border-angled text-white" style="color:;">
                             <!-- Angled SVG Border-->
@@ -320,7 +334,7 @@
                                         </div>                                        
                                     </div>
                                     <div class="text-center">
-                                        <a href="https://shop.conejondigital.com" class="btn btn-outline-primary btn-lg rounded-3 w-100">
+                                        <a href="tienda" class="btn btn-outline-primary btn-lg rounded-3 w-100">
                                             <i class="fas fa-shopping-basket me-2"></i> Ver tienda <i class="fas fa-chevron-right ms-2"></i>
                                         </a>
                                     </div>
@@ -396,7 +410,7 @@
                                             <li class="mb-2"><a href="#!"><i class="fas fa-carrot"></i> Alimentación</a></li>
                                             <li class="mb-2"><a href="#!"><i class="fas fa-medkit"></i> Salud</a></li>
                                             <li class="mb-2"><a href="#!"><i class="fas fa-baseball-ball"></i> Juguetes</a></li>
-                                            <li class="mb-2"><a href="#!">Ver todo</a></li>                                            
+                                            <li class="mb-2"><a href="tienda">Ver todo</a></li>                                            
                                         </ul>
                                     </div>
                                     <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
@@ -429,6 +443,11 @@
                 </footer>
             </div>
         </div>
+
+        <?php
+            include 'src/modals.php';
+        ?>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
