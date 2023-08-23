@@ -1,12 +1,21 @@
 <?php
-    // require 'php/conexion.php';    
-    // require 'php/funciones.php';
+
+    session_start();
+    
+    // require 'tienda/php/conexion.php';    
+    // require 'tienda/php/funciones.php';
     
     $idCliente = NULL;
+    if (isset($_SESSION['email'])) 
+    {
+        exit(header('Location: tienda/eventos.php'));
+    }
+
     if (isset($_GET['correo'])) 
     {
         $idCliente = $_GET['correo'];
     }
+    
 
 ?>
 <!DOCTYPE html>

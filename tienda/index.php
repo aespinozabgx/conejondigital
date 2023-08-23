@@ -21,7 +21,7 @@
   </head>
   <body>
     <h1>Tienda Conejón</h1>
-
+    <a href="eventos.php">Eventos</a>
     <a href="salir.php">salir</a>
   </body>
 </html>

@@ -4,7 +4,12 @@
     session_start();
     require 'php/conexion.php';
     require 'php/funciones.php';
-
+    
+    if (isset($_POST['btnRegistroExpositor'])) 
+    {
+        echo "Registro Expositor Pendiente";
+    }
+    
     if (isset($_POST['btnRegistroVisitante']))
     {         
         

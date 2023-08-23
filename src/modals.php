@@ -10,20 +10,18 @@
                 </button>
             </div>
 
-            <form action="procesa.php" method="post">
+            <form action="tienda/procesa.php" method="post">
                 <div class="modal-body">
-                 sss
+                DATOS DE REGISTRO
                 </div>            
 
                 <div class="modal-footer">
                     <input type="hidden" name="idTienda" value="<?php echo $idTienda; ?>" required>
                     <input type="hidden" name="idPedido" value="<?php echo $idPedido; ?>" required>
-                    <button type="button" class="btn btn-secondary rounded-2" data-bs-dismiss="modal">
-                        Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-outline-success rounded-2" name="btnRegistroExpositor" value="Egreso">
+                    
+                    <button type="submit" class="btn btn-outline-success rounded-2" name="btnRegistroExpositor">
                         <!-- <i class="me-2 " data-feather="plus"></i>  -->
-                        Continuar
+                        Registrar
                     </button>
                 </div>
             </form>

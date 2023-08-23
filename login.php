@@ -52,16 +52,16 @@
                                 <!-- Basic login form-->
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header justify-content-center text-center">
-                                        
-                                            <div class="text-yellow display-6 fw-700"><i class="fas fa-store fs-1 me-2"></i>vendy</div>
-                                            <div class="fw-300 fs-4">Pets <i class="fas fa-paw ms-1"></i></div>
-                                        
+                                        <i class="fas fa-carrot fs-1 text-yellow"></i>
+                                        <div class="text-yellow display-6 fw-400">                                            
+                                            Conejón Digital                                            
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <!-- Login form-->
                                         <form action="tienda/procesa.php" method="POST">
                                             <!-- Form Group (email address)-->
-                                            <div class="fw-300 text-center fs-1 text-dark">Ingresa a tu cuenta</div>
+                                            <div class="fw-300 text-center fs-1 small text-dark">Ingresa a tu cuenta</div>
                                             <div class="mb-3">
                                                 <label class="small text-dark mb-1" for="inputEmailAddress">Email</label>
                                                 <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
@@ -109,7 +109,7 @@
                 <footer class="footer-admin mt-auto footer-dark">
                     <div class="container-xl px-4">
                         <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; Vendy 2023</div>                            
+                            <div class="col-md-6 small">Copyright &copy; Conejón Digital</div>                            
                         </div>
                     </div>
                 </footer>

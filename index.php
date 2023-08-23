@@ -1,3 +1,9 @@
+<?php
+
+    session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -102,10 +108,24 @@
                                     Registrarme                                    
                                 </a> -->
                                 
-                                <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="#">
-                                    Iniciar sesión                                    
-                                </a>
-
+                                <?php
+                                if (!isset($_SESSION['email'])) 
+                                {
+                                    ?>
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="login.php">
+                                        Iniciar sesión                          
+                                    </a>  
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="tienda/cuenta.php">
+                                        <?php echo $_SESSION['email']; ?>
+                                    </a>  
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </nav>
@@ -270,7 +290,7 @@
                                             <form action="">
                                                 <div class="input-group mb-2 rounded-3" style=";">
                                                     <!-- <input class="form-control form-control-solid fs-3 shadow-none" type="text" placeholder="tucorreo@mail.com" aria-label="Recipient's username" aria-describedby="button-addon2" required /> -->
-                                                    <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="submit">Registrarme</button>
+                                                    <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registrarme</button>
                                                 </div>                                            
                                                  
                                             </form>
@@ -297,37 +317,37 @@
                                 <div class="container px-5">
                                     <div class="row gx-5">
                                         <div class="col-md-6 col-xl-4 mb-5 mt-n5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/arte.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Arte y Manualidades</div></div>
                                             </a>
                                         </div>
                                         <div class="col-md-6 col-xl-4 mb-5 mt-md-n5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/accesorios.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Accesorios</div></div>
                                             </a>
                                         </div>
                                         <div class="col-md-6 col-xl-4 mb-5 mt-xl-n5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/alimentacion.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Alimentación</div></div>
                                             </a>
                                         </div>
                                         <div class="col-md-6 col-xl-4 mb-5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/habitad.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Habitad</div></div>
                                             </a>
                                         </div>
                                         <div class="col-md-6 col-xl-4 mb-5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/juguetes.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Juguetes</div></div>
                                             </a>
                                         </div>
                                         <div class="col-md-6 col-xl-4 mb-5">
-                                            <a class="card card-portfolio h-100" href="#!">
+                                            <a class="card card-portfolio h-100" href="tienda">
                                                 <img class="card-img-top" src="assets/img/categoriasTienda/cuidados.jpg" alt="..." />
                                                 <div class="card-body"><div class="card-title">Salud</div></div>
                                             </a>
@@ -407,23 +427,23 @@
                                     <div class="col-lg-3 col-md-6 mb-5 mb-lg-0 text-white">
                                         <div class="text-uppercase-expanded text-xs mb-4">Tienda Oficial</div>
                                         <ul class="list-unstyled mb-0">
-                                            <li class="mb-2"><a href="#!"><i class="fas fa-carrot"></i> Alimentación</a></li>
-                                            <li class="mb-2"><a href="#!"><i class="fas fa-medkit"></i> Salud</a></li>
-                                            <li class="mb-2"><a href="#!"><i class="fas fa-baseball-ball"></i> Juguetes</a></li>
-                                            <li class="mb-2"><a href="tienda">Ver todo</a></li>                                            
+                                            <li class="mb-2"><a href="tienda/"><i class="fas fa-carrot"></i> Alimentación</a></li>
+                                            <li class="mb-2"><a href="tienda/"><i class="fas fa-medkit"></i> Salud</a></li>
+                                            <li class="mb-2"><a href="tienda/"><i class="fas fa-baseball-ball"></i> Juguetes</a></li>
+                                            <li class="mb-2"><a href="tienda/">Ver todo</a></li>                                            
                                         </ul>
                                     </div>
                                     <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
                                         <div class="text-uppercase-expanded mb-4 text-white">Conejón Navideño 2023</div>
                                         <ul class="list-unstyled mb-0">
-                                            <li class="mb-2"><a href="#!" class="btn btn-blue text-dark shadow-none">Registro Visitante</a></li>
-                                            <li class="mb-2 text-white"><a href="#!" class="btn btn-pink shadow-none">Registro Expositor</a></li>
+                                            <li class="mb-2"><a href="registro.php" class="btn btn-blue text-dark shadow-none">Registro Visitante</a></li>
+                                            <li class="mb-2 text-white"><a data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor" class="btn btn-pink shadow-none">Registro Expositor</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-lg-3 col-md-6">
                                         <div class="text-uppercase-expanded text-xs mb-4">Contacto</div>
                                         <ul class="list-unstyled mb-0">
-                                            <li class="mb-2"><a href="#!"><i class="fas fa-headset"></i> Soporte Vendy</a></li>
+                                            <li class="mb-2"><a href="#!"><i class="fas fa-headset"></i> Soporte</a></li>
                                             <li class="mb-2"><a href="#!"><i class="far fa-envelope"></i> Ventas</a></li>                                            
                                         </ul>
                                     </div>

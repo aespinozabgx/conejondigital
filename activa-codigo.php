@@ -101,7 +101,7 @@
                                 </div>
 
                                 <div class="text-white">
-                                    <a href="https://vendy.click/pets" class="text-white">Ir a Vendy Pets</a>
+                                    <a href="index.php" class="text-white">Ir al Inicio</a>
                                 </div>
 
                             </div>
@@ -113,7 +113,7 @@
                 <footer class="footer-admin mt-auto footer-dark">
                     <div class="container-xl px-4">
                         <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; Vendy 2021</div>                            
+                            <div class="col-md-6 small">Copyright &copy; Conejón Digital</div>                            
                         </div>
                     </div>
                 </footer>
