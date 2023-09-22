@@ -1,6 +1,6 @@
 <?php
-    require 'tienda/php/conexion.php';    
-    require 'tienda/php/funciones.php'; 
+    require 'app/php/conexion.php';    
+    require 'app/php/funciones.php'; 
     
     if(isset($_GET['correo']))
     {
@@ -65,7 +65,7 @@
                                     
                                     <div class="p-4">
                                         
-                                        <form action="tienda/procesa.php" method="POST">                                            
+                                        <form action="app/procesa.php" method="POST">                                            
 
                                             <div class="mb-3"> 
                                                 <div class="text-white text-center mb-2 fs-4 fw-300">
@@ -113,7 +113,7 @@
                 <footer class="footer-admin mt-auto footer-dark">
                     <div class="container-xl px-4">
                         <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; Conejón Digital</div>                            
+                            
                         </div>
                     </div>
                 </footer>

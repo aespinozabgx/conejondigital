@@ -74,7 +74,7 @@
                                     <div class="p-4">
                                         <!-- <div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div> -->
                                         <!-- Forgot password form-->
-                                        <form action="tienda/procesa.php" method="POST">
+                                        <form action="app/procesa.php" method="POST">
                                             
                                             <!-- Form Group (email address)-->
                                             <div class="mb-3">

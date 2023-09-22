@@ -59,17 +59,17 @@
                                     </div>
                                     <div class="card-body">
                                         <!-- Login form-->
-                                        <form action="tienda/procesa.php" method="POST">
+                                        <form action="app/procesa.php" method="POST">
                                             <!-- Form Group (email address)-->
                                             <div class="fw-300 text-center fs-1 small text-dark">Ingresa a tu cuenta</div>
                                             <div class="mb-3">
                                                 <label class="small text-dark mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                                                <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
                                             </div>
                                             <!-- Form Group (password)-->
                                             <div class="mb-3">
                                                 <label class="small text-dark mb-1" for="inputPassword">Contraseña</label>
-                                                <input class="form-control border-3 rounded-3" name="form_password" type="password" placeholder="Contraseña" required />
+                                                <input class="form-control border-3 rounded-3" name="form_password" type="password" placeholder="Contraseña" required autocomplete />
                                             </div>
                                             
                                             <input type="hidden" placeholder="Redirección" name="redirect" value="<?php echo $redirect; ?>">
@@ -89,7 +89,10 @@
                                                 {
                                                     ?>
                                                     <div class="text-danger text-center p-3 pt-4">
-                                                        Cuenta inactiva<a href="">reenviar correo de activación</a>
+                                                        Cuenta inactiva
+                                                        
+                                                        <button type="button" id="openModalBtn" class="btn btn-success rounded-pill"><i class="far fa-paper-plane me-2"></i> Reenviar correo de activación</button>
+                                                        
                                                     </div>
                                                     <?php
                                                 }
@@ -99,6 +102,7 @@
                                     <div class="card-footer text-center">
                                         <div class=""><a href="registro.php">¿No tienes cuenta? Registrate GRATIS</a></div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -121,23 +125,40 @@
         <div class="modal fade" id="modalReenvioActivacionCuenta" tabindex="-1" aria-labelledby="modalReenvioActivacionCuentaLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-primary fw-500">
-                            <i class="feather-lg me-1" data-feather='mail'></i> Cuenta inactiva
-                        </h5>
-                        <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                            <i class="fa-solid fa-xmark fa-xl"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Para asegurarnos que la plataforma se mantenga segura debemos validar las direcciones de correo.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <form action="procesa.php" method="POST" class="">
-                            <button class="btn btn-success">Reenviar correo de activación</button>
-                        </form>
-                    </div>
+                    
+                    <form action="app/procesa.php" method="POST" class="">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger fw-500">
+                                <i class="fas fa-exclamation-triangle me-1"></i> Cuenta inactiva
+                            </h5>
+                            <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark fa-xl"></i>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            
+                            <div class="mb-3 small">
+                                <p>Para asegurarnos que la plataforma se mantenga segura debemos validar las direcciones de correo. </p>
+                                <p>Te enviaremos un correo para verificar que la cuenta te pertenece.</p>
+                            </div>
+                            
+
+                            <div>
+                                <label for="" class="text-primary fw-500 mb-1">Email:</label>
+                                <input type="text" class="form-control text-center shadow-none border border-3 fs-3" value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                            </div>
+                                                
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                            
+                            <button type="submit" class="btn btn-success"><i class="far fa-paper-plane me-2"></i> Enviar</button>
+
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -145,9 +166,17 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         
-        <script src="tienda/js/scripts.js"></script>
+        <!-- <script src="app/js/scripts.js"></script> -->
         <?php
-            include 'tienda/php/triggers.php';
+            include 'app/php/triggers.php';
         ?>
+        
+        <script>
+            document.getElementById("openModalBtn").addEventListener("click", function () {
+                var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'));
+                myModal.show();
+            });
+
+        </script>
     </body>
 </html>

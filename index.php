@@ -16,7 +16,7 @@
         
         <title></title>
         
-        <link href="css/styles.css?id=28328" rel="stylesheet" />
+        <link href="css/styles.css?id=282828" rel="stylesheet" />
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         
@@ -29,7 +29,8 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">   
         <link rel="stylesheet" href="css/contador-style.css">
-        
+
+     
     </head>
     <body>
         <div id="layoutDefault">
@@ -49,10 +50,10 @@
                                     <li class="nav-item"><a class="nav-link f-poppins" href="index.php">Inicio</a></li>
 
                                     <li class="nav-item dropdown dropdown-xl no-caret">
-                                        <a class="f-poppins nav-link dropdown-toggle" id="navbarDropdownDemos" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <!-- <a class="f-poppins nav-link dropdown-toggle" id="navbarDropdownDemos" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Tienda
                                             <i class="fas fa-chevron-right dropdown-arrow"></i>
-                                        </a>
+                                        </a> -->
                                         <div class="dropdown-menu dropdown-menu-end animated--fade-in-up me-lg-n25 me-xl-n15" aria-labelledby="navbarDropdownDemos">
                                             <div class="row g-0">
                                                 <div class="col-lg-5 p-lg-3 bg-img-cover overlay overlay-primary overlay-70 d-none d-lg-block" style="background-image: url('assets/img/backgrounds/bg-dropdown-xl.jpg')">
@@ -108,6 +109,8 @@
                                         </div>
                                     </li>
                                     
+                                    <li class="nav-item f-poppins "><a class="nav-link" href="#evento">Evento</a></li>
+
                                     <li class="nav-item f-poppins "><a class="nav-link" href="#layoutDefault_footer">Contacto</a></li>
 
                                 </ul>
@@ -137,6 +140,24 @@
                             </div>
                         </div>
                     </nav>
+
+                    
+                    <div class="snowflakes" aria-hidden="true">                        
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                        <div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div><div class="snowflake">❅</div>
+                    </div>
                     
                     <!-- Page Header-->
                     <header class="page-header-ui page-header-ui-light bg-img-cover" style="background-image: url('assets/img/landing-5.jpg')">
@@ -265,6 +286,17 @@
 
                             </div>
 
+                            <div class="text-center">
+                                <div id="countdown">
+                                    <ul class="f-poppins" style="color: #c7f50e;">
+                                      <li><span id="days"></span>Días</li>
+                                      <li><span id="hours"></span>Horas</li>
+                                      <li><span id="minutes"></span>Minutos</li>
+                                      <li><span id="seconds"></span>Segundos</li>
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                         <div class="svg-border-angled text-white" style="color:;">
                             <!-- Angled SVG Border-->
@@ -303,10 +335,10 @@
                                 <div class="col-lg-8">
                                     <div class="text-center mb-10">
                                         
-                                        <div class="f-bebas display-1" style="color: #f17e76f3; text-shadow: 2px 2px 0px rgba(206, 190, 190, 0.653);">🛍️ Tienda en línea </div>
-                                        <p class="lead text-blue fw-500 fs-2">¡Encuentra todo para tus peluditos en la</p>
-                                        <p class="lead text-blue fw-500 fs-2">Tienda Oficial del Conejón!</p>
-
+                                        <div class="f-bebas display-1 mb-3" style="color: #f17e76f3; text-shadow: 2px 2px 0px rgba(206, 190, 190, 0.653);"> 🛍️ Tienda Oficial </div>
+                                        <!-- <p class="lead text-blue fw-500 fs-2">¡Encuentra todo para tus peluditos en la Tienda Oficial del Conejón!</p> -->
+                                        <img src="assets/img/proximamente.png" class="img-fluid rounded-3" alt="">
+                                        <div class="f-bangers display-6 mt-5 mb-3">¡Espérala pronto!</div>
                                     </div>
                                 </div>
                             </div>
@@ -378,12 +410,13 @@
                                     
                                     <div class="col-lg-3 col-md-6 mb-5 mb-lg-0 text-white">
                                         <div class="text-uppercase-expanded text-xs mb-4">Tienda Oficial</div>
-                                        <ul class="list-unstyled mb-0">
+                                        <!-- <ul class="list-unstyled mb-0">
                                             <li class="mb-2"><a href="tienda/"><i class="fas fa-carrot"></i> Alimentación</a></li>
                                             <li class="mb-2"><a href="tienda/"><i class="fas fa-medkit"></i> Salud</a></li>
                                             <li class="mb-2"><a href="tienda/"><i class="fas fa-baseball-ball"></i> Juguetes</a></li>
                                             <li class="mb-2"><a href="tienda/">Ver todo</a></li>                                            
-                                        </ul>
+                                        </ul> -->
+                                        Próximamente
                                     </div>
                                     <div class="col-lg-4 col-md-6 mb-5 mb-md-0">
                                         <div class="text-uppercase-expanded mb-4 text-white">Conejón Navideño 2023</div>
@@ -396,7 +429,7 @@
                                         <div class="text-uppercase-expanded text-xs mb-4">Contacto</div>
                                         <ul class="list-unstyled mb-0">
                                             <li class="mb-2"><a href="#!"><i class="fas fa-headset"></i> Soporte</a></li>
-                                            <li class="mb-2"><a href="#!"><i class="far fa-envelope"></i> Ventas</a></li>                                            
+                                            <li class="mb-2"><a href="mailto:ventas@conejondigital.com"><i class="far fa-envelope"></i> Ventas</a></li>                                            
                                         </ul>
                                     </div>
                                 </div>
@@ -423,7 +456,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         
-        <script  src="js/contador-script.js?id=28"></script>
+        <script  src="js/contador-script.js?id=2828"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init({

@@ -1,47 +1,52 @@
-function calculateTimeUntilBirthday() {
+function calcularTiempoRestante(targetDate) 
+{
   const second = 1000,
         minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
+        hour   = minute * 60,
+        day    = hour   * 24;
 
-  // Establece la fecha y hora de tu cumpleaños en la zona horaria de México  
-  const birthday = new Date("2023-12-09T00:00:00-06:00");
+  const target = new Date(targetDate);
 
-
-  function updateCountdown() {
+  function actualizaContador() 
+  {
     const now = new Date().toLocaleString("en-US", { timeZone: "America/Mexico_City" });
     const nowDate = new Date(now).getTime();
-    const distance = birthday.getTime() - nowDate;
-    
-    console.log(birthday);
-    console.log(now);
+    const distance = target.getTime() - nowDate;
 
     const days = Math.floor(distance / day);
     const hours = Math.floor((distance % day) / hour);
     const minutes = Math.floor((distance % hour) / minute);
     const seconds = Math.floor((distance % minute) / second);
 
-    return { days, hours, minutes, seconds };
+    // Seleccionar todos los elementos con los mismos IDs y actualizarlos
+    const elements = document.querySelectorAll('#days, #hours, #minutes, #seconds');
+    elements.forEach(element => 
+      {
+      switch (element.id) 
+      {
+        case 'days':
+          element.innerText = days;
+          break;
+        case 'hours':
+          element.innerText = hours;
+          break;
+        case 'minutes':
+          element.innerText = minutes;
+          break;
+        case 'seconds':
+          element.innerText = seconds;
+          break;
+        default:
+          break;
+      }
+    });
   }
 
-  function displayCountdown() {
-    const { days, hours, minutes, seconds } = updateCountdown();
+  actualizaContador(); // Llamar a la función inicialmente
 
-    document.getElementById("days").innerText = days;
-    document.getElementById("hours").innerText = hours;
-    document.getElementById("minutes").innerText = minutes;
-    document.getElementById("seconds").innerText = seconds;
-
-    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
-      document.getElementById("headline").innerText = "¡Hoy es mi cumpleaños!";
-      document.getElementById("countdown").style.display = "none";
-      document.getElementById("content").style.display = "block";
-      clearInterval(interval);
-    }
-  }
-
-  displayCountdown();
-  const interval = setInterval(displayCountdown, 1000);
+  // Configurar un intervalo para actualizar el contador cada segundo
+  const interval = setInterval(actualizaContador, 1000);
 }
 
-calculateTimeUntilBirthday();
+// Inicializar el contador con la fecha de cumpleaños deseada
+calcularTiempoRestante("2023-12-09T00:00:00-06:00");
