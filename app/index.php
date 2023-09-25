@@ -20,7 +20,7 @@
     <title></title>
   </head>
   <body>
-    <h1>Tienda Conejón</h1>
+    <h1>Conejón Digital</h1>
     <a href="eventos.php">Eventos</a>
     <a href="salir.php">salir</a>
   </body>

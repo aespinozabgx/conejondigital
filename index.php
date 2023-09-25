@@ -131,8 +131,8 @@
                                 else
                                 {
                                     ?>
-                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="tienda/cuenta.php">
-                                        <?php echo $_SESSION['email']; ?>
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="app/">
+                                        Mi cuenta
                                     </a>  
                                     <?php
                                 }
