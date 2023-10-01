@@ -62,33 +62,31 @@
                             <div class="rounded-2 bg-light text-dark text-end p-2" style="width: 16.5rem">                                                            
                                 <i class="fas fa-calendar-day me-1 text-gray-500"></i>
                                 <?php
-// Definir arrays para los nombres de los días y meses en español
-$nombreDias = array(
-    'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
-);
+                                    // Definir arrays para los nombres de los días y meses en español
+                                    $nombreDias = array(
+                                        'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'
+                                    );
 
-$nombreMeses = array(
-    '', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
-    'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-);
+                                    $nombreMeses = array(
+                                        '', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto',
+                                        'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+                                    );
 
-// Obtener la fecha actual en formato timestamp
-$fechaActual = time();
+                                    // Obtener la fecha actual en formato timestamp
+                                    $fechaActual = time();
 
-// Obtener el día de la semana, el día del mes, el mes y el año
-$diaSemana = date('w', $fechaActual);
-$dia = date('d', $fechaActual);
-$mes = date('n', $fechaActual);
-$anio = date('Y', $fechaActual);
+                                    // Obtener el día de la semana, el día del mes, el mes y el año
+                                    $diaSemana = date('w', $fechaActual);
+                                    $dia       = date('d', $fechaActual);
+                                    $mes       = date('n', $fechaActual);
+                                    $anio      = date('Y', $fechaActual);
 
-// Formatear la fecha con el formato deseado
-$fechaFormateada = '<span class="fw-600 text-blue">' . $nombreDias[$diaSemana] . '</span> &middot; ' . $dia . '/' . substr($nombreMeses[$mes], 0,3) . '/' . $anio;
+                                    // Formatear la fecha con el formato deseado
+                                    $fechaFormateada = '<span class="fw-600 text-blue">' . $nombreDias[$diaSemana] . '</span> &middot; ' . $dia . '/' . substr($nombreMeses[$mes], 0,3) . '/' . $anio;
 
-// Mostrar la fecha formateada
-echo $fechaFormateada;
-?>
-
-
+                                    // Mostrar la fecha formateada
+                                    echo $fechaFormateada;
+                                ?>
                             </div>
                         </div>
                         <!-- Illustration dashboard card example-->
@@ -130,17 +128,13 @@ echo $fechaFormateada;
                                           ¿Cómo llegar?
                                           <i class="fas fa-location-arrow ms-2"></i>
                                         </a>
-
-
                                     </div>
                                     <div class="col-sm-4 rounded-2">
                                       <img class="rounded-2 img-fluid px-xl-4" src="assets/img/banners/conejo-yv.jpg" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                         
-                         
+                        </div>                        
                     </div>
                 </main>
             </div>
