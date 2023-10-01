@@ -201,7 +201,7 @@
                                         <div class="carousel-inner rounded-3">
                                             
                                             <div class="carousel-item active" data-bs-interval="6000">
-                                                <a href="eventos.php/idEvento=cn2023"><img src="assets/img/banners/1.jpg?id=28" class="d-block w-100" alt="..."></a>
+                                                <a href="eventos.php?idEvento=cn2023"><img src="assets/img/banners/1.jpg?id=28" class="d-block w-100" alt="..."></a>
                                             </div>
 
                                             <div class="carousel-item" data-bs-interval="4000">
@@ -243,7 +243,7 @@
                                         <!-- <a class="text-white stretched-link" href="#!">Configurar catálogo</a> -->
                                         <div class="input-group ">
                                             
-                                            <a class="btn btn-outline-white w-100 fs-4" href="setup_tienda.php">                                                
+                                            <a class="btn btn-outline-white w-100 fs-4" href="mis-conejos.php?action=registroConejo">                                                
                                                 Registrar
                                             </a>
                                             

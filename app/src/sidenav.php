@@ -16,14 +16,14 @@
                     Inicio
                 </a>
                                 
-                <a class="nav-link collapsed" href="mis-compras.php">
+                <a class="nav-link collapsed" href="eventos.php">
                     <div class="nav-link-icon">
                         <i class="" data-feather="calendar"></i>
                     </div>
                     Eventos
                 </a>
 
-                <a class="nav-link collapsed" href="cuenta-configuracion.php">
+                <a class="nav-link collapsed" href="mis-conejos.php">
                     <div class="nav-link-icon">
                         <i class="fas fa-carrot"></i>
                     </div>

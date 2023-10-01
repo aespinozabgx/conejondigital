@@ -64,7 +64,7 @@
                                             <div class="fw-300 text-center fs-1 small text-dark">Ingresa a tu cuenta</div>
                                             <div class="mb-3">
                                                 <label class="small text-dark mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                                                <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
                                             </div>
                                             <!-- Form Group (password)-->
                                             <div class="mb-3">
@@ -89,10 +89,8 @@
                                                 {
                                                     ?>
                                                     <div class="text-danger text-center p-3 pt-4">
-                                                        Cuenta inactiva
-                                                        
-                                                        <button type="button" id="openModalBtn" class="btn btn-success rounded-pill"><i class="far fa-paper-plane me-2"></i> Reenviar correo de activación</button>
-                                                        
+                                                        Cuenta inactiva                                                    
+                                                        <button type="button" id="openModalBtn" class="btn btn-success rounded-pill"><i class="far fa-paper-plane me-2"></i> Reenviar correo de activación</button>                                                        
                                                     </div>
                                                     <?php
                                                 }
@@ -158,6 +156,39 @@
 
                         </div>
                     </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalCuentaExistente" tabindex="-1" aria-labelledby="modalCuentaExistenteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    
+                     
+
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger fw-500">
+                                <i class="fas fa-exclamation-triangle me-1"></i> Cuenta existente
+                            </h5>
+                            <button type="button" class="btn btn-icon btn-outline-danger btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark fa-xl"></i>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            
+                            <div class="mb-3 ">
+                                <p>Ya existe una cuenta ligada al correo ingresado, intenta iniciar sesión o reestablecer tu contraseña.</p>
+                            </div>
+                  
+                                                
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-green" data-bs-dismiss="modal">Entedido</button>                
+
+                        </div> 
 
                 </div>
             </div>

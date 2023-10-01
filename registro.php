@@ -8,7 +8,7 @@
     $idCliente = NULL;
     if (isset($_SESSION['email'])) 
     {
-        exit(header('Location: tienda/eventos.php'));
+        exit(header('Location: app/registro.php'));
     }
 
     if (isset($_GET['correo'])) 
@@ -56,7 +56,7 @@
                                 </a>
                                 
                             </div>
-                            <div class="fs-4 text-white fw-300 mb-1">Obtendrás tu acceso al evento y también acceso a la tienda oficial del Conejón</div>
+                            <div class="fs-4 text-white fw-300 mb-1">Obtendrás tu acceso al evento y a la tienda oficial del Conejón</div>
                             <div class="fs-4 text-white fw-300 mb-2">
                                 <span class="" style="text-shadow: -2px 2px 0px rgba(95, 44, 148, 0.68);">
                                     Totalmente ¡GRATIS!
@@ -91,7 +91,7 @@
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                                 <a class="small w-100 text-white" href="login.php">Iniciar sesión</a>
                                                 <button type="submit" class="btn btn-yellow fs-6 fw-500 w-100" name="btnRegistroVisitante">
-                                                    Solicitar acceso
+                                                    Continuar <i class="ms-1" data-feather="arrow-right"></i>
                                                 </button>
                                             </div>
                                         </form>
@@ -99,7 +99,7 @@
                                     
                                 </div>
 
-                                <div class="text-white">
+                                <div class="text-white text-center mt-5">
                                     <a href="index.php" class="text-white">Información del evento</a>
                                 </div>
 
