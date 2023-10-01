@@ -7,7 +7,35 @@
     date_default_timezone_set("America/Mexico_City");
     $fechahora = strtotime(date("Y-m-d h:i:s"));
 
-    
+     
+
+    // Función para buscar mascotas por idOwner y devolver un array con los resultados
+    function buscarMascotasPorIdOwner($conn, $idOwner)
+    {
+        // Preparar la consulta
+        $query = "SELECT * FROM `mascotas` WHERE idOwner = '$idOwner' AND isActive=1";
+
+        // Ejecutar la consulta
+        $result = mysqli_query($conn, $query);
+
+        // Verificar si se encontraron resultados
+        if (mysqli_num_rows($result) > 0) {
+            // Array para almacenar los resultados
+            $mascotas = array();
+
+            // Recorrer los resultados y añadirlos al array
+            while ($row = mysqli_fetch_assoc($result)) {
+                $mascotas[] = $row;
+            }
+
+            // Devolver el array de mascotas
+            return $mascotas;
+        } else {
+            // Si no se encontraron resultados, devolver un array vacío
+            return false;
+        }
+    }
+
     function generarIdMascota($conn)
     {
         $sql = "SELECT idMascota FROM mascotas ORDER BY id DESC LIMIT 1";
@@ -383,63 +411,7 @@
     }
 
 
-    function getTemplates($conn)
-    {
-        // Preparar la consulta
-        $query = "SELECT * FROM `templates` WHERE isActive = 1";
-
-        // Ejecutar la consulta
-        $result = mysqli_query($conn, $query);
-
-        // Verificar si se encontraron resultados
-        if (mysqli_num_rows($result) > 0) 
-        {
-            // Array para almacenar los resultados
-            $mascotas = array();
-
-            // Recorrer los resultados y añadirlos al array
-            while ($row = mysqli_fetch_assoc($result)) 
-            {
-                $mascotas[] = $row;
-            }
-
-            // Devolver el array de mascotas
-            return $mascotas;
-        } 
-        else 
-        {
-            // Si no se encontraron resultados, devolver un array vacío
-            return false;
-        }
-    }
-
-
-    // Función para buscar mascotas por idOwner y devolver un array con los resultados
-    function buscarMascotasPorIdOwner($conn, $idOwner) 
-    {
-        // Preparar la consulta
-        $query = "SELECT * FROM `mascotas` WHERE idOwner = '$idOwner' AND isActive=1";
-
-        // Ejecutar la consulta
-        $result = mysqli_query($conn, $query);
-
-        // Verificar si se encontraron resultados
-        if (mysqli_num_rows($result) > 0) {
-            // Array para almacenar los resultados
-            $mascotas = array();
-
-            // Recorrer los resultados y añadirlos al array
-            while ($row = mysqli_fetch_assoc($result)) {
-                $mascotas[] = $row;
-            }
-
-            // Devolver el array de mascotas
-            return $mascotas;
-        } else {
-            // Si no se encontraron resultados, devolver un array vacío
-            return false;
-        }
-    }
+    
 
     function getGeneralesMascota($conn, $idMascota)
     {

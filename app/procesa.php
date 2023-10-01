@@ -5,6 +5,91 @@
     require 'php/conexion.php';
     require 'php/funciones.php';
     
+    if (isset($_POST['btnGuardarGeneralesMascota']))
+    {
+        //echo "btnGuardarGeneralesMascota";
+        // echo "<pre>";
+        // print_r($_POST);                    
+
+        if (isset($_POST['nombreMascota'], $_POST['fechaNacimientoMascota'], $_POST['razaMascota'], $_POST['sexoMascota'], $_POST['colorMascota'])) 
+        {
+            
+            echo $idMascota = $_POST['idMascota'];
+            echo $idOwner = $_SESSION['email'];
+            
+            // Obtener los datos recibidos por POST
+            $nombreMascota = $_POST['nombreMascota'];
+            $fechaNacimientoMascota = $_POST['fechaNacimientoMascota'];
+            $razaMascota = $_POST['razaMascota'];
+            $sexoMascota = $_POST['sexoMascota'];
+            $colorMascota = $_POST['colorMascota']; 
+             
+            $query = "UPDATE mascotas SET nombre = '$nombreMascota', fechaNacimiento = '$fechaNacimientoMascota', raza = '$razaMascota', sexo = '$sexoMascota', color = '$colorMascota', isActive = 1 WHERE idMascota = '$idMascota' AND idOwner = '$idOwner'";
+            
+            $result = $conn->query($query);
+
+            if ($result === false) 
+            {
+                //echo "Error: " . $conn->error;
+                header("Location: edita-mascota.php?idMascota=$idMascota&msg=errorActualizarGenerales");
+                exit();
+            } 
+            else 
+            {                                 
+                header("Location: edita-mascota.php?idMascota=$idMascota&msg=exitoActualizarGenerales");
+                exit();
+            }
+
+        }      
+        else
+        {
+            // Redirección si falta algún dato
+            header("Location: edita-mascota.php?idMascota=$idMascota&msg=falta-datos");
+            exit();
+        }
+    }
+    
+    if (isset($_POST['btnRegistraMascota'])) 
+    {
+        var_dump($_POST);
+
+        $idMascota = generarIdMascota($conn);
+        $idCliente = $_SESSION['email'];
+        
+        $fotoMascota = cargarFotoMascota($conn, $idCliente, $idMascota);
+
+        if ($fotoMascota !== false)
+        {
+            
+            // Datos de la nueva mascota
+            $nombre = $_POST['nombreMascota'];
+            $fechaNacimiento = $_POST['fechaNacimiento'];
+            
+            $imgPerfil = $fotoMascota;
+
+            // Consulta SQL para insertar la nueva mascota
+            $sql = "INSERT INTO mascotas (nombre, idMascota, idOwner, imgPerfil, fechaNacimiento, isActive)
+            VALUES ('$nombre', '$idMascota', '$idCliente', '$imgPerfil', '$fechaNacimiento', 1)";
+
+
+            if ($conn->query($sql) === TRUE) 
+            {
+                echo "Nueva mascota registrada exitosamente";
+            } 
+            else 
+            {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+
+        }
+        else
+        {
+            echo "error";
+        }
+
+    }
+    
+        
     if (isset($_POST['btnRegistroExpositor'])) 
     {
         echo "Registro Expositor Pendiente";
@@ -491,17 +576,29 @@
             $fechaActivacion = date("Y-m-d H:i:s");
             $datosUsuario = getDatosUsuario($conn, $idCliente);
 
+            echo "<pre>";
             var_dump($datosUsuario);
 
+            // Validar si ya está activa la cuenta 
             if ($datosUsuario['isActive'] == 1)
             {
-                header('Location: ../login.php?msg=cuentaExistente');
-                exit();
-            }
-             
 
+                $_SESSION['email']    = $datosUsuario['email'];
+                $_SESSION['isActive'] = $datosUsuario['isActive'];                
+                $_SESSION['nombre']   = $datosUsuario['nombre'];                
+                $_SESSION['carrito'] = array();                 
+                $_SESSION['carrito']['subtotal']    = 0;
+                $_SESSION['carrito']['descuento']   = 0;
+
+                echo "agregados a la sesión";
+                // header('Location: ../login.php?msg=cuentaExistente');
+                // exit();
+            } 
+             
             if ($datosUsuario['token'] != $tokenActivacion) 
             {
+                
+
                 header('Location: ../activa-codigo.php?msg=tokenInvalido&correo=' . $idCliente);
                 exit();
             }
@@ -528,13 +625,12 @@
 
                     session_start();
 
-                    $_SESSION['email']    = $idCliente;                        
-                    $_SESSION['isActive'] = $row['isActive'];                
-                    $_SESSION['isDistribuidor'] = $row['isDistribuidor'];
-                    $_SESSION['nombre']   = $row['nombre'];
-                    $_SESSION['paterno']  = $row['paterno'];
-                    $_SESSION['materno']  = $row['materno'];
-                    $_SESSION['telefono'] = $row['telefono'];
+                    $_SESSION['email']    = $idCliente;              
+                    $_SESSION['isActive'] = $datosUsuario['isActive'];                
+                    $_SESSION['nombre']   = $datosUsuario['nombre'];                
+                    $_SESSION['carrito'] = array();                 
+                    $_SESSION['carrito']['subtotal']    = 0;
+                    $_SESSION['carrito']['descuento']   = 0;
                     
                     $_SESSION['carrito'] = array(); 
                     $_SESSION['carrito']['conteoTotalPlaquitas'] = 0;

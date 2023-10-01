@@ -100,6 +100,46 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modalNuevaMascota" tabindex="-1" aria-labelledby="modalNuevaMascotaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-4 fw-600 text-primary" id="modalNuevaMascotaLabel"> <i class="fas fa-carrot me-1"></i> Registra tu cheñol</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form class="" action="../app/procesa.php" method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+
+                    <div class="container"> 
+                        
+                        <label for="">Nombre:</label>
+                        <input type="text" class="form-control form-control-lg text-center fs-2 border-4 border-blue-soft shadow-none mb-2" placeholder="Cheñol" name="nombreMascota" id="" value="" required>
+
+                        <label for="">Agrega una foto:</label>
+                        <input type="file" class="form-control mb-2" name="fotoMascota" id="fotoMascota" required> 
+
+                        <label for="">Fecha de nacimiento:</label>
+                        <input type="date" class="form-control mb-2" name="fechaNacimiento" id="fechaNacimiento" max="<?php echo date('Y-m-d'); ?>" required>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" name="btnRegistraMascota">Guardar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade" id="modalDescargaEtiquetaProducto" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

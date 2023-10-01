@@ -4,6 +4,9 @@
     require 'php/conexion.php';
     require 'php/funciones.php';
 
+    $idOwner = $_SESSION['email'];
+    $arrayMascotas = buscarMascotasPorIdOwner($conn, $idOwner);
+    
     if (isset($_SESSION['username']))
     {
         $username = $_SESSION['username'];
@@ -164,14 +167,14 @@
                                                 <?php
                                                     
                                                 ?>
-                                              ¡Hola, <?php echo ucwords(strtolower($_SESSION['nombre'])); ?>!
+                                            Mis cheñoles
                                             </a> 
 
                                         </div>
                                         <div class="page-header-subtitle">
                                             <div class="">
                                                 <span class="fw-500 text-white-75 small">
-                                                    Bienvenido(a) de vuelto al Conejón Digital
+                                                    Registra a tus peluditos para el <b>Conejón Navideño 2023</b>
                                                     <?php
                                                     //     setlocale(LC_TIME, "spanish");
                                                     //     setlocale(LC_TIME, 'es_ES.UTF-8');
@@ -199,87 +202,69 @@
                         
                         <div class="row">
                             <div class="col-xl-12 col-md-12 mb-4">
-                                <div class="">
-                                    <div id="carouselExampleInterval" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-                                        <div class="carousel-inner rounded-3">
-                                            
-                                            <div class="carousel-item active" data-bs-interval="6000">
-                                                <a href="eventos.php?idEvento=cn2023"><img src="assets/img/banners/1.jpg?id=28" class="d-block w-100" alt="..."></a>
+                                <a class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalNuevaMascota">
+                                    <!-- Dashboard info widget 1-->
+                                    <div class="card bg-yellow lift shadow-sm h-100 btn w-100">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-grow-1">
+                                                    <!-- <div class="small fw-bold text-orante mb-1">Mis mascotas</div> -->
+                                                    <div class="display-5 text-white fw-400 text-center sombra-titulos-vendy">
+                                                        Nuevo registro                                                        
+                                                        <i class="fas fa-plus text-white-50"></i>                                                        
+                                                    </div>                                                
+                                                </div>
+                                                
                                             </div>
-
-                                            <div class="carousel-item" data-bs-interval="4000">
-                                                <a href="#"><img src="assets/img/banners/2.jpg" class="d-block w-100" alt="..."></a>
-                                            </div>
-                                             
                                         </div>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
-                                    </div>                
-                                </div>
+                                    </div>
+                                </a>
                             </div>
-                        </div> 
+                        </div>
 
                         <div class="row">
-                            <div class="col-lg-6 col-xl-6 mb-4">
-                                <div class="card bg-success text-white h-100 gradient-red ">
-                                    <div class="card-body ">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">¿Qué esperas?</div>
-                                                <div class="fs-2 fw-500">
-                                                    ¡Registra a tu <b>Cheñol!</b>
+                            <?php
+                                                        
+                            if($arrayMascotas !== false)
+                            {
+                                foreach ($arrayMascotas as $mascota) 
+                                {
+                                ?>
+                                <div class="col-xl-6 col-md-6 mb-4">
+                                    <a href="edita-mascota.php?idMascota=<?php echo $mascota['idMascota']; ?>" class="text-decoration-none">
+                                        <!-- Dashboard info widget 1-->
+                                        <div class="card border-start-lg lift border-start-green h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-grow-1">
+                                                        <!-- <div class="small fw-bold text-orante mb-1">Mis mascotas</div> -->
+                                                        <div class="display-6 text-orange">
+                                                            <?php echo $mascota['nombre']; ?>                                               
+                                                        </div>                                                
+                                                    </div>
+                                                    <div class="ms-2">
+                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil']; ?> " style="height: 99px;" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <span class="material-symbols-outlined text-white-75" style="font-size: 3em;">
-                                                cruelty_free
-                                            </span>
-                                            <!-- <i class="fas fa-bullhorn"></i> -->
                                         </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <!-- <a class="text-white stretched-link" href="#!">Configurar catálogo</a> -->
-                                        <div class="input-group ">
-                                            
-                                            <a class="btn btn-outline-white w-100 fs-4" href="mis-conejos.php?action=registroConejo">                                                
-                                                Registrar
-                                            </a>
-                                            
-
-                                            <!-- <input type="text" style="cursor: pointer;" onClick="javascript: copiarPortapapeles();" id="myInput" class="form-control form-control-sm bg-success text-white" name="urlPerfil" value="https://mayoristapp.mx/perfil.php?tienda=<?php echo $username; ?>" readonly> -->
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </div>
-                            
-                            <div class="col-lg-6 col-xl-6 mb-4">
-                                <div class="card bg-green text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Próximos eventos</div>
-                                                <div class="display-6 fw-500">
-                                                    1
-                                                </div>
-                                            </div>
-                                            <i class="feather-xl text-white-50" data-feather="calendar"></i>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                            
-                                        <a class="text-white stretched-link" href="eventos.php">Ver eventos</a>
-                                        <div class="text-white"><i class="fas fa-angle-right"></i></div>
-
-                                    </div>
+                                <?php
+                                }
+                            }
+                            else
+                            {                                    
+                                ?>                                    
+                                <div class="col-12 d-flex justify-content-center">                                                                                
+                                    <img src="assets/img/banners/sinconejos.jpg" style="height: 200px;" class="img-fluid rounded-2" alt="">
                                 </div>
-                            </div>
-                            
-                        </div>                        
+                                <?php
+                            }
+                        ?>
+                        </div>
+
+                                            
 
                     </div>
 

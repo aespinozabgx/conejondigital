@@ -1,5 +1,11 @@
 <?php
-        
+    session_start();
+
+    if (isset($_SESSION['email'])) 
+    {
+        exit(header('Location: app/'));
+    }
+
     if (isset($_GET['msg'])) 
     {
         $urlMsg = $_GET['msg'];   
@@ -195,12 +201,15 @@
         </div>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         
         <!-- <script src="app/js/scripts.js"></script> -->
         <?php
+         include 'src/modals.php';
             include 'app/php/triggers.php';
-        ?>
+         
+           
+        ?>  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         
         <script>
             document.getElementById("openModalBtn").addEventListener("click", function () {

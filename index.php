@@ -123,7 +123,7 @@
                                 if (!isset($_SESSION['email'])) 
                                 {
                                     ?>
-                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="login.php">
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="registro.php">
                                         Registrarme                       
                                     </a>  
                                     <?php
@@ -454,9 +454,7 @@
             include 'src/modals.php';
         ?>  
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>        
         <script  src="js/contador-script.js?id=2828"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>

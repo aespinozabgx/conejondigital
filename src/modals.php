@@ -1,3 +1,35 @@
+<div class="modal fade" id="modalCuentaExistente" tabindex="-1" aria-labelledby="modalCuentaExistenteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary fw-600">
+                    Cuenta existente
+                </h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form action="tienda/procesa.php" method="post">
+                <div class="modal-body">
+                DATOS DE REGISTRO
+                </div>            
+
+                <div class="modal-footer">
+                    <input type="hidden" name="idTienda" value="<?php echo $idTienda; ?>" required>
+                    <input type="hidden" name="idPedido" value="<?php echo $idPedido; ?>" required>
+                    
+                    <button type="submit" class="btn btn-outline-success rounded-2" name="btnRegistroExpositor">
+                        <!-- <i class="me-2 " data-feather="plus"></i>  -->
+                        Registrar
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalRegistroExpositor" tabindex="-1" aria-labelledby="modalRegistroExpositorLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

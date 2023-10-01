@@ -2,6 +2,13 @@
     require 'app/php/conexion.php';    
     require 'app/php/funciones.php'; 
     
+    session_start();
+    
+    if (isset($_SESSION['email'])) 
+    {
+        exit(header('Location: app/'));
+    }
+
     if(isset($_GET['correo']))
     {
         $correo = $_GET['correo'];

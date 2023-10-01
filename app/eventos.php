@@ -1,11 +1,7 @@
 <?php
   session_start();
 
-  if (isset($_SESSION['email']) && isset($_SESSION['nombre'])) 
-  {
-    echo "Hola, " . $_SESSION['nombre'];
-  } 
-  else
+  if (!isset($_SESSION['email']) && !isset($_SESSION['nombre']))  
   {
     ?>
     <a href="../login.php">Iniciar sesión</a>
@@ -93,9 +89,20 @@
                         <div class="card card-waves mb-4 mt-5">
                             <div class="card-body p-5">
                                 <div class="row align-items-center justify-content-between">
-                                    <div class="col-sm-8 mb-3">
-                                        <h2 class="text-primary display-6">Conejón Navideño 2023</h2>
-                                        <p class="text-gray-700">
+                                  <div class="container">
+                                    
+                                    <div class="row">
+                                        <!-- Contenedor 2 para dispositivos móviles (orden primero) -->
+                                        <div class="col-sm-4 order-md-2 rounded-2 mb-3" id="dos">
+                                            <img class="img-fluid px-xl-4 rounded-2" src="assets/img/banners/conejo-yv.jpg?id=28" />
+                                        </div>
+                                        
+                                        <!-- Contenedor 1 (texto y botones) -->
+                                        <div class="col-sm-8 mb-3" id="uno">
+                                            <h2 class="text-primary display-6 fw-500">Conejón Navideño 2023</h2>
+                                            <p class="text-gray-700">
+                                                <!-- Contenido de texto aquí -->
+                                                <p class="text-gray-700">
                                           <div class="text-gray-600 small mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
                                           <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
                                             <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
@@ -103,35 +110,39 @@
                                                 <i class="ms-1" data-feather="external-link"></i>
                                             </a>
                                           </div>
-                                        </p>                                    
+                                        </p>   
+                                            </p>
 
-                                        <!-- Botón 1 para dispositivos móviles -->
-                                        <a class="btn btn-primary p-3 mb-1 me-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#modalAcceso">
-                                          Mi acceso
-                                          <i class="fas fa-ticket-alt ms-2"></i>
-                                        </a>
+                                            <!-- Botón 1 para dispositivos móviles -->
+                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#modalAcceso">
+                                                Mi acceso
+                                                <i class="fas fa-ticket-alt ms-2"></i>
+                                            </a>
 
-                                        <!-- Botón 1 para dispositivos medianos y grandes -->
-                                        <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalAcceso">
-                                          Mi acceso
-                                          <i class="fas fa-ticket-alt ms-2"></i>
-                                        </a>
+                                            <!-- Botón 1 para dispositivos medianos y grandes -->
+                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalAcceso">
+                                                Mi acceso
+                                                <i class="fas fa-ticket-alt ms-2"></i>
+                                            </a>
 
-                                        <!-- Botón 2 para dispositivos móviles -->
-                                        <a class="btn btn-green p-3 mb-1 me-1 w-100 d-md-none" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                          ¿Cómo llegar?
-                                          <i class="fas fa-location-arrow ms-2"></i>
-                                        </a>
+                                            <!-- Botón 2 para dispositivos móviles -->
+                                            <a class="btn btn-green p-3 mb-1 w-100 d-md-none" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                ¿Cómo llegar?
+                                                <i class="fas fa-location-arrow ms-2"></i>
+                                            </a>
 
-                                        <!-- Botón 2 para dispositivos medianos y grandes -->
-                                        <a class="btn btn-green p-3 mb-1 me-1 d-none d-md-inline" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                          ¿Cómo llegar?
-                                          <i class="fas fa-location-arrow ms-2"></i>
-                                        </a>
+                                            <!-- Botón 2 para dispositivos medianos y grandes -->
+                                            <a class="btn btn-green p-3 mb-1 d-none d-md-inline" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                ¿Cómo llegar?
+                                                <i class="fas fa-location-arrow ms-2"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-4 rounded-2">
-                                      <img class="rounded-2 img-fluid px-xl-4" src="assets/img/banners/conejo-yv.jpg" />
-                                    </div>
+
+                                </div>
+
+
+                                 
                                 </div>
                             </div>
                         </div>                        
