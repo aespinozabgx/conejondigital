@@ -198,14 +198,14 @@
                             <div class="col-xl-12 col-md-12 mb-4">
                                 <div class="">
                                     <div id="carouselExampleInterval" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
+                                        <div class="carousel-inner rounded-3">
                                             
                                             <div class="carousel-item active" data-bs-interval="6000">
-                                                <a href="../"><img src="assets/img/banners/1.jpg" class="d-block w-100 rounded-3" alt="..."></a>
+                                                <a href="eventos.php/idEvento=cn2023"><img src="assets/img/banners/1.jpg?id=28" class="d-block w-100" alt="..."></a>
                                             </div>
 
                                             <div class="carousel-item" data-bs-interval="4000">
-                                                <a href="#"><img src="assets/img/banners/2.jpg" class="d-block w-100 rounded-3" alt="..."></a>
+                                                <a href="#"><img src="assets/img/banners/2.jpg" class="d-block w-100" alt="..."></a>
                                             </div>
                                              
                                         </div>
@@ -255,7 +255,7 @@
                             </div>
                             
                             <div class="col-lg-6 col-xl-6 mb-4">
-                                <div class="card bg-yellow text-white h-100">
+                                <div class="card bg-green text-white h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="me-3">
@@ -269,7 +269,7 @@
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between small">
                                             
-                                        <a class="text-white stretched-link" href="mis-ventas.php">Ver eventos  </a>
+                                        <a class="text-white stretched-link" href="eventos.php">Ver eventos</a>
                                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
 
                                     </div>
@@ -277,8 +277,6 @@
                             </div>
                             
                         </div>                        
-
-                                              
 
                     </div>
 

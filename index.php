@@ -124,7 +124,7 @@
                                 {
                                     ?>
                                     <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="login.php">
-                                        Iniciar sesión                          
+                                        Registrarme                       
                                     </a>  
                                     <?php
                                 }
@@ -177,8 +177,8 @@
                                         </div>
                                         
                                         <div class="d-flex flex-column flex-sm-row">
-                                            <a class="btn btn-lg f-poppins fa-beat btn-blue fw-500 fs-4 me-sm-3 mb-3 mb-sm-0" style="--fa-beat-scale: 0.9; --fa-animation-duration: 2s;" href="registro.php">
-                                                ¡Quiero asistir!
+                                            <a class="btn btn-lg f-poppins fa-beat btn-blue fw-500 fs-4 me-sm-3 mb-3 mb-sm-0" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s;" href="registro.php">
+                                                Registrarme
                                             </a>
                                             <a class="btn btn-lg btn-white fw-500" href="#evento">
                                                 Más información
@@ -201,7 +201,9 @@
                             <div class="row gx-5 justify-content-center">
                                 <div class="">
                                     <div class="mb-10 text-center" data-aos="fade-up">
-                                        <div class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">El CONEJÓN NAVIDEÑO 2023<br><span class="f-poppins display-6">INICIA EN</span></div>
+                                        <img src="app/assets/img/banners/landing.jpg" class="img-fluid rounded-3 shadow-sm mb-5" alt="">
+                                        <!-- <div class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">El CONEJÓN NAVIDEÑO 2023<br></div> -->
+                                        <span class="display-3 f-poppins fw-400 text-uppercase text-white mb-2">FALTAN</span>
                                         
                                         <div id="countdown">
                                             <ul class="f-poppins" style="color: #c7f50e;">
@@ -219,7 +221,7 @@
                                 </div>
                             </div>
 
-                            <div class="display-6 f-poppins text-white mb-3" data-aos="fade-up">
+                            <div class="display-3 f-bangers text-white mb-3" data-aos="fade-up">
                                 Encontrarás ...
                             </div>
 
@@ -330,15 +332,14 @@
                     </section>
 
                     <section class="bg-white pt-5 pb-10" style="background-color:;">
-                        <div class="container px-5">
+                        <div class="container px-5" data-aos="fade-up">
                             <div class="row gx-5 justify-content-center">
-                                <div class="col-lg-8">
-                                    <div class="text-center mb-10">
-                                        
-                                        <div class="f-bebas display-1 mb-3" style="color: #f17e76f3; text-shadow: 2px 2px 0px rgba(206, 190, 190, 0.653);"> 🛍️ Tienda Oficial </div>
+                                <div class="col-12">
+                                    <div class="text-center mb-10">                                        
+                                        <!-- <div class="f-bebas display-1 mb-3" style="color: #f17e76f3; text-shadow: 2px 2px 0px rgba(206, 190, 190, 0.653);"> 🛍️ Tienda Oficial </div> -->
                                         <!-- <p class="lead text-blue fw-500 fs-2">¡Encuentra todo para tus peluditos en la Tienda Oficial del Conejón!</p> -->
-                                        <img src="assets/img/proximamente.png" class="img-fluid rounded-3" alt="">
-                                        <div class="f-bangers display-6 mt-5 mb-3">¡Espérala pronto!</div>
+                                        <img src="app/assets/img/banners/2.jpg" class="img-fluid rounded-3" alt="">
+                                        <div class="f-bangers display-6 mt-5 mb-3" data-aos="fade-up">¡Espérala pronto!</div>
                                     </div>
                                 </div>
                             </div>
