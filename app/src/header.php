@@ -4,7 +4,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu" class="feather-lg"></i></button>
     <!-- Navbar Brand-->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-yellow" href="index.php"> 
-        <div class="fs-6 fw-400">
+        <div class="fs-3 fw-500">
             <span class="material-symbols-outlined">
                 cruelty_free
             </span>

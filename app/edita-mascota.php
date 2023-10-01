@@ -34,6 +34,7 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
         <style>
             
@@ -170,14 +171,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-auto mt-4">
-                                        <h1 class="page-header-title">                                            
+                                    <div class="col-auto mt-5">
+                                        <h1 class="text-white mb-0 fw-400 sombra-titulos-vendy display-5">                                            
                                             <?php echo ucwords($generalesMascota['nombre']); ?>
-                                        </h1>
-                                        
+                                        </h1>                                    
                                         <div>
-                                            Fecha de nacimiento: <?php echo date("d/m/Y", strtotime($generalesMascota['fechaNacimiento'])); ?>
+                                            Actualiza los datos de <?php echo ucwords($generalesMascota['nombre']); ?> cuando lo necesites.
                                         </div>
+                                        
                                         <!-- <div class="page-header-subtitle mb-2">
                                             <a href="../perfil/?id=<?php echo $idMascota; ?>" target="_blank" class="text-white text-decoration-none small">
                                             Ver perfil público <i class="fas fa-external-link-alt fa-sm ms-1"></i>
@@ -195,9 +196,7 @@
                                             </button>
                                         </div> -->
                                         
-
-                                    </div>
-                                     
+                                    </div>                                     
                                 </div>
                             </div>
                         </div>
@@ -270,7 +269,7 @@
                             <div class="col-xl-6 mb-4">
                                 <div class="card card-header-actions ">
                                     <div class="card-header fs-4 fw-600">
-                                        <div><i class="fas fa-paw me-1"></i> Datos Generales</div>
+                                        <div><i class="fas fa-carrot me-1"></i> Datos Generales</div>
                                     </div>
                                     <div class="card-body">
                                     
@@ -543,14 +542,12 @@
                     </div>
                 </main>
                 
-                <footer class="footer-admin mt-auto footer-light">
-                    <div class="container-xl px-4">
-                        <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; vendy 2023</div>
-                             
-                        </div>
-                    </div>
-                </footer>
+                <?php
+                    if (file_exists('src/footer.php'))
+                    {
+                        require 'src/footer.php';
+                    }
+                ?>
 
             </div>
         </div>
