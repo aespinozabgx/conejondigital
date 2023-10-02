@@ -362,43 +362,7 @@
 
  
 
-        </script>  
-        <script type="text/javascript">            
-
-            function downloadURI(uri, name)
-            {
-                var link = document.createElement("a");
-                link.download = name;
-                link.href = uri;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                delete link;
-            }            
-
-            function makeCodeUrlPago(contenidoQR)
-            {
-                let qrcode = new QRCode(document.getElementById("qrcode"),
-                {
-                  text: contenidoQR,
-                  width: 1080,
-                  height: 1080,
-                  colorDark : "#000000",
-                  colorLight : "#ffffff",
-                  correctLevel : QRCode.CorrectLevel.H
-                });
-
-                setTimeout(
-                    function ()
-                    {
-                        let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
-                        var tienda = '<?php echo $_SESSION['managedStore']; ?>';
-                        downloadURI(dataUrl, 'vendyQR_' + tienda + '.png');
-                    },1000
-                );
-            }
-
-        </script>
+        </script>         
         <?php
 
         if (isset($_GET['rangoFecha']))

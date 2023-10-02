@@ -311,91 +311,12 @@
             <?php
                 // Ganancias y ventas
                 $meses = array(1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic");
-                foreach ($ventaGananciaPorMesTienda as $ganancia)
-                {
-                    $gananciasPHP[] = $ganancia['total_Ganancia'];
-                    $ventasPHP[]    = $ganancia['total_Venta'];
-                    $mesesPHP[]     = $meses[$ganancia['mes']];
-                }
+               
             ?>
             //console.log(<?php //echo json_encode($mesesPHP); ?>);
-
-            // Configuración de la gráfica de barras
-            var config =
-            {
-              type: 'bar',
-              data: {
-                  labels: <?php echo !empty($mesesPHP) ? json_encode($mesesPHP) : json_encode(""); ?>,
-                  datasets: [{
-                    label: 'Ventas',
-                    backgroundColor: 'rgba(255, 0, 0, 0.5)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    borderWidth: 2,
-                    data: <?php echo !empty($ventasPHP) ? json_encode($ventasPHP) : json_encode("0"); ?>
-                  },
-                  {
-                      label: 'Ganancias',
-                      backgroundColor: 'rgba(96, 75, 245, 0.7)',
-                      borderColor: 'rgba(92, 72, 238, 1)',
-                      borderWidth: 2,
-                      data: <?php echo !empty($gananciasPHP) ? json_encode($gananciasPHP) : json_encode(""); ?>
-                  }]
-              },
-              options: {
-                  maintainAspectRatio: false,
-                  responsive: true,
-                  title: {
-                      display: true,
-                      text: 'Ventas y Ganancias del año'
-                },
-                scales: {
-                }
-              }
-            };
-
-            // Crear la gráfica de barras
-            var ctx = document.getElementById('myBarChart').getContext('2d');
-            var myBarChart = new Chart(ctx, config);
-
  
-
-        </script>  
-        <script type="text/javascript">            
-
-            function downloadURI(uri, name)
-            {
-                var link = document.createElement("a");
-                link.download = name;
-                link.href = uri;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                delete link;
-            }            
-
-            function makeCodeUrlPago(contenidoQR)
-            {
-                let qrcode = new QRCode(document.getElementById("qrcode"),
-                {
-                  text: contenidoQR,
-                  width: 1080,
-                  height: 1080,
-                  colorDark : "#000000",
-                  colorLight : "#ffffff",
-                  correctLevel : QRCode.CorrectLevel.H
-                });
-
-                setTimeout(
-                    function ()
-                    {
-                        let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
-                        var tienda = '<?php echo $_SESSION['managedStore']; ?>';
-                        downloadURI(dataUrl, 'vendyQR_' + tienda + '.png');
-                    },1000
-                );
-            }
-
-        </script>
+        </script>   
+ 
         <?php
 
         if (isset($_GET['rangoFecha']))

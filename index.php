@@ -308,19 +308,24 @@
                     
                     <section class="pt-5 pb-10 bg-white">
 
-                        <div class="container px-5 " data-aos="fade-up">
+                        <div class="container px-5" data-aos="fade-up">
                             <div class="bg-green card mt-n15 shadow-sm mb-0 z-1 rounded-3" style="background-color: #FFDAC1;">
                                 <div class="card-body p-5 rounded-3">
                                     <div class="row gx-5 align-items-center">
                                         <div class="col-lg-6">
-                                            <h1 class="text-white">Atención Expositores <i class="fas fa-bullhorn fa-rotate-by fa-lg" style="--fa-rotate-angle: -30deg;"></i></h1>
-                                            <p class="lead text-white mb-3">Realiza tu pre registro y consigue tu lugar en el Conejón Navideño 2023 y en la tienda oficial del Conejón</p>
+                                            <h1 class="text-white">                                                
+                                                <i class="fas fa-bullhorn fa-rotate-by fa-lg me-2" style="--fa-rotate-angle: -30deg;"></i>
+                                                Atención Expositores 
+                                            </h1>
+                                            <p class="lead text-white mb-3">Realiza tu pre registro y consigue tu lugar en el Conejón Navideño 2023 y en la tienda oficial del Conejón. <b>Lugares limitados.</b></p>
                                         </div>
                                         <div class="col-lg-6">
                                             <form action="">
                                                 <div class="input-group mb-2 rounded-3" style=";">
                                                     <!-- <input class="form-control form-control-solid fs-3 shadow-none" type="text" placeholder="tucorreo@mail.com" aria-label="Recipient's username" aria-describedby="button-addon2" required /> -->
-                                                    <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</button>
+                                                    <!-- <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</button> -->
+
+                                                    <a class="btn btn-outline-white fs-4 w-100 shadow-none" style="" href="https://forms.gle/CF8ikDxfLgNyVv7J6" target="_blank">Registro Expositor</a>
                                                 </div>                                            
                                                  
                                             </form>
