@@ -13,14 +13,14 @@
       {
           case 'errorCuentaInactiva':
               echo "<script>             
-                      var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'))
+                      var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'));
                       myModal.show();                      
                     </script>";
           break;
 
           case 'cuentaExistente':
               echo "<script>             
-                      var myModal = new bootstrap.Modal(document.getElementById('modalCuentaExistente'))
+                      var myModal = new bootstrap.Modal(document.getElementById('modalCuentaExistente'));
                       myModal.show();                      
                     </script>";
           break;

@@ -289,6 +289,9 @@
 
             function makeCodeUrlPago(contenidoQR)
             {
+                // Limpia el contenido del contenedor (elimina cualquier código QR anterior)
+                let qrcodeContainer = document.getElementById("qrcode").innerHTML = '';            
+                
                 let qrcode = new QRCode(document.getElementById("qrcode"), 
                 {
                     text: contenidoQR,
@@ -297,7 +300,7 @@
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
-                });
+                });        
 
                 document.querySelector("#qrcode img").id = "qr-image";
                 let qrImage = document.getElementById("qr-image");

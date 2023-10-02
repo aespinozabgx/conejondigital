@@ -35,6 +35,14 @@
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        
+        <!-- Enlace a Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
+        <!-- Enlace a Bootstrap JavaScript (incluyendo Popper.js) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         
         <style>
@@ -199,24 +207,19 @@
                 </div>
             </div>
         </div>
-
-
         
         <!-- <script src="app/js/scripts.js"></script> -->
         <?php
-         include 'src/modals.php';
+            include 'src/modals.php';
             include 'app/php/triggers.php';
-         
-           
         ?>  
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>        
+        <script src="js/scripts.js"></script> 
         <script>
-            document.getElementById("openModalBtn").addEventListener("click", function () {
-                var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'));
-                myModal.show();
-            });
-
+            // document.getElementById("openModalBtn").addEventListener("click", function () {
+            //     var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'));
+            //     myModal.show();
+            // });
         </script>
     </body>
 </html>

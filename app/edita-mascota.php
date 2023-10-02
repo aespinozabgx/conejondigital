@@ -166,7 +166,7 @@
                                     <div class="col-auto mt-4">                                       
                                         <div class="">
                                             <div class="avatar">                                        
-                                                <img class="" src="<?php echo "users/" . $_SESSION['email'] . "/mascotas/" . $generalesMascota['idMascota'] . "/" . $generalesMascota['imgPerfil']; ?>" alt="">
+                                                <img class="" src="<?php echo "users/" . $_SESSION['email'] . "/mascotas/" . $generalesMascota['idMascota'] . "/" . $generalesMascota['imgPerfil'] . "?id=" . mt_rand(1,28); ?>" alt="">
                                             </div>
                                         </div>
                                     </div>

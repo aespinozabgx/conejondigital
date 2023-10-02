@@ -134,6 +134,24 @@
                 font-weight: bold; /* Estilo de fuente en negrita */
                 width: 100%; /* Ancho al 100% */
             }
+
+            .avatar 
+            {
+                width: 120px; /* Ajusta el ancho deseado */
+                height: 120px; /* Ajusta la altura deseada */
+            }
+
+            .avatar img 
+            {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                border: 5px solid #fff;
+                -webkit-box-shadow: 1px 4px 4px 1px rgba(0,0,0,0.30);
+                -moz-box-shadow: 1px 4px 4px 1px rgba(0,0,0,0.30);
+                box-shadow: 1px 4px 4px 1px rgba(0,0,0,0.30);
+            }   
         
         </style>
     </head>
@@ -233,17 +251,17 @@
                                 <div class="col-xl-6 col-md-6 mb-4">
                                     <a href="edita-mascota.php?idMascota=<?php echo $mascota['idMascota']; ?>" class="text-decoration-none">
                                         <!-- Dashboard info widget 1-->
-                                        <div class="card border-start-lg lift border-start-blue h-100">
+                                        <div class="card border-start-lg lift border-start-orange h-100">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-grow-1">
                                                         <!-- <div class="small fw-bold text-orante mb-1">Mis mascotas</div> -->
-                                                        <div class="display-6 text-orange">
+                                                        <div class="display-5 fw-400 sombra-titulos-vendy text-blue f-banggers">
                                                             <?php echo $mascota['nombre']; ?>                                               
                                                         </div>                                                
                                                     </div>
-                                                    <div class="ms-2">
-                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil']; ?> " style="height: 99px;" alt="">
+                                                    <div class="avatar">
+                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil']; ?> " style="" alt="">
                                                     </div>
                                                 </div>
                                             </div>

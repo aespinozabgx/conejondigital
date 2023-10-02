@@ -8,7 +8,7 @@
     $idCliente = NULL;
     if (isset($_SESSION['email'])) 
     {
-        exit(header('Location: app/registro.php'));
+        exit(header('Location: app/'));
     }
 
     if (isset($_GET['correo'])) 
@@ -109,13 +109,9 @@
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="footer-admin mt-auto footer-dark">
-                    <div class="container-xl px-4">
-                        <div class="row">
-                            <div class="col-md-6 small">Copyright &copy; Vendy 2023</div>                            
-                        </div>
-                    </div>
-                </footer>
+                <?php
+                    include 'app/src/footer.php';
+                ?>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
