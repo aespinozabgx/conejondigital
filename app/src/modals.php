@@ -1,3 +1,35 @@
+<div class="modal fade" id="modalCredencialEvento" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary fw-600">                    
+                    Acceso
+                </h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="text-center text-danger">
+                    <div class="text-center">
+                        <img src="assets/img/ticket.jpg" class="" style="height: 55px;" alt="">                        
+                    </div>
+                    <h2 class="f-poppins sombra-titulos-vendy text-green display-6 fw-500"><?php echo $_SESSION['nombre']; ?></h2>                    
+                    <div id="qrcode" class="p-3 mb-2 d-flex justify-content-center"></div>
+                </div>
+            </div>
+            <div class="modal-footer text-center d-flex justify-content-center">
+                
+                <a class="btn btn-outline-green rounded-2 fs-5" href="mis-conejos.php">
+                    Registra tu cheñol 🐰
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalDevoluciones" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
     <div class="modal-dialog  ">
         <div class="modal-content">

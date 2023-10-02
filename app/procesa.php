@@ -577,7 +577,7 @@
             $datosUsuario = getDatosUsuario($conn, $idCliente);
 
             echo "<pre>";
-            var_dump($datosUsuario);
+            print_r($datosUsuario);
 
             // Validar si ya está activa la cuenta 
             if ($datosUsuario['isActive'] == 1)
@@ -590,9 +590,9 @@
                 $_SESSION['carrito']['subtotal']    = 0;
                 $_SESSION['carrito']['descuento']   = 0;
 
-                echo "agregados a la sesión";
-                // header('Location: ../login.php?msg=cuentaExistente');
-                // exit();
+                //echo "agregados a la sesión";
+                header('Location: ../login.php?msg=cuentaExistente');
+                exit();
             } 
              
             if ($datosUsuario['token'] != $tokenActivacion) 
@@ -623,6 +623,7 @@
                         mkdir($target_dir, 0777, true);
                     }
 
+
                     session_start();
 
                     $_SESSION['email']    = $idCliente;              
@@ -638,8 +639,45 @@
                     $_SESSION['carrito']['subtotal']    = 0;
                     $_SESSION['carrito']['descuento']   = 0;
                     
-                    header('Location: index.php?modal=modalCredencialEvento');
-                    exit();
+                    // validar si hay eventos
+                    // Incluir la conexión a la base de datos y las funciones de validación si las tienes
+
+                    // Comprobar si el formulario se ha enviado
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+                    {
+                        // Recuperar el ID del usuario y del evento (asegúrate de validarlos)
+                        $usuario_id = $_SESSION['email']; // Cambia esto por la forma en que obtienes el ID del usuario
+                        $evento_id = "CN2023"; // Cambia esto por la forma en que obtienes el ID del evento
+
+                        // Validaciones adicionales (puedes agregar más según tus necesidades)
+                        if (empty($usuario_id) || empty($evento_id)) 
+                        {
+                            // Manejo de error: campos obligatorios no completados
+                            echo "Por favor, complete todos los campos obligatorios.";
+                        } 
+                        else 
+                        { 
+                            $fecha_hora_registro = date("Y-m-d H:i:s");
+                            try {
+                                $sql = "INSERT INTO registro_asistencia (usuario_id, evento_id, fecha_hora_registros)
+                                        VALUES (?, ?, ?)";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bind_param("sss", $usuario_id, $evento_id, $fecha_hora_registro);
+                                $stmt->execute();
+
+                                exit(header('Location: eventos.php?modal=modalCredencialEvento'));
+
+                            } 
+                            catch (Exception $e) 
+                            {
+                                // Manejo de error: error de base de datos
+                                //echo "Error de base de datos: " . $e->getMessage();
+                                exit(header('Location: eventos.php?modal=modalCredencialEvento'));
+                            }
+                        }
+                    }
+
+                   
                 }
                 else 
                 {

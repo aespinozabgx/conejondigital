@@ -151,8 +151,8 @@
                                         </div>
                                         <div class="page-header-subtitle">
                                             <div class="">
-                                                <span class="fw-500 text-white-75 small">                                                 
-                                                    Registra a tus peluditos al <b>Conejón Navideño 2023</b>                                                      
+                                                <span class="fw-300 text-white-75 small">                                                 
+                                                    Conoce los próximos eventos oficiales del Conejón                                                 
                                                 </span>
                                             </div>
                                         </div>
@@ -203,13 +203,13 @@
                                             </p>
 
                                             <!-- Botón 1 para dispositivos móviles -->
-                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#modalAcceso">
+                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#modalCredencialEvento" onclick="makeCodeUrlPago('<?php echo $_SESSION['email']; ?>');">
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
 
                                             <!-- Botón 1 para dispositivos medianos y grandes -->
-                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalAcceso">
+                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalCredencialEvento" onclick="makeCodeUrlPago('<?php echo $_SESSION['email']; ?>');">
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
@@ -225,6 +225,7 @@
                                                 ¿Cómo llegar?
                                                 <i class="fas fa-location-arrow ms-2"></i>
                                             </a>
+                                            
                                         </div>
                                     </div>
 
@@ -262,62 +263,15 @@
         </div>
          
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>        
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js" integrity="sha512-vCUbejtS+HcWYtDHRF2T5B0BKwVG/CLeuew5uT2AiX4SJ2Wff52+kfgONvtdATqkqQMC9Ye5K+Td0OTaz+P7cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>        
-
+        <script src="js/scripts.js"></script> 
         <script type="text/javascript">
 
             // Obtener los datos de ventas y ganancias desde PHP
             <?php
                 // Ganancias y ventas
                 $meses = array(1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic");
-                foreach ($ventaGananciaPorMesTienda as $ganancia)
-                {
-                    $gananciasPHP[] = $ganancia['total_Ganancia'];
-                    $ventasPHP[]    = $ganancia['total_Venta'];
-                    $mesesPHP[]     = $meses[$ganancia['mes']];
-                }
-            ?>
-            //console.log(<?php //echo json_encode($mesesPHP); ?>);
-
-            // Configuración de la gráfica de barras
-            var config =
-            {
-              type: 'bar',
-              data: {
-                  labels: <?php echo !empty($mesesPHP) ? json_encode($mesesPHP) : json_encode(""); ?>,
-                  datasets: [{
-                    label: 'Ventas',
-                    backgroundColor: 'rgba(255, 0, 0, 0.5)',
-                    borderColor: 'rgba(255, 0, 0, 1)',
-                    borderWidth: 2,
-                    data: <?php echo !empty($ventasPHP) ? json_encode($ventasPHP) : json_encode("0"); ?>
-                  },
-                  {
-                      label: 'Ganancias',
-                      backgroundColor: 'rgba(96, 75, 245, 0.7)',
-                      borderColor: 'rgba(92, 72, 238, 1)',
-                      borderWidth: 2,
-                      data: <?php echo !empty($gananciasPHP) ? json_encode($gananciasPHP) : json_encode(""); ?>
-                  }]
-              },
-              options: {
-                  maintainAspectRatio: false,
-                  responsive: true,
-                  title: {
-                      display: true,
-                      text: 'Ventas y Ganancias del año'
-                },
-                scales: {
-                }
-              }
-            };
-
-            // Crear la gráfica de barras
-            var ctx = document.getElementById('myBarChart').getContext('2d');
-            var myBarChart = new Chart(ctx, config);
-
- 
+                
+            ?> 
 
         </script>  
         <script type="text/javascript">            
@@ -335,24 +289,28 @@
 
             function makeCodeUrlPago(contenidoQR)
             {
-                let qrcode = new QRCode(document.getElementById("qrcode"),
+                let qrcode = new QRCode(document.getElementById("qrcode"), 
                 {
-                  text: contenidoQR,
-                  width: 1080,
-                  height: 1080,
-                  colorDark : "#000000",
-                  colorLight : "#ffffff",
-                  correctLevel : QRCode.CorrectLevel.H
+                    text: contenidoQR,
+                    width: 250,
+                    height: 250,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
                 });
 
-                setTimeout(
-                    function ()
-                    {
-                        let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
-                        var tienda = '<?php echo $_SESSION['managedStore']; ?>';
-                        downloadURI(dataUrl, 'vendyQR_' + tienda + '.png');
-                    },1000
-                );
+                document.querySelector("#qrcode img").id = "qr-image";
+                let qrImage = document.getElementById("qr-image");
+                qrImage.classList.add("img-fluid"); 
+ 
+                // setTimeout(
+                //     function ()
+                //     {
+                //         let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
+                //         var tienda = '<?php echo $_SESSION['email']; ?>';
+                //         downloadURI(dataUrl, tienda + '.png');
+                //     },1000
+                // );
             }
 
         </script>

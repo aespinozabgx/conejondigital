@@ -233,7 +233,7 @@
                                 <div class="col-xl-6 col-md-6 mb-4">
                                     <a href="edita-mascota.php?idMascota=<?php echo $mascota['idMascota']; ?>" class="text-decoration-none">
                                         <!-- Dashboard info widget 1-->
-                                        <div class="card border-start-lg lift border-start-green h-100">
+                                        <div class="card border-start-lg lift border-start-blue h-100">
                                             <div class="card-body">
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-grow-1">
