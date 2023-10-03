@@ -16,7 +16,7 @@
         
         <title></title>
         
-        <link href="css/styles.css?id=282828" rel="stylesheet" />
+        <link href="css/styles.css?id=28" rel="stylesheet" />
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         

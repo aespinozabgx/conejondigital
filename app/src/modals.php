@@ -19,9 +19,8 @@
                     <div id="qrcode" class="p-3 mb-2 d-flex justify-content-center"></div>
                 </div>
             </div>
-            <div class="modal-footer text-center d-flex justify-content-center">
-                
-                <a class="btn btn-outline-green rounded-2 fs-5" href="mis-conejos.php">
+            <div class="modal-footer text-center d-flex justify-content-center">                
+                <a class="btn btn-green w-100 rounded-2 fs-5" href="mis-conejos.php">
                     Registra tu cheñol 🐰
                 </a>
             </div>

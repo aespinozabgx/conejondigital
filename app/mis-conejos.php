@@ -261,7 +261,7 @@
                                                         </div>                                                
                                                     </div>
                                                     <div class="avatar">
-                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil']; ?> " style="" alt="">
+                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil'] . "?id=" . mt_rand(28,33); ?> " style="" alt="">
                                                     </div>
                                                 </div>
                                             </div>
