@@ -51,7 +51,7 @@
     
     if (isset($_POST['btnRegistraMascota'])) 
     {
-        var_dump($_POST);
+        //var_dump($_POST);
 
         $idMascota = generarIdMascota($conn);
         $idCliente = $_SESSION['email'];
@@ -74,17 +74,19 @@
 
             if ($conn->query($sql) === TRUE) 
             {
-                echo "Nueva mascota registrada exitosamente";
+                //echo "Nueva mascota registrada exitosamente";
+                exit(header('Location: mis-conejos.php?msg=exitoRegistroConejo'));
             } 
             else 
             {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                //echo "Error: " . $sql . "<br>" . $conn->error;
+                exit(header('Location: mis-conejos.php?msg=errorRegistroConejo'));
             }
 
         }
         else
         {
-            echo "error";
+            exit(header('Location: mis-conejos.php?msg=errorRegistroConejo'));
         }
 
     }
