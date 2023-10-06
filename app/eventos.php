@@ -88,7 +88,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="js/qrcode.js"></script>
+        <!-- <script src="js/qrcode.js"></script> -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
         <style type="text/css">
@@ -193,23 +193,23 @@
                                                 <!-- Contenido de texto aquí -->
                                                 <p class="text-gray-700">
                                           <div class="text-gray-600 small mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
-                                          <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
-                                            <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
-                                                <i class="ms-1" data-feather="external-link"></i>
-                                            </a>
-                                          </div>
-                                        </p>   
+                                            <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
+                                                <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                    Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
+                                                    <i class="ms-1" data-feather="external-link"></i>
+                                                </a>
+                                            </div>
+                                            </p>   
                                             </p>
 
                                             <!-- Botón 1 para dispositivos móviles -->
-                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#modalCredencialEvento" onclick="makeCodeUrlPago('<?php echo $_SESSION['email']; ?>');">
+                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
 
                                             <!-- Botón 1 para dispositivos medianos y grandes -->
-                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#modalCredencialEvento" onclick="makeCodeUrlPago('<?php echo $_SESSION['email']; ?>');">
+                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
@@ -244,6 +244,37 @@
 
                     </div>
 
+                    <div class="modal fade" id="modalCredencialEvento" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-primary fw-600">                    
+                                        Acceso
+                                    </h5>
+                                    <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                        <i class="fa-solid fa-xmark fa-xl"></i>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class="text-center text-danger">
+                                        <div class="text-center">
+                                            <img src="assets/img/ticket.jpg" class="" style="height: 55px;" alt="">                        
+                                        </div>
+                                        <h2 class="f-poppins sombra-titulos-vendy text-green display-6 fw-500"><?php echo $_SESSION['nombre']; ?></h2>                    
+                                        <div id="qrcode-contenedor2" class="p-3 mb-2 d-flex justify-content-center"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-center d-flex justify-content-center">                
+                                    <a class="btn btn-green w-100 rounded-2 fs-5" href="mis-conejos.php">
+                                        Registra tu cheñol 🐰
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                 </main>
 
                 <script src="js/funciones.js?id=2828"></script>
@@ -261,21 +292,18 @@
 
             </div>
         </div>
-         
+
+       <!-- QR CODE JS -->
+        <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
+        <script src='//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js'></script>
+        <script src="js/qr-script.js?is=28"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>        
         <script src="js/scripts.js"></script> 
-        <script type="text/javascript">
-
-            // Obtener los datos de ventas y ganancias desde PHP
-            <?php
-                // Ganancias y ventas
-                $meses = array(1 => "Ene", 2 => "Feb", 3 => "Mar", 4 => "Abr", 5 => "May", 6 => "Jun", 7 => "Jul", 8 => "Ago", 9 => "Sep", 10 => "Oct", 11 => "Nov", 12 => "Dic");
-                
-            ?> 
-
-        </script>  
+          
         <script type="text/javascript">            
-
+             
+            
             function downloadURI(uri, name)
             {
                 var link = document.createElement("a");
@@ -285,13 +313,14 @@
                 link.click();
                 document.body.removeChild(link);
                 delete link;
-            }            
+            }
 
             function makeCodeUrlPago(contenidoQR)
             {
                 // Limpia el contenido del contenedor (elimina cualquier código QR anterior)
-                let qrcodeContainer = document.getElementById("qrcode").innerHTML = '';            
-                
+                document.getElementById("qrcode").innerHTML = '';            
+                qrcode.clear();
+
                 let qrcode = new QRCode(document.getElementById("qrcode"), 
                 {
                     text: contenidoQR,
@@ -300,11 +329,14 @@
                     colorDark: "#000000",
                     colorLight: "#ffffff",
                     correctLevel: QRCode.CorrectLevel.H
-                });        
+                });       
 
-                document.querySelector("#qrcode img").id = "qr-image";
-                let qrImage = document.getElementById("qr-image");
-                qrImage.classList.add("img-fluid"); 
+                // qrcode.clear(); // clear the code.
+                // qrcode.makeCode("http://naver.com"); // make another code.
+
+                // document.querySelector("#qrcode img").id = "qr-image";
+                // let qrImage = document.getElementById("qr-image");
+                // qrImage.classList.add("img-fluid"); 
  
                 // setTimeout(
                 //     function ()
@@ -314,6 +346,7 @@
                 //         downloadURI(dataUrl, tienda + '.png');
                 //     },1000
                 // );
+                console.log('Creado2');
             }
 
         </script>
@@ -369,6 +402,7 @@
                     }, 500);
 
             </script>
+            
             <?php
         }
 

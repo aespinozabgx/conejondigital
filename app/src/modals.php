@@ -1,30 +1,22 @@
-<div class="modal fade" id="modalCredencialEvento" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-primary fw-600">                    
-                    Acceso
-                </h5>
-                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark fa-xl"></i>
-                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Acceso Conejón Navideño 2023</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
             <div class="modal-body">
-                <div class="text-center text-danger">
-                    <div class="text-center">
-                        <img src="assets/img/ticket.jpg" class="" style="height: 55px;" alt="">                        
-                    </div>
-                    <h2 class="f-poppins sombra-titulos-vendy text-green display-6 fw-500"><?php echo $_SESSION['nombre']; ?></h2>                    
-                    <div id="qrcode" class="p-3 mb-2 d-flex justify-content-center"></div>
-                </div>
+                <input id="text" type="text" value="https://vendy.click/www" style="width:80%; display:none;" />
+                
+                <h2 class="f-poppins sombra-titulos-vendy text-green text-center display-6 fw-500"><?php echo ucwords(strtolower($_SESSION['nombre'])); ?></h2>
+                <div id="qrcode-contenedor" style=""></div>
             </div>
-            <div class="modal-footer text-center d-flex justify-content-center">                
-                <a class="btn btn-green w-100 rounded-2 fs-5" href="mis-conejos.php">
+            <div class="modal-footer">
+                <a class="btn btn-green rounded-2 fs-5 w-100" href="mis-conejos.php">
                     Registra tu cheñol 🐰
-                </a>
+                </a> 
             </div>
-
         </div>
     </div>
 </div>
