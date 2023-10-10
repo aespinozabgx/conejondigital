@@ -395,7 +395,7 @@
                                                 <div class="small text-dark fs-300 mb-3">Registra medios de contacto adicionales para que sea más fácil localizarte cuando alguien escanee la plaquita de <span class="fs-4 fw-500"><?php echo $generalesMascota['nombre']; ?></span></div>    
                                             
                                                 <div class="col text-center fs-5 fw-500 text-dark" data-bs-toggle="modal" data-bs-target="#modalDatosDeContacto">
-                                                    <a class="btn rounded-pill btn-primary btn-lg m-2 p-3">
+                                                    <a class="btn rounded-pill btn-primary btn-lg m-2 z3">
                                                         <i class="fas fa-phone fs-1"></i>
                                                     </a>
                                                     Teléfono

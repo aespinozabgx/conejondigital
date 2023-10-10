@@ -103,7 +103,7 @@
         <meta name="author" content="" />
         <title>Conejón Digital</title> 
         <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
-        <link href="css/styles.css?id=3328" rel="stylesheet" />
+        <link href="css/styles.css?id=28" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -256,8 +256,8 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="flex-grow-1">
                                                         <!-- <div class="small fw-bold text-orante mb-1">Mis mascotas</div> -->
-                                                        <div class="display-5 fw-400 sombra-titulos-vendy text-blue f-banggers">
-                                                            <?php echo $mascota['nombre']; ?>                                               
+                                                        <div class="display-5 fw-400 vendy text-orange f-poppins">
+                                                            <?php echo ucwords(strtolower($mascota['nombre'])); ?>                                               
                                                         </div>                                                
                                                     </div>
                                                     <div class="avatar">

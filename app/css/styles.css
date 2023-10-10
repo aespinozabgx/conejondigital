@@ -168,6 +168,24 @@ transition: all 0.1s linear;
 
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@200;400&family=Righteous&display=swap');
+@import url('../fonts/Bangers-Regular.ttf?family=Bangers');
+
+.f-bangers
+{
+  font-family: 'Bangers', cursive;
+}
+
+.f-bebas
+{
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+
+.f-poppins
+{
+  font-family: 'Poppins', sans-serif;
+}
 
 .float
 {
