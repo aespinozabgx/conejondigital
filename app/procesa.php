@@ -5,6 +5,41 @@
     require 'php/conexion.php';
     require 'php/funciones.php';
     
+    
+    if (isset($_POST['btnEliminarMascota']))
+    {
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo $_SESSION['email'];
+        $idMascota = filter_input(INPUT_POST, 'idMascota', FILTER_SANITIZE_STRING);
+        $email = $_SESSION['email']; // No necesitas escapar una variable de sesión.
+
+        // Verifica si el usuario es el propietario de la mascota y elimina si es válido.
+        $query = "DELETE FROM mascotas WHERE idMascota = ? AND idOwner = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ss", $idMascota, $email);
+
+        if ($stmt->execute()) 
+        {
+            $msg = "Mascota eliminada correctamente.";
+            $redirectPage = "mis-conejos.php"; // Redirige a mis-conejos.php en caso de éxito.
+        } 
+        else 
+        {
+            $msg = "Error al eliminar la mascota: " . $conn->error;
+            $redirectPage = "edita-mascota.php"; // Redirige a edita-mascota.php en caso de error.
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        // Redireccionar a la página correspondiente con el mensaje.
+        header("Location: $redirectPage?idMascota=" . $idMascota . "&msg=" . urlencode($msg));
+        exit;
+
+
+    }
+
     if (isset($_POST['btnGuardarGeneralesMascota']))
     {
         //echo "btnGuardarGeneralesMascota";

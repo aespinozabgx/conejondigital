@@ -172,18 +172,72 @@
                                     </div>
 
                                     <div class="col-auto mt-5">
-                                        <h1 class="text-white mb-0 fw-400 sombra-titulos-vendy display-5">                                            
-                                            <?php echo ucwords($generalesMascota['nombre']); ?>
-                                        </h1>                                    
+                                        
+                                        <h1 class="text-white mb-0">
+                                            <div class="dropdown">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="fw-400 display-3" style="text-shadow: 2px 2px 0px rgba(228, 202, 86, 0.62); color: #fff700;"><?php echo ucwords($generalesMascota['nombre']); ?></div>
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        <button class="btn shadow-sm btn-transparent border-white border-1 btn-icon mb-3 ms-10" type="button" data-bs-toggle="dropdown">                                                
+                                                            <i class="feather-lg text-white" data-feather="more-vertical"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <!-- <li><a class="dropdown-item" href="#">Action</a></li>
+                                                            <li><a class="dropdown-item" href="#">Another action</a></li> -->
+                                                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEliminarConejo">Eliminar</a></li>
+                                                        </ul>
+                                                    </div>                                                                                                    
+
+                                                </div>
+                                            </div>
+                                        </h1>
                                         <div>
                                             Actualiza los datos de <?php echo ucwords($generalesMascota['nombre']); ?> cuando lo necesites.
                                         </div>
                                         
-                                        <!-- <div class="page-header-subtitle mb-2">
-                                            <a href="../perfil/?id=<?php echo $idMascota; ?>" target="_blank" class="text-white text-decoration-none small">
-                                            Ver perfil público <i class="fas fa-external-link-alt fa-sm ms-1"></i>
-                                            </a>
-                                        </div> -->
+                                        <div class="page-header-subtitle mb-2">                                                                   
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modalEliminarConejo" tabindex="-1" aria-labelledby="modalEliminarConejoLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <form action="procesa.php" method="POST">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="modalEliminarConejoLabel">Confirmación</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">                                                        
+                                                            <div class="text-dark">Eliminarás toda la información y fotos de <span class="fw-600"><?php echo $generalesMascota['nombre']; ?></span>, ¿Deseas continuar?</div>
+                                                            <input type="hidden" value="<?php echo $_GET['idMascota']; ?>" id="idMascotaToDelete" name="idMascota" required>
+                                                        </div>
+                                                        <div class="modal-footer text-dark">
+                                                            <?php
+                                                                if (isset($_GET['idMascota'])) 
+                                                                {
+                                                                    $idMascota = $_GET['idMascota'];
+                                                                    ?>
+                                                                    <button class="btn btn-danger text-white" name="btnEliminarMascota" type="submit">Eliminar ahora</button>
+                                                                    <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    ?>
+                                                                    <div class="small">Ocurrió un error, actualiza la página</div>
+                                                                    <?php
+                                                                }
+                                                                
+                                                            ?>
+                                                            
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </div>
+
+                                        </div>
                                         
                                         <!-- <div>
                                             <button class="btn btn-dark shadow-sm mb-2" data-bs-toggle="modal" data-bs-target="#modalMascotaPerdida">
@@ -196,7 +250,8 @@
                                             </button>
                                         </div> -->
                                         
-                                    </div>                                     
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
