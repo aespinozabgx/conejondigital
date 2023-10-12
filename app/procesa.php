@@ -129,7 +129,49 @@
         
     if (isset($_POST['btnRegistroExpositor'])) 
     {
-        echo "Registro Expositor Pendiente";
+        // echo "Registro Expositor Pendiente";
+        // echo "<pre>";
+        // print_r($_POST);
+        // Validar si el usuario ya está registrado por su correo electrónico
+
+        $correo = $_POST['correo'];
+        $check_query = "SELECT * FROM expositores WHERE correo = '$correo'";
+        $result = $conn->query($check_query);
+        
+        if ($result->num_rows > 0) 
+        {
+            //echo "El usuario ya está registrado con este correo electrónico.";            
+            exit(header('Location: ../index.php?msg=expositorYaRegistrado'));
+        } 
+        else 
+        {
+            // Si el usuario no está registrado, proceder con el registro
+            $nombre = $_POST['nombre'];
+            $whatsapp = $_POST['whatsapp'];
+            $nombre_negocio = $_POST['nombre_negocio'];
+            $giro_negocio = $_POST['giro_negocio']; // Cambio de nombre
+            $contacto_negocio = $_POST['contacto_negocio']; // Cambio de nombre
+            $como_te_enteraste = $_POST['como_te_enteraste']; // Cambio de nombre
+
+            // Insertar los datos en la tabla "expositores" con los nuevos nombres de columna
+            $sql = "INSERT INTO expositores (correo, nombre, whatsapp, nombre_negocio, giro_negocio, contacto_negocio, como_te_enteraste)
+                    VALUES ('$correo', '$nombre', '$whatsapp', '$nombre_negocio', '$giro_negocio', '$contacto_negocio', '$como_te_enteraste')";
+
+            if ($conn->query($sql) === TRUE) 
+            {
+                //echo "Registro exitoso. Gracias por registrarte como expositor.";
+                exit(header('Location: ../index.php?msg=expositorRegistrado'));
+            } 
+            else 
+            {
+                //echo "Error al registrar: " . $conn->error;
+                exit(header('Location: ../index.php?msg=expositorNoRegistrado'));
+            }
+        }
+
+        // Cerrar la conexión
+        $conn->close();
+
     }
     
     if (isset($_POST['btnRegistroVisitante']))

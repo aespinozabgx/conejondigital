@@ -42,18 +42,68 @@
                 </button>
             </div>
 
-            <form action="tienda/procesa.php" method="post">
+            <form action="app/procesa.php" method="post">
+                
                 <div class="modal-body">
-                DATOS DE REGISTRO
+                                    
+                    <div class="mb-3">
+                        <label for="correo" class="form-label">Correo electrónico:*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i data-feather="mail"></i></span>
+                            <input type="email" class="form-control" id="correo" placeholder="correo@dominio.com" name="correo" required>                        
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">¿Cómo te llamas?*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i data-feather="user"></i></span>                        
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre" name="nombre" required>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="whatsapp" class="form-label">Whatsapp (10 dígitos)*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i data-feather="phone"></i></span>
+                            <input type="tel" class="form-control" id="whatsapp" name="whatsapp" placeholder="10 dígitos" pattern="[0-9]{10}" required>
+                        </div>                    
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="nombre_negocio" class="form-label">Nombre de tu negocio/empresa*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i data-feather="briefcase"></i></span>
+                            <input type="text" class="form-control" id="nombre_negocio" placeholder="Negocio" name="nombre_negocio" required>                        
+                        </div>                    
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="productos" class="form-label">Si eres seleccionado, ¿Qué productos pretendes vender en el Conejón Navideño 2023?*</label>
+                        <textarea class="form-control" id="giro_negocio" name="giro_negocio" rows="3" required></textarea>
+                    </div>
+ 
+
+                    <div class="mb-3">
+                        <label for="sitio_web" class="form-label">Sitio web o Redes sociales de tu negocio*</label>                     
+                        <textarea class="form-control" id="contacto_negocio" name="contacto_negocio" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="enteraste" class="form-label">¿Cómo te enteraste de este evento?*</label>
+                        <input type="text" class="form-control" id="como_te_enteraste" name="como_te_enteraste" required>
+                    </div>
+
                 </div>            
 
                 <div class="modal-footer">
-                    <input type="hidden" name="idTienda" value="<?php echo $idTienda; ?>" required>
-                    <input type="hidden" name="idPedido" value="<?php echo $idPedido; ?>" required>
+                    <!-- <input type="hidden" name="idTienda" value="<?php //echo $idTienda; ?>" required>
+                    <input type="hidden" name="idPedido" value="<?php //echo $idPedido; ?>" required> -->
                     
-                    <button type="submit" class="btn btn-outline-success rounded-2" name="btnRegistroExpositor">
+                    <button type="submit" class="btn btn-blue rounded-2" name="btnRegistroExpositor">
                         <!-- <i class="me-2 " data-feather="plus"></i>  -->
-                        Registrar
+                        Registrarme
                     </button>
                 </div>
             </form>
@@ -62,7 +112,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalRegistroVisitante" tabindex="-1" aria-labelledby="modalRegistroExpositorLabel" aria-hidden="true">
+<div class="modal fade" id="modalRegistroVisitante" tabindex="-1" aria-labelledby="modalRegistroVisitanteLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

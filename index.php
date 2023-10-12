@@ -22,7 +22,8 @@
         
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" crossorigin="anonymous"></script>
-        
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bangers" rel="stylesheet">
@@ -30,6 +31,15 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">   
         <link rel="stylesheet" href="css/contador-style.css">
 
+        <style>
+            
+            mark 
+            {
+                background-color: rgba(129, 88, 53, 0.48);
+                color: #FFF;
+            }
+
+        </style>
      
     </head>
     <body>
@@ -166,14 +176,20 @@
                                 <div class="row gx-5 align-items-center">
                                     <div class="col-lg-6 mb-3" data-aos="zoom-out-down">
                                         <div class="f-bangers text-white display-1 mb-2" style="text-shadow: -4px 4px 1px rgba(236, 18, 18, 0.962);">¡Cheñolas <span class="f-bebas display-6">y</span> <br> cheñoles!</div>
-                                        <div class="text-white mb-3 fs-1">¡Ya viene el conejón navideño 2023!</div>
-                                        <div class="text-white mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
-                                        <div class="text-white mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
-                                            <a class="text-white" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                Reforma Nte 742, CDMX
-                                                <i class="ms-1" data-feather="external-link"></i>
-                                            </a>
-                                            
+                                        <div class="text-white mb-3 fs-1" style=" ">
+                                            <mark>¡Ya viene el conejón navideño 2023!</mark>
+                                        </div>
+                                        <div class="text-white mb-1 fs-3">
+                                            <mark><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</mark>
+                                        </div>
+                                        <div class="text-white mb-5 fs-3">
+                                            <mark>
+                                                <i class="fas fa-map-marker-alt me-1"></i>
+                                                <a class="text-white" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                    Reforma Nte 742, CDMX
+                                                    <i class="ms-1" data-feather="external-link"></i>
+                                                </a>
+                                            </mark>                                            
                                         </div>
                                         
                                         <div class="d-flex flex-column flex-sm-row">
@@ -325,7 +341,7 @@
                                                     <!-- <input class="form-control form-control-solid fs-3 shadow-none" type="text" placeholder="tucorreo@mail.com" aria-label="Recipient's username" aria-describedby="button-addon2" required /> -->
                                                     <!-- <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</button> -->
 
-                                                    <a class="btn btn-outline-white fs-4 w-100 shadow-none" style="" href="https://forms.gle/CF8ikDxfLgNyVv7J6" target="_blank">Registro Expositor</a>
+                                                    <a class="btn btn-outline-white fs-4 w-100 shadow-none" style="" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</a>
                                                 </div>                                            
                                                  
                                             </form>
@@ -456,11 +472,20 @@
         </div>
 
         <?php
-            include 'src/modals.php';
+            if (file_exists('src/modals.php'))
+            {
+                require 'src/modals.php';
+            }
+
+            if (file_exists('src/triggers.php'))
+            {
+                require 'src/triggers.php';
+            }
         ?>  
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>        
-        <script  src="js/contador-script.js?id=2828"></script>
+        <script src="js/contador-script.js?id=2828"></script>
+        <script  src="js/scripts.js?id=2828"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
             AOS.init({
