@@ -825,6 +825,8 @@ if (isset($_POST['btnLogin28']))
                         $_SESSION['telefono'] = $row['telefono'];
                         $_SESSION['creditos'] = $row['creditos'];
 
+                        $_SESSION['rol']      = $row['rol'];
+
                         $_SESSION['carrito'] = array(); 
                         $_SESSION['carrito']['conteoTotalPlaquitas'] = 0;
                         $_SESSION['carrito']['creditos']    = 0;

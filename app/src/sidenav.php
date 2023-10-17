@@ -33,6 +33,23 @@
                     </div>
                     Soporte <span class="text-gray-600 fw-700"> App</span>
                 </a>
+                
+                <?php
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] == "admin") 
+                {
+                ?>
+                <div class="sidenav-menu-heading">Admin</div>
+                <a class="nav-link collapsed" href="../admin">
+                    <div class="nav-link-icon">
+                        <i data-feather="shield"></i>
+                    </div>
+                    Panel <span class="text-gray-600 fw-700"> </span>
+                </a>
+                <?php
+                }
+                ?>
+
+
             </div>
         </div>
         <!-- Sidenav Footer-->
