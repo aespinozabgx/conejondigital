@@ -1,5 +1,11 @@
+<?php
+
+session_start();
+require '../php/conexion.php';
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -242,8 +248,8 @@
                 </div>
             </nav>
             <!-- Page Content-->
-            <div class="container px-5 my-5">
-                <div class="text-center mb-5">
+            <div class="container px-5 mt-5">
+                <div class="text-center mb-3">
                     <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Acceso</span></h1>
                 </div>
                 <div class="row gx-5 justify-content-center">
@@ -265,9 +271,9 @@
                                 <div class="card-body p-5">
                                     <div class="row align-items-center gx-4">
                                         <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                                            <div class="bg-light p-4 rounded-4">
+                                            <div class="bg-light p-0 shadow-lg rounded-4">
                                                 <!-- <div class="text-primary fs-4 text-center fw-bolder mb-2">Axel Espinoza</div> -->
-                                                <div class="small fw-bolder">
+                                                <div class="">
                                                     <img src="https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC" class="img-fluid rounded-2" alt="">
                                                 </div>                                        
                                             </div>
@@ -280,11 +286,15 @@
                                                 <div class="">
                                                     
                                                     <div class="text-dark fs-5 mb-2">
-                                                        <i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre
+                                                        <i class="far fa-user me-2"></i> <?php echo $_SESSION['nombre']; ?>
                                                     </div>
 
                                                     <div class="text-dark fs-5 mb-2">
-                                                        <i class="fas fa-map-marker-alt me-1"></i>
+                                                        <i class="far fa-calendar-alt me-2"></i> 9 y 10 de Diciembre
+                                                    </div>
+
+                                                    <div class="text-dark fs-5 mb-2">
+                                                        <i class="fas fa-map-marker me-2" style="color: rgba(69, 66, 65, 0.736);"></i>
                                                         <a class="text-gray-600" style="text-decoration: none;" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
                                                             Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, CP 06200, Ciudad de México, CDMX <i class="fas fa-external-link-square-alt ms-1"></i>
                                                         </a>
@@ -310,12 +320,12 @@
                                         
                                         <div class="col">
                                             <div class="text-center">
-                                                <div class="text-primary fw-300 mb-3 fs-1">                                                                                                      
+                                                <div class="text-primary fw-300 mb-5 fs-1">                                                                                                      
                                                     <span class="f-lobster2italic fw-bold display-5">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
                                                 </div>                                                                                            
                                                 
                                                 <div class="mb-3">
-                                                    <img src="assets/gafete2.jpg" class="img-fluid" style=" " alt="">
+                                                    <img src="assets/gafete.jpg" class="img-fluid" style="" alt="">
                                                 </div>
                                                 
                                                 <div class="mb-3 fw-300 fs-5 text-danger">
@@ -323,7 +333,9 @@
                                                 </div>
                                                 
                                                 <div class="text-dark ">
-                                                    <button class="btn btn-success btn-lg w-100 p-3 fs-2 fa-beat fw-bold" style="--fa-animation-duration: 2s; --fa-beat-scale: 0.9;">
+
+                                                    <!-- Button trigger modal -->
+                                                    <button class="btn btn-success btn-lg w-100 p-3 fs-2 fa-beat fw-bold" style="--fa-animation-duration: 2s; --fa-beat-scale: 0.9;" data-bs-toggle="modal" data-bs-target="#modalComprarGafete">
                                                         ¡Lo quiero! 🐇
                                                     </button>
                                                 </div>
@@ -386,6 +398,27 @@
                 </div>
             </div>
         </main>
+ 
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modalComprarGafete" tabindex="-1" aria-labelledby="modalComprarGafeteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalComprarGafeteLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    axel
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
         <!-- Footer-->
         <?php
         include "../../app/src/footer.php";
