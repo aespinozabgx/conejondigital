@@ -203,13 +203,13 @@
                                             </p>
 
                                             <!-- Botón 1 para dispositivos móviles -->
-                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" href="acceso/">
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
 
                                             <!-- Botón 1 para dispositivos medianos y grandes -->
-                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" href="acceso/">
                                                 Mi acceso
                                                 <i class="fas fa-ticket-alt ms-2"></i>
                                             </a>
