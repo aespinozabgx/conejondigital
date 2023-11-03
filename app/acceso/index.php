@@ -11,7 +11,7 @@ require '../php/conexion.php';
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Personal - Start Bootstrap Template</title>
+        <title>Acceso Conejón Digital</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         
@@ -235,11 +235,16 @@ require '../php/conexion.php';
             <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
                 <div class="container px-5">
-                    <a class="navbar-brand" href="index.html"><span class="fw-bolder text-primary">Start Bootstrap</span></a>
+                    <a class="navbar-brand" href="../eventos.php">
+                        <span class="fw-bolder text-primary">
+                            <i class="fas fa-arrow-circle-left me-2"></i>
+                            Regresar
+                        </span>
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../">Inicio</a></li>
                             <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
                             <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
@@ -320,22 +325,22 @@ require '../php/conexion.php';
                                         
                                         <div class="col">
                                             <div class="text-center">
-                                                <div class="text-primary fw-300 mb-5 fs-1">                                                                                                      
-                                                    <span class="f-lobster2italic fw-bold display-5">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
+                                                <div class="fw-300 mb-5 display-4 px-5" style="color: #6091e6;">
+                                                    <span class="f-lobster2italic fw-bold display-2">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
                                                 </div>                                                                                            
-                                                
+                                                <br>
                                                 <div class="mb-3">
                                                     <img src="assets/gafete.jpg" class="img-fluid" style="" alt="">
                                                 </div>
                                                 
-                                                <div class="mb-3 fw-300 fs-5 text-danger">
+                                                <div class="mb-3 fw-300 small text-danger">
                                                     Piezas limitadas
                                                 </div>
                                                 
                                                 <div class="text-dark ">
 
                                                     <!-- Button trigger modal -->
-                                                    <button class="btn btn-success btn-lg w-100 p-3 fs-2 fa-beat fw-bold" style="--fa-animation-duration: 2s; --fa-beat-scale: 0.9;" data-bs-toggle="modal" data-bs-target="#modalComprarGafete">
+                                                    <button class="btn btn-primary btn-lg w-100 p-3 fs-2 fw-bold fa-fade" style="--fa-animation-duration: 3s; --fa-fade-opacity: 0.6;" data-bs-toggle="modal" data-bs-target="#modalComprarGafete">
                                                         ¡Lo quiero! 🐇
                                                     </button>
                                                 </div>

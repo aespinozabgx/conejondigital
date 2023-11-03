@@ -657,6 +657,7 @@
 
             echo "<pre>";
             print_r($datosUsuario);
+            echo "<br>33";
 
             // Validar si ya está activa la cuenta 
             if ($datosUsuario['isActive'] == 1)
@@ -669,15 +670,14 @@
                 $_SESSION['carrito']['subtotal']    = 0;
                 $_SESSION['carrito']['descuento']   = 0;
 
-                //echo "agregados a la sesión";
+                echo "Agregados a la sesión <br>";
                 header('Location: ../login.php?msg=cuentaExistente');
                 exit();
             } 
              
             if ($datosUsuario['token'] != $tokenActivacion) 
-            {
-                
-
+            {                
+                echo $datosUsuario['token'] . " - " . $tokenActivacion . "<br>";
                 header('Location: ../activa-codigo.php?msg=tokenInvalido&correo=' . $idCliente);
                 exit();
             }
@@ -702,7 +702,6 @@
                         mkdir($target_dir, 0777, true);
                     }
 
-
                     session_start();
 
                     $_SESSION['email']    = $idCliente;              
@@ -716,68 +715,66 @@
                     $_SESSION['carrito']['conteoTotalPlaquitas'] = 0;
                     $_SESSION['carrito']['creditos']    = 0; 
                     $_SESSION['carrito']['subtotal']    = 0;
-                    $_SESSION['carrito']['descuento']   = 0;
-                    
-                    // validar si hay eventos
-                    // Incluir la conexión a la base de datos y las funciones de validación si las tienes
+                    $_SESSION['carrito']['descuento']   = 0;                    
 
-                    // Comprobar si el formulario se ha enviado
-                    if ($_SERVER["REQUEST_METHOD"] == "POST") 
+                    // Recuperar el ID del usuario y del evento (asegúrate de validarlos)
+                    $usuario_id = $_SESSION['email']; // Cambia esto por la forma en que obtienes el ID del usuario
+                    $evento_id = "CN2023"; // Cambia esto por la forma en que obtienes el ID del evento
+                    $fecha_hora_registro = date("Y-m-d H:i:s");
+
+                    // Validaciones adicionales (puedes agregar más según tus necesidades)
+                    // Validaciones de los datos antes de la inserción
+                    if (empty($usuario_id) || empty($evento_id) || empty($fecha_hora_registro)) 
                     {
-                        // Recuperar el ID del usuario y del evento (asegúrate de validarlos)
-                        $usuario_id = $_SESSION['email']; // Cambia esto por la forma en que obtienes el ID del usuario
-                        $evento_id = "CN2023"; // Cambia esto por la forma en que obtienes el ID del evento
+                        echo "<h2>Error: Todos los campos son obligatorios.</h2>";
+                        die;
+                    } 
+                    else 
+                    {
+                        $sql = "INSERT INTO registro_asistencia (usuario_id, evento_id, fecha_hora_registro)
+                                VALUES (?, ?, ?)";
+                        $stmt = $conn->prepare($sql);
 
-                        // Validaciones adicionales (puedes agregar más según tus necesidades)
-                        if (empty($usuario_id) || empty($evento_id)) 
+                        if (!$stmt) 
                         {
-                            // Manejo de error: campos obligatorios no completados
-                            echo "Por favor, complete todos los campos obligatorios.";
+                            //echo "Error en la preparación de la consulta SQL: " . $conn->error;
+                            header('Location: ../activa-codigo.php?msg=errorActivacion&correo=' . $idCliente);
                         } 
                         else 
-                        { 
-                            $fecha_hora_registro = date("Y-m-d H:i:s");
-                            try {
-                                $sql = "INSERT INTO registro_asistencia (usuario_id, evento_id, fecha_hora_registros)
-                                        VALUES (?, ?, ?)";
-                                $stmt = $conn->prepare($sql);
-                                $stmt->bind_param("sss", $usuario_id, $evento_id, $fecha_hora_registro);
-                                $stmt->execute();
+                        {
+                            $stmt->bind_param("sss", $usuario_id, $evento_id, $fecha_hora_registro);
 
-                                exit(header('Location: eventos.php?modal=modalCredencialEvento'));
-
-                            } 
-                            catch (Exception $e) 
+                            if (!$stmt->execute()) 
                             {
-                                // Manejo de error: error de base de datos
-                                //echo "Error de base de datos: " . $e->getMessage();
-                                exit(header('Location: eventos.php?modal=modalCredencialEvento'));
+                                //echo "Error al ejecutar la consulta SQL: " . $stmt->error;
+                                header('Location: ../activa-codigo.php?msg=errorActivacion&correo=' . $idCliente);
+                            } 
+                            else 
+                            {
+                                //echo "Registro exitoso.";
+                                exit(header('Location: acceso/'));
                             }
-                        }
+                        }   
                     }
 
-                   
                 }
-                else 
+                else
                 {
                     header('Location: ../activa-codigo.php?msg=errorActivacion&correo=' . $idCliente);
-                    exit();
+                    exit(); 
                 }
- 
             }
             else 
             {
-                echo "Error en la consulta: " . $conn->error;
+                header('Location: ../activa-codigo.php?msg=errorActivacion&correo=' . $idCliente);
             }
-
         }
         else
         {
             header('Location: ../activa-codigo.php?msg=errorActivacion2&correo=' . $idCliente);
-            exit();
-        }        
+            exit(); 
+        } 
     }
-
 
 if (isset($_POST['btnLogin28'])) 
 {

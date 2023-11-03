@@ -192,39 +192,48 @@
                                             <p class="text-gray-700">
                                                 <!-- Contenido de texto aquí -->
                                                 <p class="text-gray-700">
-                                          <div class="text-gray-600 small mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
-                                            <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
-                                                <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                    Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
-                                                    <i class="ms-1" data-feather="external-link"></i>
-                                                </a>
-                                            </div>
-                                            </p>   
+                                                    
+                                                    <div class="text-gray-600 small mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
+                                                    
+                                                    <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
+                                                        <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                            Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
+                                                            <i class="ms-1" data-feather="external-link"></i>
+                                                        </a>
+                                                    </div>
+                                                </p>   
                                             </p>
 
-                                            <!-- Botón 1 para dispositivos móviles -->
-                                            <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" href="acceso/">
-                                                Mi acceso
-                                                <i class="fas fa-ticket-alt ms-2"></i>
-                                            </a>
 
-                                            <!-- Botón 1 para dispositivos medianos y grandes -->
-                                            <a class="btn btn-primary p-3 mb-1 me-1 d-none d-md-inline" href="acceso/">
-                                                Mi acceso
-                                                <i class="fas fa-ticket-alt ms-2"></i>
-                                            </a>
+                                             <!-- Botón 1 para dispositivos móviles -->
+                                             <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" href="acceso/">
+                                                    Mi acceso
+                                                    <i class="fas fa-ticket-alt ms-2"></i>
+                                                </a>
 
-                                            <!-- Botón 2 para dispositivos móviles -->
-                                            <a class="btn btn-green p-3 mb-1 w-100 d-md-none" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                ¿Cómo llegar?
-                                                <i class="fas fa-location-arrow ms-2"></i>
-                                            </a>
+                                                <!-- Botón 2 para dispositivos móviles -->
+                                                <a class="btn btn-green p-3 mb-1 w-100 d-md-none" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                    ¿Cómo llegar?
+                                                    <i class="fas fa-location-arrow ms-2"></i>
+                                                </a>
 
-                                            <!-- Botón 2 para dispositivos medianos y grandes -->
-                                            <a class="btn btn-green p-3 mb-1 d-none d-md-inline" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                ¿Cómo llegar?
-                                                <i class="fas fa-location-arrow ms-2"></i>
-                                            </a>
+                                            <div class="row">                                               
+                                                
+                                                <div class="col">
+                                                    <!-- Botón 1 para dispositivos medianos y grandes -->
+                                                    <a class="mb-2 me-1 btn btn-primary w-100 btn-lg mb-1 d-none d-md-inline" href="acceso/">
+                                                        Mi acceso
+                                                        <i class="fas fa-ticket-alt ms-2"></i>
+                                                    </a>
+
+                                                    <!-- Botón 2 para dispositivos medianos y grandes -->
+                                                    <a class="mb-2 me-1 btn btn-green w-100 btn-lg mb-1 d-none d-md-inline" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                        ¿Cómo llegar?
+                                                        <i class="fas fa-location-arrow ms-2"></i>
+                                                    </a>
+                                                </div>
+
+                                            </div>
                                             
                                         </div>
                                     </div>

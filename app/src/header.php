@@ -5,10 +5,11 @@
     <!-- Navbar Brand-->
     <a class="navbar-brand pe-3 ps-4 ps-lg-2 text-yellow" href="index.php"> 
         <div class="fs-3 fw-500">
-            <span class="material-symbols-outlined">
+            <!-- <span class="material-symbols-outlined">
                 cruelty_free
             </span>
-            Conejón Digital
+            Conejón Digital -->
+            <img src="./assets/img/logo.jpg" style="height: 55px;" class="mt-0 img-fluid p-1" alt="">            
             <?php
                 if(isset($isConexionLocal) && $isConexionLocal)
                 {
