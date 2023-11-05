@@ -3,14 +3,15 @@
     session_start();
     require 'php/conexion.php';
     require 'php/funciones.php';
-    
+	require 'php/lock.php';
+
     $idOwner   = $_SESSION['email'];
     $idMascota = $_GET['idMascota'];
 
     $arrayMascotas = buscarMascotasPorIdOwner($conn, $idOwner);
     $generalesMascota = getGeneralesMascota($conn, $idMascota); 
 
-    $datosDeContacto = obtenerDatosDeContacto($conn, $idMascota);
+    //$datosDeContacto = obtenerDatosDeContacto($conn, $idMascota);
 
     // echo "<pre>";
     // print_r($generalesMascota);
@@ -443,146 +444,145 @@
                                             {
                                             ?>
                                             <table id="datatablesSimple" class="table bg-pink text-white table-hover rounded-3 m-0 p-3">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th> 
-                                                    <th>Age</th>  
-                                                    <th>Acciones</th> 
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th> 
-                                                    <th>Age</th>  
-                                                    <th>Acciones</th> 
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <?php
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th> 
+                                                        <th>Age</th>  
+                                                        <th>Acciones</th> 
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Name</th> 
+                                                        <th>Age</th>  
+                                                        <th>Acciones</th> 
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <?php
 
-                                                    $contadorTelefono = 1; 
-                                                    $contadorWhatsapp = 1;
-                                                    $contadorTelegram = 1;
-                                                    $contadorEmail    = 1;
-                                                    $contadorDirecciones = 1;
+                                                        $contadorTelefono = 1; 
+                                                        $contadorWhatsapp = 1;
+                                                        $contadorTelegram = 1;
+                                                        $contadorEmail    = 1;
+                                                        $contadorDirecciones = 1;
 
-                                                    if ($datosDeContacto !== false) 
-                                                    {                                                                                                    
-                                                        foreach ($datosDeContacto as $key => $contacto) 
-                                                        {
-                                                            if ($contacto['idMediosDeContacto'] == "telefono") 
-                                                            {                                                                                                                                     
-                                                            ?>
-                                                            <tr class="text-white"> 
-                                                                
-                                                                <td class="text-end">
-                                                                    <div class="text-white">
-                                                                        <i class="fas fa-phone fa-lg text-white me-2"></i>                                                                    
-                                                                    </div>
-                                                                </td>
-                                                                
-                                                                <td>
-                                                                    <?php echo chunk_split($contacto['dato'], 2, ' '); ?>
-                                                                </td>
-
-                                                                <td>
-                                                                    <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
-                                                                    <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
-                                                                </td>
-
-                                                            </tr>
-                                                            <?php
-                                                            $contadorTelefono++;
-                                                            }
-
-                                                            if ($contacto['idMediosDeContacto'] == "whatsapp") 
+                                                        if ($datosDeContacto !== false) 
+                                                        {                                                                                                    
+                                                            foreach ($datosDeContacto as $key => $contacto) 
                                                             {
-                                                            ?>
-                                                                <tr class="text-dark">                                                             
+                                                                if ($contacto['idMediosDeContacto'] == "telefono") 
+                                                                {
+                                                                ?>
+                                                                <tr class="text-white"> 
+                                                                    
                                                                     <td class="text-end">
-                                                                        <div class="text-green">
-                                                                            <i class="fa-brands fa-whatsapp fa-lg text-white me-2"></i>                                                                                                                                            
+                                                                        <div class="text-white">
+                                                                            <i class="fas fa-phone fa-lg text-white me-2"></i>                                                                    
                                                                         </div>
                                                                     </td>
+                                                                    
                                                                     <td>
                                                                         <?php echo chunk_split($contacto['dato'], 2, ' '); ?>
                                                                     </td>
-                                                                    <td>
-                                                                        <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
-                                                                        <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            $contadorWhatsapp++;
-                                                            }
-                                                            
-                                                            if ($contacto['idMediosDeContacto'] == "telegram") 
-                                                            {
-                                                            ?>
-                                                                <tr class="text-dark">                                                             
-                                                                    <td class="text-end">
-                                                                        <div class="text-teal">
-                                                                            <i class="fa-brands fa-telegram fa-lg text-white me-2"></i>                                                                                                                                            
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo chunk_split($contacto['dato'], 2, ' '); ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
-                                                                        <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            $contadorTelegram++;
-                                                            }
-                                                            
-                                                            if ($contacto['idMediosDeContacto'] == "email") 
-                                                            {
-                                                            ?>
-                                                                <tr class="text-dark">                                                             
-                                                                    <td class="text-end">
-                                                                        <div class="text-teal">
-                                                                            <i class="far fa-envelope fa-lg text-white me-2"></i>                                                                        
-                                                                        </div>
-                                                                    </td>
-                                                                    <td> <?php echo $contacto['dato']; ?> </td> 
-                                                                    <td>
-                                                                        <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
-                                                                        <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            $contadorEmail++;
-                                                            }
-                                                            
-                                                            if ($contacto['idMediosDeContacto'] == "direccion") 
-                                                            {
-                                                            ?>
-                                                                <tr class="text-dark">                                                             
 
-                                                                    <td class="text-end">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="text-teal">
-                                                                                <i class="fas fa-map-marker-alt fa-lg text-white me-2"></i>                                                                            
+                                                                    <td>                                                                        
+                                                                        <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <?php
+                                                                $contadorTelefono++;
+                                                                }
+
+                                                                if ($contacto['idMediosDeContacto'] == "whatsapp") 
+                                                                {
+                                                                ?>
+                                                                    <tr class="text-dark">                                                             
+                                                                        <td class="text-end">
+                                                                            <div class="text-green">
+                                                                                <i class="fa-brands fa-whatsapp fa-lg text-white me-2"></i>                                                                                                                                            
                                                                             </div>
-                                                                        </div>
-                                                                    </td>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php echo chunk_split($contacto['dato'], 2, ' '); ?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
+                                                                            <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                                $contadorWhatsapp++;
+                                                                }
+                                                                
+                                                                if ($contacto['idMediosDeContacto'] == "telegram") 
+                                                                {
+                                                                ?>
+                                                                    <tr class="text-dark">                                                             
+                                                                        <td class="text-end">
+                                                                            <div class="text-teal">
+                                                                                <i class="fa-brands fa-telegram fa-lg text-white me-2"></i>                                                                                                                                            
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php echo chunk_split($contacto['dato'], 2, ' '); ?>
+                                                                        </td>
+                                                                        <td>
+                                                                            <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
+                                                                            <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                                $contadorTelegram++;
+                                                                }
+                                                                
+                                                                if ($contacto['idMediosDeContacto'] == "email") 
+                                                                {
+                                                                ?>
+                                                                    <tr class="text-dark">                                                             
+                                                                        <td class="text-end">
+                                                                            <div class="text-teal">
+                                                                                <i class="far fa-envelope fa-lg text-white me-2"></i>                                                                        
+                                                                            </div>
+                                                                        </td>
+                                                                        <td> <?php echo $contacto['dato']; ?> </td> 
+                                                                        <td>
+                                                                            <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
+                                                                            <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                                $contadorEmail++;
+                                                                }
+                                                                
+                                                                if ($contacto['idMediosDeContacto'] == "direccion") 
+                                                                {
+                                                                ?>
+                                                                    <tr class="text-dark">                                                             
 
-                                                                    <td> <?php echo $contacto['dato']; ?> </td>
-                                                                    <td>
-                                                                        <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
-                                                                        <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php
-                                                            $contadorDirecciones++;
+                                                                        <td class="text-end">
+                                                                            <div class="d-flex justify-content-between">
+                                                                                <div class="text-teal">
+                                                                                    <i class="fas fa-map-marker-alt fa-lg text-white me-2"></i>                                                                            
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td> <?php echo $contacto['dato']; ?> </td>
+                                                                        <td>
+                                                                            <!-- <button class="btn btn-datatable btn-icon btn-transparent-dark me-2"><i data-feather="more-vertical"></i></button> -->
+                                                                            <button onclick="abrirModal('<?php echo $contacto['id'] . ';'. ucwords($contacto['idMediosDeContacto']) . ';'. $contacto['dato']; ?>')" class="btn btn-icon btn-sm text-white btn-dark"><i data-feather="trash-2" class=""></i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php
+                                                                $contadorDirecciones++;
+                                                                }
                                                             }
                                                         }
-                                                    }
-                                                ?>                                                                                        
-                                                
-                                            </tbody>
+                                                    ?>                                                                                        
+                                                    
+                                                </tbody>
                                             </table>
                                             <?php
                                             }

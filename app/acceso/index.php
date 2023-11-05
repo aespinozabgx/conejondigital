@@ -1,7 +1,15 @@
 <?php
 
-session_start();
-require '../php/conexion.php';
+    session_start();
+    
+    require '../php/conexion.php';
+
+    if (!isset($_SESSION['email']) || empty($_SESSION['email']))
+    {
+        //die('No puedes estar aquí');
+        exit(header('Location: ../../login.php?msg=requiereSesion'));
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -245,9 +253,8 @@ require '../php/conexion.php';
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="../">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="resume.html">Resume</a></li>
-                            <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
-                            <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                            <li class="nav-item"><a class="nav-link" href="../eventos.php">Eventos</a></li>                            
+                            <li class="nav-item"><a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=5215610346590&text=Hola,%20requiero%20soporte%20de%20mi%20cuenta%20conejondigital.com">Soporte</a></li>
                         </ul>
                     </div>
                 </div>

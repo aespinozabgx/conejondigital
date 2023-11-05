@@ -2,16 +2,18 @@
     session_start();
 
     require 'php/conexion.php';
-    require 'php/funciones.php';
+        require 'php/funciones.php';
+        require 'php/lock.php';
 
     if (isset($_SESSION['username']))
     {
         $username = $_SESSION['username'];
     }
-    else
-    {
-        $username = $_SESSION['email'];
-    }
+    
+
+    // echo "<pre>";
+    // print_r($_SESSION);
+    // die;
 
     // if (isset($_SESSION['email']))
     // {
@@ -249,9 +251,7 @@
                                             <a class="btn btn-outline-white w-100 fs-4" href="mis-conejos.php?action=registroConejo">                                                
                                                 Registrar
                                             </a>
-                                            
-
-                                            <!-- <input type="text" style="cursor: pointer;" onClick="javascript: copiarPortapapeles();" id="myInput" class="form-control form-control-sm bg-success text-white" name="urlPerfil" value="https://mayoristapp.mx/perfil.php?tienda=<?php echo $username; ?>" readonly> -->
+                                                                                                                                    
                                         </div>
                                     </div>
                                 </div>

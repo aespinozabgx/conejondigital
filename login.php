@@ -21,7 +21,6 @@
     {
         $redirect = $_GET['redirect'];
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -31,7 +30,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Login - SB Admin Pro</title>
+        <title>Inicia sesión</title>
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -65,34 +64,32 @@
                             <div class="col-lg-5">
                                 <!-- Basic login form-->
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header justify-content-center text-center">
-                                        <i class="fas fa-carrot fs-1 text-yellow"></i>
-                                        <div class="text-yellow display-6 fw-400">                                            
+                                    <div class="card-header justify-content-center text-center p-4">
+                                        <i class="fas fa-carrot fs-1 text-yellow my-2"></i>
+                                        <div class="text-yellow f-poppins display-5 fw-400">
                                             Conejón Digital                                            
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <!-- Login form-->
                                         <form action="app/procesa.php" method="POST">
-                                            <!-- Form Group (email address)-->
-                                            <div class="fw-300 text-center fs-1 small text-dark">Ingresa a tu cuenta</div>
-                                            <div class="mb-3">
-                                                <label class="small text-dark mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control border-3 rounded-3" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="floatingInput" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                                                <label for="floatingInput">Correo Electrónico</label>
                                             </div>
-                                            <!-- Form Group (password)-->
-                                            <div class="mb-3">
-                                                <label class="small text-dark mb-1" for="inputPassword">Contraseña</label>
-                                                <input class="form-control border-3 rounded-3" name="form_password" type="password" placeholder="Contraseña" required autocomplete />
-                                            </div>
+                                            <div class="form-floating">
+                                                <input type="password" class="form-control" id="floatingPassword" name="form_password" type="password" placeholder="Contraseña" required autocomplete >
+                                                <label for="floatingPassword">Contraseña</label>
+                                            </div>  
                                             
                                             <input type="hidden" placeholder="Redirección" name="redirect" value="<?php echo $redirect; ?>">
 
                                             <!-- Form Group (login box)-->
-                                            <div class="text-end mt-4 mb-0">
-                                                <!-- <a class="small" href="auth-password-basic.html">Olvidé mi contraseña</a> -->
-                                                <button class="btn btn-primary rounded-3 w-100 fs-6" type="submit" name="btnLogin28">
-                                                    Iniciar sesión
+                                            <div class="mt-4 mb-0">
+                                                <!-- <a class="" href="auth-password-basic.html">Olvidé mi contraseña</a> -->
+                                                <button class="btn btn-primary btn-lg rounded-3 w-100 fs-4 f-poppins" type="submit" name="btnLogin28">
+                                                    Entrar
                                                 </button>
                                             </div>
                                         </form>
@@ -112,7 +109,7 @@
                                         ?>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class=""><a href="registro.php">¿No tienes cuenta? Registrate GRATIS</a></div>
+                                        <div class="p-3 f-poppins fw-300"><a href="registro.php">¿No tienes cuenta? Registrate GRATIS</a></div>
                                     </div>
 
                                 </div>

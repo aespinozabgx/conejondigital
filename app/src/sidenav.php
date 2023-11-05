@@ -27,7 +27,7 @@
                     </div>
                     Configuración <span class="text-gray-600 fw-700"> </span>
                 </a>
-                <a class="nav-link collapsed" href="" target="_blank">
+                <a class="nav-link collapsed" href="https://api.whatsapp.com/send?phone=5215610346590&text=Hola,%20requiero%20soporte%20de%20mi%20cuenta%20conejondigital.com" target="_blank">
                     <div class="nav-link-icon">
                         <i class="fas fa-headset"></i>
                     </div>

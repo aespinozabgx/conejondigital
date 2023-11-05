@@ -3,6 +3,7 @@
 
     require 'php/conexion.php';
     require 'php/funciones.php';
+	require 'php/lock.php';
 
     $idOwner = $_SESSION['email'];
     $arrayMascotas = buscarMascotasPorIdOwner($conn, $idOwner);
@@ -261,7 +262,7 @@
                                                         </div>                                                
                                                     </div>
                                                     <div class="avatar">
-                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil'] . ""; ?> " style="" alt="">
+                                                        <img src="users/<?php echo $_SESSION['email'] . "/mascotas/" . $mascota['idMascota'] . "/" . $mascota['imgPerfil']; ?>" style="" alt="">
                                                     </div>
                                                 </div>
                                             </div>

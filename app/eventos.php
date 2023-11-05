@@ -3,6 +3,7 @@
 
     require 'php/conexion.php';
     require 'php/funciones.php';
+	require 'php/lock.php';
 
     if (isset($_SESSION['username']))
     {
@@ -125,43 +126,38 @@
         ?>
         <div id="layoutSidenav">
             <?php
-              // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
-              {
-                include 'src/sidenav.php';
-              }
+                // Menú (sidenav)
+                if (file_exists('src/sidenav.php'))
+                {
+                    include 'src/sidenav.php';
+                }
             ?>
             <div id="layoutSidenav_content">
+            
                 <main>
                     <header class="page-header page-header-dark bg-indigo pb-9">
                         <div class="container-xl px-4">
                             <div class="page-header-content pt-4">
                                 <div class="row align-items-center justify-content-between">
                                     <div class="col-auto mt-4">
-                                            
                                         <div>
-                                                                                        
-                                            <a class="display-6 text-white fw-200 sombra-titulos-vendy text-decoration-none">
-                                                <?php
-                                                    
-                                                ?>
+                                            <a class="display-4 text-white fw-200 sombra-titulos-vendy text-decoration-none" href="#">
                                                 Eventos
-                                            </a> 
-
+                                            </a>
                                         </div>
                                         <div class="page-header-subtitle">
-                                            <div class="">
-                                                <span class="fw-300 text-white-75 small">                                                 
-                                                    Conoce los próximos eventos oficiales del Conejón                                                 
-                                                </span>
-                                            </div>
+                                            <span class="fw-300 text-white-75  ">
+                                                Conoce los próximos eventos oficiales del Conejón
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-auto mt-4">
                                         <form class="" id="formularioFechaFiltrado" action="index.html" method="post">
                                             <div class="input-group input-group-joined border-0">
                                                 <span class="input-group-text bg-transparent"><i class="text-white" data-feather="calendar"></i></span>
-                                                <div class="form-control align-bottom pt-3 ps-0 fs-3 fw-600 bg-transparent text-white pointer"><?php echo date("j M, Y"); ?></div>
+                                                <div class="form-control align-bottom pt-3 ps-0 fs-3 fw-600 bg-transparent text-white pointer">
+                                                    <?php echo date("j M, Y"); ?>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -169,130 +165,63 @@
                             </div>
                         </div>
                     </header>
-                    <!-- Main page content-->
                     <div class="container-xl px-4 mt-n15">
-                        
                         <div class="row">
+                            
                             <div class="col-xl-12 col-md-12 mb-4">
-                                <div class="">
-                                <div class="card card-waves shadow rounded-1 mb-4 mt-5">
-                            <div class="card-body p-5">
-                                <div class="row align-items-center justify-content-between">
-                                  <div class="container">
-                                    
-                                    <div class="row">
-                                        <!-- Contenedor 2 para dispositivos móviles (orden primero) -->
-                                        <div class="col-sm-4 order-md-2 rounded-2 mb-3" id="dos">
-                                            <img class="img-fluid px-xl-4 rounded-2" src="assets/img/banners/conejo-yv.jpg?id=28" />
-                                        </div>
-                                        
-                                        <!-- Contenedor 1 (texto y botones) -->
-                                        <div class="col-sm-8 mb-3" id="uno">
-                                            <h2 class="text-primary display-6 fw-500">Conejón Navideño 2023</h2>
-                                            <p class="text-gray-700">
-                                                <!-- Contenido de texto aquí -->
-                                                <p class="text-gray-700">
-                                                    
-                                                    <div class="text-gray-600 small mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
-                                                    
-                                                    <div class="text-gray-600 small mb-5 fs-3"><i class="fas fa-map-marker-alt me-1"></i>
-                                                        <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                            Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
-                                                            <i class="ms-1" data-feather="external-link"></i>
-                                                        </a>
+                                <div class="card shadow rounded-3 mb-4 mt-5">
+                                    <div class="card-body p-5">
+                                        <div class="row align-items-center justify-content-between">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-sm-6 order-md-1 mb-4" id="dos">
+                                                        <img class="img-fluid rounded rounded-3" style="min-height:;" src="assets/img/banners/conejo-yv.jpg" alt="Imagen del evento" />
                                                     </div>
-                                                </p>   
-                                            </p>
-
-
-                                             <!-- Botón 1 para dispositivos móviles -->
-                                             <a class="btn btn-primary p-3 mb-1 w-100 d-md-none" href="acceso/">
-                                                    Mi acceso
-                                                    <i class="fas fa-ticket-alt ms-2"></i>
-                                                </a>
-
-                                                <!-- Botón 2 para dispositivos móviles -->
-                                                <a class="btn btn-green p-3 mb-1 w-100 d-md-none" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                    ¿Cómo llegar?
-                                                    <i class="fas fa-location-arrow ms-2"></i>
-                                                </a>
-
-                                            <div class="row">                                               
-                                                
-                                                <div class="col">
-                                                    <!-- Botón 1 para dispositivos medianos y grandes -->
-                                                    <a class="mb-2 me-1 btn btn-primary w-100 btn-lg mb-1 d-none d-md-inline" href="acceso/">
-                                                        Mi acceso
-                                                        <i class="fas fa-ticket-alt ms-2"></i>
-                                                    </a>
-
-                                                    <!-- Botón 2 para dispositivos medianos y grandes -->
-                                                    <a class="mb-2 me-1 btn btn-green w-100 btn-lg mb-1 d-none d-md-inline" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
-                                                        ¿Cómo llegar?
-                                                        <i class="fas fa-location-arrow ms-2"></i>
-                                                    </a>
+                                                    <div class="col-sm-6 mb-3" id="uno">
+                                                        <div class="text-primary display-6 mb-3 f-poppins fw-500">Conejón Navideño 2023</div>
+                                                        <div class="text-gray-600   mb-1 fs-3"><i class="far fa-calendar-alt me-1"></i> 9 y 10 de Diciembre</div>
+                                                        <div class="text-gray-600   mb-5 fs-3">
+                                                            <i class="fas fa-map-marker-alt me-1"></i>
+                                                            <a class="text-gray-600 small" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                                Paseo de La Reforma Nte 742, Tlatelolco, Cuauhtémoc, 06200 Ciudad de México, CDMX
+                                                                <i class="ms-1" data-feather="external-link"></i>
+                                                            </a>
+                                                        </div>
+                                                        <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 d-md-none mb-2" href="acceso/">
+                                                            Mi acceso
+                                                            <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                        </a>
+                                                        <a class="btn btn-lg btn-green border-green border-3 fs-1 w-100 d-md-none mb-2" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                            Ubicación
+                                                            <i class="fas fa-location-arrow ms-2"></i>
+                                                        </a>
+                                                        <div class="row">
+                                                            <div class="col mb-2 me-1 d-none d-md-block">
+                                                                <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 h-100" href="acceso/">
+                                                                    Mi acceso
+                                                                    <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                                </a>
+                                                            </div>
+                                                            <div class="col mb-2 d-none d-md-block">
+                                                                <a class="btn btn-lg btn-green border-green border-3 fs-1 w-100 h-100" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
+                                                                    Ubicación
+                                                                    <i class="fas fa-location-arrow ms-2"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
                                             </div>
-                                            
                                         </div>
                                     </div>
-
-                                </div>
-
-
-                                 
                                 </div>
                             </div>
-                        </div>                 
-                                </div>
-                            </div>
-                        </div> 
 
-                                          
-
-                    </div>
-
-                    <div class="modal fade" id="modalCredencialEvento" tabindex="-1" aria-labelledby="modalNoCalificarPedidoLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-primary fw-600">                    
-                                        Acceso
-                                    </h5>
-                                    <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                                        <i class="fa-solid fa-xmark fa-xl"></i>
-                                    </button>
-                                </div>
-
-                                <div class="modal-body">
-                                    <div class="text-center text-danger">
-                                        <div class="text-center">
-                                            <img src="assets/img/ticket.jpg" class="" style="height: 55px;" alt="">                        
-                                        </div>
-                                        <h2 class="f-poppins sombra-titulos-vendy text-green display-6 fw-500"><?php echo $_SESSION['nombre']; ?></h2>                    
-                                        <div id="qrcode-contenedor2" class="p-3 mb-2 d-flex justify-content-center"></div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer text-center d-flex justify-content-center">                
-                                    <a class="btn btn-green w-100 rounded-2 fs-5" href="mis-conejos.php">
-                                        Registra tu cheñol 🐰
-                                    </a>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
-
-                </main>
-
-                <script src="js/funciones.js?id=2828"></script>
+                </main> 
+                
                 <?php
-                    if (file_exists('src/modals.php'))
-                    {
-                        require 'src/modals.php';
-                    }
-
                     if (file_exists('src/footer.php'))
                     {
                         require 'src/footer.php';
@@ -302,7 +231,17 @@
             </div>
         </div>
 
-       <!-- QR CODE JS -->
+        <?php 
+            if (file_exists('src/modals.php'))
+            {
+                require 'src/modals.php';
+            } 
+        ?>
+
+        <!-- QR PENDIENTE -->
+
+        <script src="js/funciones.js?id=2828"></script>
+        <!-- QR CODE JS -->
         <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
         <script src='//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js'></script>
         <script src="js/qr-script.js?is=28"></script>
