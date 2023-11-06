@@ -3,6 +3,7 @@
     session_start();
     
     require '../php/conexion.php';
+    require '../php/funciones.php';
 
     if (!isset($_SESSION['email']) || empty($_SESSION['email']))
     {
@@ -10,6 +11,16 @@
         exit(header('Location: ../../login.php?msg=requiereSesion'));
     }
 
+    $idUsuario = $_SESSION['email'];
+    $hasAccess = getAccesoVisitante($conn, $idUsuario, 'CN2023');
+
+    if (!$hasAccess) 
+    {
+        exit(header('Location: ../eventos.php'));
+    }
+
+    // var_dump($hasAccess);
+    // die;
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +46,8 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css?id=2828" rel="stylesheet" />
+        
+        <script src="../js/qrcode.js"></script>
         <style>
             
    
@@ -280,13 +293,13 @@
                             </div>
                             <!-- Experience Card 1-->
                             <div class="card shadow border-0 rounded-4 mb-3">
-                                <div class="card-body p-5">
+                                <div class="card-body p-4">
                                     <div class="row align-items-center gx-4">
                                         <div class="col text-center text-lg-start mb-4 mb-lg-0">
                                             <div class="bg-light p-0 shadow-lg rounded-4">
                                                 <!-- <div class="text-primary fs-4 text-center fw-bolder mb-2">Axel Espinoza</div> -->
-                                                <div class="">
-                                                    <img src="https://t3.gstatic.com/licensed-image?q=tbn:ANd9GcSh-wrQu254qFaRcoYktJ5QmUhmuUedlbeMaQeaozAVD4lh4ICsGdBNubZ8UlMvWjKC" class="img-fluid rounded-2" alt="">
+                                                <div class="p-2 rounded-3 bg-white d-flex justify-content-center">
+                                                    <div id="qrcode"></div>                                                    
                                                 </div>                                        
                                             </div>
                                         </div>
@@ -325,19 +338,20 @@
                                 </div>
                             </div> 
 
-                            <!-- Experience Card 1-->
-                            <div class="card shadow border-0 rounded-4 mb-5">
+                            
+                            <!-- <div class="card shadow border-0 rounded-4 mb-5">
                                 <div class="card-body p-4 mt-2">
                                     <div class="row align-items-center gx-4">
                                         
                                         <div class="col">
                                             <div class="text-center">
+                                                
                                                 <div class="fw-300 mb-5 display-4 px-5" style="color: #6091e6;">
-                                                    <span class="f-lobster2italic fw-bold display-2">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
+                                                    <span class="f-lobster2italic fw-bold display-2 text-nowrap">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
                                                 </div>                                                                                            
-                                                <br>
+                                                
                                                 <div class="mb-3">
-                                                    <img src="assets/gafete.jpg" class="img-fluid" style="" alt="">
+                                                    <img src="assets/gafete.jpg" class="img-fluid" style="" alt="">                                                    
                                                 </div>
                                                 
                                                 <div class="mb-3 fw-300 small text-danger">
@@ -345,18 +359,18 @@
                                                 </div>
                                                 
                                                 <div class="text-dark ">
-
-                                                    <!-- Button trigger modal -->
                                                     <button class="btn btn-primary btn-lg w-100 p-3 fs-2 fw-bold fa-fade" style="--fa-animation-duration: 3s; --fa-fade-opacity: 0.6;" data-bs-toggle="modal" data-bs-target="#modalComprarGafete">
                                                         ¡Lo quiero! 🐇
                                                     </button>
                                                 </div>
+
                                             </div>
                                         </div>
                                         
                                     </div>
                                 </div>
-                            </div> 
+                            </div>  -->
+
                         </section>
  
 
@@ -436,9 +450,27 @@
         include "../../app/src/footer.php";
         ?>
         
+        <script>
+            
+            // Obtener el contenido de la variable de sesión 'email' desde PHP
+            var email = '<?php echo $_SESSION['email']; ?>';
+        
+            // Crear un nuevo objeto QRCode
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: email,
+                width: 800,
+                height: 800
+            });
+            
+            var qrCodeImage = document.querySelector("#qrcode img");
+            qrCodeImage.classList.add("img-fluid");
+
+        </script>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
     </body>
 </html>
