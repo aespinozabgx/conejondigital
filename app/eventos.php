@@ -5,15 +5,22 @@
     require 'php/funciones.php';
 	require 'php/lock.php';
 
-    if (isset($_SESSION['username']))
+    if (isset($_SESSION['email']))
     {
-        $username = $_SESSION['username'];
-    }
-    else
-    {
-        $username = $_SESSION['email'];
+        $idUsuario = $_SESSION['email'];
     } 
 
+    // echo "<pre>";
+    // print_r($_SESSION);
+    // die;
+
+    //echo $idUsuario;
+    $hasAccess = getAccesoVisitante($conn, $idUsuario, 'CN2023');
+
+    // echo "<pre>";    
+    // var_dump($hasAccess);
+    // die;
+    
     // Obtener la fecha de hoy en español
     setlocale(LC_TIME, 'es_ES.UTF-8');
     setlocale(LC_TIME, "spanish");
@@ -197,10 +204,31 @@
                                                         </a>
                                                         <div class="row">
                                                             <div class="col mb-2 me-1 d-none d-md-block">
-                                                                <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 h-100" href="acceso/">
-                                                                    Mi acceso
-                                                                    <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
-                                                                </a>
+                                                                <?php
+                                                                    if ($hasAccess !== false)
+                                                                    {
+                                                                        
+                                                                       
+                                                                        ?>
+                                                                        <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 h-100" href="acceso/">
+                                                                            Mi acceso
+                                                                            <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                                        </a>
+                                                                        <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                        <form action="procesa.php" method="POST">
+                                                                            <input type="hidden" name="idUsuario" value="<?php echo $idUsuario; ?>">                                                                        
+                                                                            <button type="submit" name="btnRegistroAsistencia" class="btn btn-lg btn-danger border-danger border-3 fw-500 fs-1 w-100 h-100">
+                                                                                Obtener acceso
+                                                                                <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                                            </button>
+                                                                        </form>
+                                                                        <?php
+                                                                    }
+                                                                ?>
                                                             </div>
                                                             <div class="col mb-2 d-none d-md-block">
                                                                 <a class="btn btn-lg btn-green border-green border-3 fs-1 w-100 h-100" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">

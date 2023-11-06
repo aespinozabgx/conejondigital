@@ -6,8 +6,65 @@
 
     date_default_timezone_set("America/Mexico_City");
     $fechahora = strtotime(date("Y-m-d h:i:s"));
+    
 
-     
+    function registrarAsistencia($conn, $idUsuario, $evento_id) 
+    {
+        // Verificar si el usuario ya tiene un registro para este evento
+        $sql = "SELECT * FROM registro_asistencia WHERE usuario_id = ? AND evento_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $idUsuario, $evento_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Si no hay un registro existente, crea uno nuevo
+        if ($result->num_rows === 0) 
+        {
+            $fechaHoraRegistro = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO registro_asistencia (usuario_id, evento_id, fecha_hora_registro) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sss", $idUsuario, $evento_id, $fechaHoraRegistro);
+    
+            if ($stmt->execute()) 
+            {
+                return true; // El registro de asistencia se creó exitosamente
+            } else {
+                return false; // Hubo un error al crear el registro
+            }
+        } 
+        else 
+        {
+            return false; // El usuario ya tiene un registro para este evento
+        }
+    }
+        
+    function getAccesoVisitante($conn, $idUsuario, $evento_id)
+    {
+        // Consulta SQL para buscar un registro del usuario para el evento especificado
+        $sql = "SELECT * FROM registro_asistencia WHERE usuario_id = ? AND evento_id = ?";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $idUsuario, $evento_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Comprobar si se encontró un registro
+        if ($result->num_rows > 0) 
+        {
+            // Si se encontró un registro, devolver un array con los datos
+            //return $result->fetch_assoc();
+            $array = $result->fetch_assoc();
+
+            //var_dump($array);            
+            return $array;
+            
+        } 
+        else 
+        {
+            // Si no se encontró un registro, devolver false
+            return false;
+        }
+    }
 
     // Función para buscar mascotas por idOwner y devolver un array con los resultados
     function buscarMascotasPorIdOwner($conn, $idOwner)

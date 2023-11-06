@@ -1,11 +1,34 @@
 <?php
 
-    require __DIR__.'/vendor/autoload.php';
-    session_start();
     require 'php/conexion.php';
     require 'php/funciones.php';
+
+    require __DIR__ . '/vendor/autoload.php';
+
+    use Mpdf\QrCode\QrCode;
+    use Mpdf\QrCode\Output;
+
+    session_start();
+
+    if (isset($_POST['btnRegistroAsistencia'])) 
+    {
+        
+        // Uso de la función para registrar asistencia
+        $idUsuario = $_SESSION['email']; // Reemplaza con el ID del usuario
+        $evento_id = "CN2023"; // Reemplaza con el ID del evento
+        
+        if (registrarAsistencia($conn, $idUsuario, $evento_id)) 
+        {
+            //echo "Asistencia registrada con éxito.";
+            exit(header('Location: acceso/?msg=registrado'));
+        } 
+        else 
+        {
+            echo "El usuario ya tiene un registro para este evento o hubo un error.";
+        }
     
-    
+    }
+
     if (isset($_POST['btnEliminarMascota']))
     {
         // echo "<pre>";
