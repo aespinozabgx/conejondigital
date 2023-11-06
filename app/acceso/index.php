@@ -54,8 +54,7 @@
         <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
         <style>
-            
-   
+
             @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
             .f-lobster
@@ -90,6 +89,12 @@
                 z-index: 1;
             }
 
+            .typed-cursor 
+            {
+                opacity: 0; /* Oculta el cursor cambiando su opacidad a 0 */
+                display: none; /* También puedes ocultar el cursor configurándolo en "none" */
+            }
+
             .no-flexbox .rabbit 
             {
                 margin: 10em auto 0;
@@ -109,22 +114,23 @@
                 animation: kick 1s infinite linear;
             }
 
-            .rabbit:after {
-            content: "";
-            position: absolute;
-            width: .75em;
-            height: 2em;
-            background: white;
-            border-radius: 50% 100% 0 0;
-            -moz-transform: rotate(-30deg);
-            -ms-transform: rotate(-30deg);
-            -webkit-transform: rotate(-30deg);
-            transform: rotate(-30deg);
-            right: 1em;
-            top: -1em;
-            border-top: 1px solid #f7f5f4;
-            border-left: 1px solid #f7f5f4;
-            box-shadow: -0.5em 0em 0 -0.1em white;
+            .rabbit:after 
+            {
+                content: "";
+                position: absolute;
+                width: .75em;
+                height: 2em;
+                background: white;
+                border-radius: 50% 100% 0 0;
+                -moz-transform: rotate(-30deg);
+                -ms-transform: rotate(-30deg);
+                -webkit-transform: rotate(-30deg);
+                transform: rotate(-30deg);
+                right: 1em;
+                top: -1em;
+                border-top: 1px solid #f7f5f4;
+                border-left: 1px solid #f7f5f4;
+                box-shadow: -0.5em 0em 0 -0.1em white;
             }
 
             .clouds 
@@ -278,8 +284,11 @@
             <!-- Page Content-->
             <div class="container px-5 mt-5">
                 
+                <div class="text-center mb-3 display-5 fw-bolder" data-aos="fade-up">
+                    <div id="salida-typewrite-acceso" class="text-gradient d-inline mb-0"></div>🥳
+                </div>
                 <div class="text-center mb-3" data-aos="fade-up">
-                    <div id="salida-typewrite-acceso" class="text-gradient d-inline display-5 fw-bolder mb-0"></div>                    
+                    <div id="segundo-texto" class="text-gradient d-inline display-6 fw-bolder mb-0"></div>
                 </div>
 
                 <div class="row gx-5 justify-content-center" data-aos="fade-up">
@@ -287,6 +296,7 @@
                         
                         <!-- Experience Section-->                        
                         <section>
+
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 
                                 <!-- Download resume button-->
@@ -296,6 +306,7 @@
                                     Download Resume
                                 </a> -->
                             </div>
+
                             <!-- Experience Card 1-->
                             <div class="card shadow border-0 rounded-4 mb-3">
                                 <div class="card-body p-4">
@@ -343,7 +354,6 @@
                                 </div>
                             </div> 
 
-                            
                             <!-- <div class="card shadow border-0 rounded-4 mb-5">
                                 <div class="card-body p-4 mt-2">
                                     <div class="row align-items-center gx-4">
@@ -378,7 +388,6 @@
 
                         </section>
  
-
                         <!-- Divider-->
                         <div class="pb-5"></div> 
                        
@@ -405,10 +414,10 @@
                                 </div>
                                 <div class="col-lg-8 col-12 col-sm-12 p-4 text-center">
                                     <div class="mb-4">
-                                        <h2 class="fs-2 mt-2" style="color: rgb(204, 68, 91);">
+                                        <h2 class="fs-2 mt-2 text-white" style="text-shadow: 1px 1px 1px rgb(161, 152, 152);">
                                             Registra a tus peluditos para el collage del 
                                         </h2>
-                                        <h1 class="text-white fs-1 fw-bold" style="text-shadow: 2px 2px 0px rgba(205, 78, 78, 0.849);">
+                                        <h1 class="text-white display-5  fw-bold" style="text-shadow: 3px 3px 3px rgb(226, 104, 104);">
                                             Conejón Navideño 2023🎄
                                         </h1>
                                     </div>
@@ -463,28 +472,43 @@
             var email = '<?php echo $_SESSION['email']; ?>';
         
             // Crear un nuevo objeto QRCode
-            var qrcode = new QRCode(document.getElementById("qrcode"), {
+            var qrcode = new QRCode(document.getElementById("qrcode"), 
+            {
                 text: email,
                 width: 800,
                 height: 800
             });
-            
+
             var qrCodeImage = document.querySelector("#qrcode img");
             qrCodeImage.classList.add("img-fluid");
 
             document.addEventListener("DOMContentLoaded", function () 
             {
-                var options = {
-                    strings: ["Acceso"],
-                    typeSpeed: 100, // Velocidad de escritura en milisegundos
+                var optionsFelicidades = 
+                {
+                    strings: ["¡Felicidades!"],
+                    typeSpeed: 100,
+                    onComplete: function () {
+                        animarSegundoTexto();
+                    },
                 };
-                var typed = new Typed("#salida-typewrite-acceso", options);
-            });
 
+                var typedFelicidades = new Typed("#salida-typewrite-acceso", optionsFelicidades);
+
+                function animarSegundoTexto() 
+                {
+                    var optionsSegundoTexto = 
+                    {
+                        strings: ["Ya tienes tu acceso"],
+                        typeSpeed: 100,
+                    };
+
+                    var typedSegundoTexto = new Typed("#segundo-texto", optionsSegundoTexto);
+                }
+            });
 
         </script>
         
-
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
