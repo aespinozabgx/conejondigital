@@ -46,8 +46,13 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css?id=2828" rel="stylesheet" />
-        
+
+        <!-- AOS CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
         <script src="../js/qrcode.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
         <style>
             
    
@@ -264,23 +269,23 @@
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
-                            <li class="nav-item"><a class="nav-link" href="../">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="../eventos.php">Eventos</a></li>                            
-                            <li class="nav-item"><a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=5215610346590&text=Hola,%20requiero%20soporte%20de%20mi%20cuenta%20conejondigital.com">Soporte</a></li>
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">                                                        
+                            <li class="nav-item"><a class="nav-link" target="_blank" href="https://api.whatsapp.com/send?phone=5215610346590&text=Hola,%20requiero%20soporte%20de%20mi%20cuenta%20conejondigital.com"><i class="fas fa-headset me-1"></i> Soporte</a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <!-- Page Content-->
             <div class="container px-5 mt-5">
-                <div class="text-center mb-3">
-                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Acceso</span></h1>
+                
+                <div class="text-center mb-3" data-aos="fade-up">
+                    <div id="salida-typewrite-acceso" class="text-gradient d-inline display-5 fw-bolder mb-0"></div>                    
                 </div>
-                <div class="row gx-5 justify-content-center">
+
+                <div class="row gx-5 justify-content-center" data-aos="fade-up">
                     <div class="col-lg-11 col-xl-9 col-xxl-8">
-                        <!-- Experience Section-->
                         
+                        <!-- Experience Section-->                        
                         <section>
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 
@@ -379,7 +384,8 @@
                        
                     </div>
                 </div>
-                <div class="gx-2">
+
+                <div class="gx-2" data-aos="fade-up">
                     <div class="mb-2">
                         <div class="d-flex align-items-center mb-4">                                        
                             <h3 class="fw-bolder text-gradient display-5 f-poppins mb-0"><span class="d-inline">Registra tu cheñol</span></h3>
@@ -421,34 +427,35 @@
                         </div>
                                              
                     </section>
-                </div>
+                </div>                
             </div>
         </main>
  
+        <div class="px-5 mx-2">
+            <!-- Footer-->
+            <?php
+                include "../../app/src/footer.php";
+            ?>
+        </div>
         
         <!-- Modal -->
         <div class="modal fade" id="modalComprarGafete" tabindex="-1" aria-labelledby="modalComprarGafeteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalComprarGafeteLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    axel
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalComprarGafeteLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        axel
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary">Guardar</button>
+                    </div>
                 </div>
             </div>
-            </div>
-        </div>
-
-        <!-- Footer-->
-        <?php
-        include "../../app/src/footer.php";
-        ?>
+        </div>        
         
         <script>
             
@@ -465,12 +472,28 @@
             var qrCodeImage = document.querySelector("#qrcode img");
             qrCodeImage.classList.add("img-fluid");
 
+            document.addEventListener("DOMContentLoaded", function () 
+            {
+                var options = {
+                    strings: ["Acceso"],
+                    typeSpeed: 100, // Velocidad de escritura en milisegundos
+                };
+                var typed = new Typed("#salida-typewrite-acceso", options);
+            });
+
+
         </script>
+        
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
 
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
+        
     </body>
 </html>
