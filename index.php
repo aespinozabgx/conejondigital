@@ -137,8 +137,8 @@
                                         Registrarme                       
                                     </a>
                                     
-                                    <a class="btn btn-success fw-500 ms-lg-1 mb-2 me-1" href="registro.php">
-                                        Iniciar sesión
+                                    <a class="btn btn-success fw-500 ms-lg-1 mb-2 me-1" href="login.php">
+                                        Entrar
                                     </a> 
                                     <?php
                                 }

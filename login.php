@@ -31,7 +31,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Inicia sesión</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="app/css/styles.css?id=28" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -55,7 +55,7 @@
 
         </style>
     </head>
-    <body class="bg-primary">
+    <body class="" style="background-image: url('rabbit.png'); background-size: 300px 300px; background-repeat: repeat;">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -63,32 +63,31 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <!-- Basic login form-->
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header justify-content-center text-center p-4">
-                                        <i class="fas fa-carrot fs-1 text-yellow my-2"></i>
-                                        <div class="text-yellow f-poppins display-5 fw-400">
+                                <div class="card bg-pink shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header justify-content-center text-center p-5">                                        
+                                        <div class="text-white f-poppins display-5 fw-500">
                                             Conejón Digital                                            
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    <div class="card-body p-4">
                                         <!-- Login form-->
                                         <form action="app/procesa.php" method="POST">
-
+                                            <div class="display-6 mb-2 text-white">Inicia sesión</div>
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" id="floatingInput" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                                                <input type="email" class="form-control fs-5" id="floatingInput" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
                                                 <label for="floatingInput">Correo Electrónico</label>
                                             </div>
                                             <div class="form-floating">
-                                                <input type="password" class="form-control" id="floatingPassword" name="form_password" type="password" placeholder="Contraseña" required autocomplete >
+                                                <input type="password" class="form-control fs-5" id="floatingPassword" name="form_password" type="password" placeholder="Contraseña" required autocomplete >
                                                 <label for="floatingPassword">Contraseña</label>
                                             </div>  
                                             
                                             <input type="hidden" placeholder="Redirección" name="redirect" value="<?php echo $redirect; ?>">
 
                                             <!-- Form Group (login box)-->
-                                            <div class="mt-4 mb-0">
+                                            <div class="mt-2 mb-0">
                                                 <!-- <a class="" href="auth-password-basic.html">Olvidé mi contraseña</a> -->
-                                                <button class="btn btn-primary btn-lg rounded-3 w-100 fs-4 f-poppins" type="submit" name="btnLogin28">
+                                                <button class="btn btn-outline-light btn-lg rounded-3 w-100 fw-600 fs-4 f-poppins" type="submit" name="btnLogin28">
                                                     Entrar
                                                 </button>
                                             </div>
@@ -99,7 +98,7 @@
                                                 if ($urlMsg == 'errorCuentaInactiva') 
                                                 {
                                                     ?>
-                                                    <div class="text-danger text-center p-3 pt-4">
+                                                    <div class="text-yellow text-center p-3 pt-4">
                                                         Cuenta inactiva                                                    
                                                         <button type="button" id="openModalBtn" class="btn btn-success rounded-pill"><i class="far fa-paper-plane me-2"></i> Reenviar correo de activación</button>                                                        
                                                     </div>
@@ -109,7 +108,9 @@
                                         ?>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="p-3 f-poppins fw-300"><a href="registro.php">¿No tienes cuenta? Registrate GRATIS</a></div>
+                                        <div class="p-3 f-poppins fw-300">
+                                            <a href="registro.php" class="text-white">¿No tienes cuenta? Registrate GRATIS</a>
+                                        </div>
                                     </div>
 
                                 </div>

@@ -10,6 +10,59 @@
 
     session_start();
 
+        if (isset($_POST['btnGafeteCarrito'])) 
+        {
+            echo "btnGafeteCarrito";
+            
+            $disenoGafete = isset($_POST['disenoGafete']) ? $_POST['disenoGafete'] : '';
+            $nombreArchivo = '';
+
+            if (empty($disenoGafete)) 
+            {
+                // Redireccionar a disenaGafete.php con un mensaje de error
+                header("Location: disenaGafete.php?msg=errorRegistroGafete");
+                exit;
+            }
+
+            // Iniciar una transacción
+            $conn->begin_transaction();
+
+            $directorioDestino = 'gafetes/users/' . $_SESSION['email'] . '/';
+
+            // Verificar si el directorio de destino no existe y crearlo si es necesario
+            if (!file_exists($directorioDestino)) 
+            {
+                mkdir($directorioDestino, 0777, true);
+            }
+
+            $nombreArchivo = subirArchivo('fileToUpload', $directorioDestino);
+
+            if ($nombreArchivo !== null) 
+            {
+                $idUsuario = $_SESSION['email']; // Asigna el valor del ID de usuario desde la sesión, ajusta según tu código
+                $query = "INSERT INTO tabla_gafetes (idUsuario, nombre_archivo, diseno) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param('sss', $idUsuario, $nombreArchivo, $disenoGafete);
+            
+                if ($stmt->execute()) {
+                    // Confirmar la transacción
+                    $conn->commit();
+            
+                    // Redireccionar a disenaGafete.php con un mensaje de éxito
+                    header("Location: disenaGafete.php?msg=exitoRegistroGafete");
+                    exit;
+                }
+            }
+            
+
+            // En caso de error, revertir la transacción
+            $conn->rollback();
+
+            // Redireccionar a disenaGafete.php con un mensaje de error
+            header("Location: disenaGafete.php?msg=errorRegistroGafete");
+            exit;
+        }
+
     if (isset($_POST['btnRegistroAsistencia'])) 
     {
         
@@ -24,7 +77,7 @@
         } 
         else 
         {
-            echo "El usuario ya tiene un registro para este evento o hubo un error.";
+            die("El usuario ya tiene un registro para este evento o hubo un error.");
         }
     
     }

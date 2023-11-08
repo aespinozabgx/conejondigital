@@ -6,8 +6,72 @@
 
     date_default_timezone_set("America/Mexico_City");
     $fechahora = strtotime(date("Y-m-d h:i:s"));
-    
+  
 
+    function obtenerGafetesNoComprados($conn, $idUsuario)
+    {
+        $registros = array();
+    
+        // Consulta SQL para seleccionar los registros
+        $sql = "SELECT * FROM tabla_gafetes WHERE idUsuario = ? AND isPurchased = 0";
+        
+        // Preparar la consulta
+        $stmt = $conn->prepare($sql);
+        
+        // Vincular el parámetro
+        $stmt->bind_param("s", $idUsuario);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+        
+        // Obtener el resultado
+        $result = $stmt->get_result();
+        
+        // Recorrer los resultados y almacenarlos en un array
+        while ($row = $result->fetch_assoc()) {
+            $registros[] = $row;
+        }
+    
+        // Cerrar la consulta
+        $stmt->close();
+    
+        return $registros;
+    }
+    
+    function subirArchivo($nombreCampo, $directorioDestino) 
+    {
+        // Verificar si el archivo se envió correctamente
+        if (isset($_FILES[$nombreCampo]) && $_FILES[$nombreCampo]['error'] === UPLOAD_ERR_OK) 
+        {
+            $nombreArchivo = $_FILES[$nombreCampo]['name'];
+            $rutaArchivo = $directorioDestino . $nombreArchivo;
+            
+            // Validar el tipo de archivo permitido (puedes ajustar esta lista según tus necesidades)
+            $extensionesPermitidas = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'heic');
+            $extensionArchivo = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            if (!in_array(strtolower($extensionArchivo), $extensionesPermitidas)) 
+            {
+                return null; // El tipo de archivo no está permitido
+            }
+            
+            // Sanitizar el nombre de archivo para eliminar caracteres no deseados
+            $nombreArchivo = preg_replace("/[^a-zA-Z0-9.-_]/", "", $nombreArchivo);
+    
+            // Generar un nombre de archivo único para evitar posibles conflictos
+            $nombreArchivoUnico = uniqid() . '_' . $nombreArchivo;
+            $rutaArchivoUnico = $directorioDestino . $nombreArchivoUnico;
+    
+            // Mover el archivo subido a la ubicación deseada
+            if (move_uploaded_file($_FILES[$nombreCampo]['tmp_name'], $rutaArchivoUnico)) 
+            {
+                // Devuelve el nombre del archivo si se subió correctamente
+                return $nombreArchivoUnico;
+            }
+        }
+        return null; // Devuelve null si hubo un error al subir el archivo
+    }
+    
+    
     function registrarAsistencia($conn, $idUsuario, $evento_id) 
     {
         // Verificar si el usuario ya tiene un registro para este evento

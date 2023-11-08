@@ -354,7 +354,7 @@
                                 </div>
                             </div> 
 
-                            <!-- <div class="card shadow border-0 rounded-4 mb-5">
+                            <div class="card shadow border-0 rounded-4 mb-5">
                                 <div class="card-body p-4 mt-2">
                                     <div class="row align-items-center gx-4">
                                         
@@ -374,9 +374,9 @@
                                                 </div>
                                                 
                                                 <div class="text-dark ">
-                                                    <button class="btn btn-primary btn-lg w-100 p-3 fs-2 fw-bold fa-fade" style="--fa-animation-duration: 3s; --fa-fade-opacity: 0.6;" data-bs-toggle="modal" data-bs-target="#modalComprarGafete">
+                                                    <a href="../disenaGafete.php" class="btn btn-primary btn-lg w-100 p-3 fs-2 fw-bold fa-fade" style="--fa-animation-duration: 3s; --fa-fade-opacity: 0.6;">
                                                         ¡Lo quiero! 🐇
-                                                    </button>
+                                                    </a>
                                                 </div>
 
                                             </div>
@@ -384,7 +384,7 @@
                                         
                                     </div>
                                 </div>
-                            </div>  -->
+                            </div> 
 
                         </section>
  
@@ -451,17 +451,119 @@
         <div class="modal fade" id="modalComprarGafete" tabindex="-1" aria-labelledby="modalComprarGafeteLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalComprarGafeteLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        axel
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                    <form action="procesa.php" method="post">
+            
+                        <div class="modal-header">
+                            <h5 class="modal-title text-success fw-600">
+                                <i class="fas fa-paint-brush me-1"></i> Diseña una plaquita
+                            </h5>
+                            <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark fa-xl"></i>
+                            </button>
+                        </div>
+        
+                        <div class="modal-body">
+                        
+                            <div class="mb-2">
+                                <label for="mascota" class="text-primary fw-600 fs-6">Forma de la plaquita:</label>
+                                <select id="selectMascota" name="mascota" class="form-select fs-4 shadow-none border border-3" required>
+                                    <option value="">Seleccionar</option>
+                                    <option value="perro">Hueso</option>
+                                    <option value="gato">Gato</option>
+                                </select>
+                            </div>
+        
+                            <div class="mb-2">
+                                <div class="text-primary fw-600 fs-6 mb-2">Selecciona un diseño:</div>                
+                                
+                                <div id="design-options-container d-flex justify-content-center">
+                                    <?php
+                                        $dir = 'templates/';
+                                        $files = scandir($dir);
+                                        foreach ($files as $file) 
+                                        {
+                                            if ($file !== '.' && $file !== '..' ) 
+                                            {
+                                                echo '<label class="design-option rounded rounded-3 ">';
+                                                echo '<input type="radio" required name="diseno" value="' . $file . '">';
+                                                echo '<img src="templates/' . $file . '" alt="' . $file . '">';
+                                                echo '</label>';
+                                            }
+                                        }
+                                    ?>
+                                </div>                                            
+                                
+                                <div id="selected-image-container" style="">
+                                    <div class="selected-image rounded rounded-3 mb-2">                                 
+                                        <div id="txtNombreMascota" style="font-family: poppins; color: pink" class="centered-text d-flex justify-content-center align-items-center display-4 mt-3">
+                                            <?php
+                                            if (isset($generalesMascota['nombre']) && !empty($generalesMascota['nombre'])) 
+                                            {
+                                                echo $generalesMascota['nombre'];
+                                            }
+                                            else
+                                            {
+                                                echo "Nombre Mascota";
+                                            }
+                                            ?>
+                                        </div>
+                                        
+                                        <div id="txtNumeroMascota" style="font-family: poppins; color: pink" class="centered-text d-flex justify-content-center align-items-center display-4 mt-2">
+                                            55 888 33 28
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+        
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="" class="text-primary fw-600 fs-6">Nombre mascota:</label>
+                                        <input type="text" name="nombreMascota" id="inputNombreMascota" class="form-control mt-2 fs-4 shadow-none border border-3" value="<?php echo isset($generalesMascota['nombre']) ? $generalesMascota['nombre'] : ''; ?>" placeholder="Nombre Mascota" required>
+        
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="" class="text-primary fw-600 fs-6">Teléfono principal:</label>
+                                        <input type="text" name="numeroMascota" id="inputNumeroMascota" placeholder="55 28 888 33 28" class="form-control fs-4 mt-2 shadow-none border border-3" required>
+                                    </div>
+                                </div>
+        
+                                <div class="row">
+                                    <div class="col-md-6 mb-2">
+                                        <label for="" class="text-primary fw-600 fs-6">Tipo de fuente</label>
+                                        <select id="fontSelect" name="tipoFuente" class="form-select w-100 fs-4 shadow-none border border-3" onchange="changeFont()" required>
+                                            <option value="">Seleccionar</option>
+                                            <option value="bangers">Bangers</option>
+                                            <option value="bebas">Bebas</option>
+                                            <option value="belanosina">Belanosina</option>
+                                            <option value="permanentmarker">Permanentmarker</option>
+                                            <option value="poppins" selected>Poppins</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <label for="" class="text-primary fw-600 fs-6">Color del texto</label>
+                                        <select id="colorSelect" name="colorTexto" class="form-select w-100 fs-4 shadow-none border border-3" onchange="changeFontColor()" required>
+                                            <option value="">Seleccionar</option>                                    
+                                            <option value="yellow" selected>Amarillo</option>
+                                            <option value="white">Blanco</option>
+                                            <option value="black">Negro</option>
+                                            <option value="red">Rojo</option>
+                                            <option value="pink" selected>Rosa</option>
+                                            <option value="blue">Azul</option>
+                                            <option value="green">Verde</option> 
+                                        </select>
+                                    </div>
+                                </div>
+                        
+                            </div>                                        
+                            <div class="mb-2 text-center fw-300 text-success small px-3">
+                                Ajustaremos el diseño final, la previsualización es sólo una guía para seleccionar los elementos solicitados, recuerda que los colores puede variar al momento de realizar la placa.
+                            </div>
+                        </div>
+                        <div class="modal-footer">                    
+                            <!-- <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalDisenadorPlaquita">Diseñar plaquita <i class="fas fa-paw ms-2"></i></button> -->
+                            <button type="submit" class="btn btn-primary rounded-3 fs-4" name="btnOrdenarPlaquita">Agregar <i class="fas fa-shopping-cart ms-2"></i></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>        

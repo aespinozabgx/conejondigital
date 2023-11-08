@@ -11,6 +11,17 @@
 
       switch ($msg)
       {
+            case 'exitoRegistroGafete':
+            ?>
+            <script type="text/javascript">
+                var exitoRegistroGafete = new bootstrap.Modal(document.getElementById("modalFullscreen"), {});
+                document.onreadystatechange = function ()
+                {
+                    exitoRegistroGafete.show();
+                };
+            </script>
+            <?php
+            break;
 
           case 'formatoNoPermitido':
           ?>
