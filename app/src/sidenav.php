@@ -27,7 +27,7 @@
                     </div>
                     Configuración <span class="text-gray-600 fw-700"> </span>
                 </a>
-                <a class="nav-link collapsed" href="" target="_blank">
+                <a class="nav-link collapsed" href="https://api.whatsapp.com/send/?phone=%2B5215610346590&text=Hola%2C+requiero+ayuda+con+mi+Cuenta%5D_&type=phone_number&app_absent=0" target="_blank">
                     <div class="nav-link-icon">
                         <i class="fas fa-headset"></i>
                     </div>
