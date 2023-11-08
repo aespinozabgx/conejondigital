@@ -48,13 +48,11 @@
         $registrarPlaquitas = false;
         $registrarCreditos  = false;
 
-        
-        
         $idPedido = generarIdPedido($conn);
         $idCliente       = $_SESSION['email'];
         $fechaPedido     = date("Y-m-d H:i:s");
-        //$envioDinamico   = $_POST["metodoEnvioDinamico"];
-        
+
+        //$envioDinamico   = $_POST["metodoEnvioDinamico"];        
         //$envioDinamico   = explode(";", $envioDinamico);
         //$tipoEnvio       = $envioDinamico[2];
         $tipoEnvio       = "PIK"; // PIK PARA LANYARD
@@ -63,10 +61,15 @@
         $direccionEnvio  = "Dirección de usuario 88";
         $idMetodoDePago  = $_POST['metodoPago'];
         
-        $subtotal        = 90;
-        $total           = 0;
-        $descuentos      = 90;
+        
+        $gafetesCarrito = obtenerGafetesNoComprados($conn, $idCliente);
+        $totalGafetes = sizeof($gafetesCarrito);
+
+        $subtotal        = $totalGafetes * 90;
+        $descuentos      = 0;
+        $total           = $totalGafetes * 90;
         $precioEnvio = 0;    
+
         //$creditosPorUsar = $_POST['creditosPorUsar'];
         
         $isActive        = 1;
@@ -93,8 +96,9 @@
             // Verificar si se insertó correctamente el pedido
             if ($conn->affected_rows === 1) 
             {
-                
 
+                // Actualizar tabla_gafete para eliminar del carrito o de los pendeintes
+                // y asignar a cada lanyard el idPedido
                  
             } else {
                 throw new Exception("Error al insertar el pedido.");

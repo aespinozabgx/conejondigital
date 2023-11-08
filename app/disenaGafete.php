@@ -94,7 +94,7 @@
         <meta name="author" content="" />
         <title>Conejón Digital</title> 
         <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
-        <link href="css/styles.css?id=3328" rel="stylesheet" />
+        <link href="css/styles.css?id=28" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -105,16 +105,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
         <style type="text/css">
-
-            .rounded-img
-            {
-                width: 66px;
-                height: 66px;
-                border: 2px solid #ccc;
-                cursor: pointer;                
-                border-radius: 50%;
-            }
-
+ 
             input[type=radio]
             {
                 -ms-transform: scale(1.3); /* IE */

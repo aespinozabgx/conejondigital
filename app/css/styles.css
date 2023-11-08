@@ -269,7 +269,8 @@ transition: all 0.1s linear;
     text-shadow: 1px 1px 0 rgb(187, 184, 184);
 }
 
-body {
+body 
+{
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -280,6 +281,15 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rounded-img
+{
+    width: 66px;
+    height: 66px;
+    border: 2px solid #ccc;
+    cursor: pointer;                
+    border-radius: 50%;
 }
 
 .modal-backdrop{
