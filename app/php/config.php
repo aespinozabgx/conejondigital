@@ -9,7 +9,7 @@
 
     //  1 Localhost
     //  0 Web
-    $isConexionLocal = 0;
+    $isConexionLocal = 1;
 
     // Prevent Login
     // Pre Registro = true

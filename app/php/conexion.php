@@ -1,9 +1,21 @@
 <?php
 	
-	$servername = "185.212.71.16";
-	$username   = "u854920720_app";
-	$password   = '[dU&@Tjf1';
-	$database	= "u854920720_conejon";
+	require 'config.php';
+	
+	if ($isConexionLocal)
+	{
+		$servername = "localhost";
+		$username   = "root";
+		$password   = '';
+		$database	= "conejondigital";	
+	}
+	else
+	{
+		$servername = "185.212.71.16";
+		$username   = "u854920720_app";
+		$password   = '[dU&@Tjf1';
+		$database	= "u854920720_conejon";
+	}
 
 	$conn = mysqli_connect(
 		$servername,
@@ -19,7 +31,5 @@
 	{
 		echo "Error al intentar conectarse con la DB: " . mysqli_connect_error();
 	}
-	
-	require 'config.php';
 
 ?>

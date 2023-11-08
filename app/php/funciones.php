@@ -7,7 +7,70 @@
     date_default_timezone_set("America/Mexico_City");
     $fechahora = strtotime(date("Y-m-d h:i:s"));
   
+    function cargarComprobante($conn, $idCliente, $idPedido)
+    { 
+       
+        $salida = false;
+        // if ($FILES['fileToUpload']['size'] <= 0)
+        // {
+        //     return true;
+        //     exit;
+        // }
 
+        // Apunta a la carpeta del pedido
+        $target_dir = "users/" . $idCliente . "/pedidos/" . $idPedido . "/";
+
+        if (!is_dir($target_dir)) 
+        {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $target_file = $target_dir . "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+        // Apunta al arhivo: "verifica/usr_docs/idCliente/Pagos/idPedido.ext"
+
+        $uploadOk = 1;
+
+        if(!is_dir($target_dir))
+        {
+            mkdir($target_dir, 0777, true);
+        }
+
+        // Allow certain file formats
+        $allowedExt = Array('jpg', 'png', 'jpeg', 'pdf', 'webp');
+
+        if(!in_array($extension, $allowedExt))
+        {
+            $msg = "Sólo se admiten archivos 'jpg', 'png', 'jpeg', 'pdf' y 'webp'";
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0)
+        {
+            return false;
+            exit();
+            // if everything is ok, try to upload file
+        }
+        else
+        {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+            {
+                // echo "The file **" . $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION)) . "** has been uploaded.";
+                $nombre = "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+                return $nombre;
+                exit();
+            }
+            else
+            {
+                // echo "Sorry, there was an error uploading your file.";
+                return false;
+                exit();
+            }
+        }
+
+    }
+    
     function obtenerGafetesNoComprados($conn, $idUsuario)
     {
         $registros = array();
@@ -359,79 +422,15 @@
 
     }
 
-    function cargarComprobante($conn, $idCliente, $idPedido)
-    { 
-       
-        $salida = false;
-        // if ($FILES['fileToUpload']['size'] <= 0)
-        // {
-        //     return true;
-        //     exit;
-        // }
-
-        // Apunta a la carpeta del pedido
-        $target_dir = "users/" . $idCliente . "/pedidos/" . $idPedido . "/";
-
-        if (!is_dir($target_dir)) 
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        $target_file = $target_dir . "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-        $extension = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-        // Apunta al arhivo: "verifica/usr_docs/idCliente/Pagos/idPedido.ext"
-
-        $uploadOk = 1;
-
-        if(!is_dir($target_dir))
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        // Allow certain file formats
-        $allowedExt = Array('jpg', 'png', 'jpeg', 'pdf', 'webp');
-
-        if(!in_array($extension, $allowedExt))
-        {
-            $msg = "Sólo se admiten archivos 'jpg', 'png', 'jpeg', 'pdf' y 'webp'";
-            $uploadOk = 0;
-        }
-
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0)
-        {
-            return false;
-            exit();
-            // if everything is ok, try to upload file
-        }
-        else
-        {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
-            {
-                // echo "The file **" . $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION)) . "** has been uploaded.";
-                $nombre = "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-                return $nombre;
-                exit();
-            }
-            else
-            {
-                // echo "Sorry, there was an error uploading your file.";
-                return false;
-                exit();
-            }
-        }
-
-    }
-
     function getProductosComprados($conn, $idPedido, $idCliente)
     {
         $sql = "SELECT
                     pedidos.*,
-                    plaquitas.*
+                    tabla_gafetes.*
                 FROM
                     pedidos
-                INNER JOIN plaquitas ON
-                    plaquitas.idPedido = pedidos.idPedido
+                INNER JOIN tabla_gafetes ON
+                    tabla_gafetes.idPedido = pedidos.idPedido
                 WHERE
                     pedidos.idPedido = '$idPedido'";
 

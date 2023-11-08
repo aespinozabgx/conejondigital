@@ -14,6 +14,14 @@
                     </div>
                     Eventos
                 </a>
+                
+                <a class="nav-link collapsed" href="mis-pedidos.php">
+                    <div class="nav-link-icon">
+                        <i data-feather="shopping-bag"></i>
+                    </div>
+                    Mis Pedidos
+                </a>
+
                 <a class="nav-link collapsed" href="mis-conejos.php">
                     <div class="nav-link-icon">
                         <i class="fas fa-carrot"></i>

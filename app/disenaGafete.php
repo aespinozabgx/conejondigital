@@ -388,50 +388,40 @@
                                                                             <!-- Puedes agregar más contenido según sea necesario -->
                                                                         </div>
                                                                         <div class="modal-footer d-flex justify-content-between">
-                                                                             
-                                                                                <div class="col fs-3 fw-500 text-start">
-                                                                                    <?php
-
-                                                                                        $subtotal = sizeof($registrosNoComprados) * 90;
-                                                                                        $formattedSubtotal = '$ ' . number_format($subtotal, 2);
-
-                                                                                        echo $formattedSubtotal;
-
-                                                                                    ?>
-
-                                                                                </div>
-                                                                                <div class="col-lg-2 col-sm-6">
-                                                                                    <a href="pago.php" class="btn btn-lg btn-light rounded-pill w-100 fs-4">
-                                                                                        <i class="fas fa-coins me-2 fa-flip" style="--fa-animation-duration: 3s;"></i> Pagar
-                                                                                    </a>
-                                                                                </div> 
+                                                                            <div class="col fs-3 fw-500 text-start">
+                                                                                <?php
+                                                                                    $subtotal = sizeof($registrosNoComprados) * 90;
+                                                                                    $formattedSubtotal = '$ ' . number_format($subtotal, 2);
+                                                                                    echo $formattedSubtotal;
+                                                                                ?>
+                                                                            </div>
+                                                                            <div class="col-lg-2 col-sm-6">
+                                                                                <a href="pago.php" class="btn btn-lg btn-light rounded-pill w-100 fs-4">
+                                                                                    <i class="fas fa-coins me-2 fa-flip" style="--fa-animation-duration: 3s;"></i> Pagar
+                                                                                </a>
+                                                                            </div> 
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <?php
                                                         }
-
                                                     ?>
-
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </main> 
-                
                 <?php
                     if (file_exists('src/footer.php'))
                     {
                         require 'src/footer.php';
                     }
                 ?>
-
             </div>
         </div>
 
@@ -441,127 +431,16 @@
                 require 'src/modals.php';
             } 
         ?>
-
-        <!-- QR PENDIENTE -->
-
-        <script src="js/funciones.js?id=2828"></script>
-        <!-- QR CODE JS -->
-        <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
-        <script src='//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js'></script>
-        <script src="js/qr-script.js?is=28"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>        
-        <script src="js/scripts.js"></script> 
           
-        <script type="text/javascript">            
-             
-            
-            function downloadURI(uri, name)
-            {
-                var link = document.createElement("a");
-                link.download = name;
-                link.href = uri;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                delete link;
-            }
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>        
+        <script src="js/scripts.js"></script>
 
-            function makeCodeUrlPago(contenidoQR)
-            {
-                // Limpia el contenido del contenedor (elimina cualquier código QR anterior)
-                document.getElementById("qrcode").innerHTML = '';            
-                qrcode.clear();
-
-                let qrcode = new QRCode(document.getElementById("qrcode"), 
-                {
-                    text: contenidoQR,
-                    width: 250,
-                    height: 250,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });       
-
-                // qrcode.clear(); // clear the code.
-                // qrcode.makeCode("http://naver.com"); // make another code.
-
-                // document.querySelector("#qrcode img").id = "qr-image";
-                // let qrImage = document.getElementById("qr-image");
-                // qrImage.classList.add("img-fluid"); 
- 
-                // setTimeout(
-                //     function ()
-                //     {
-                //         let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
-                //         var tienda = '<?php echo $_SESSION['email']; ?>';
-                //         downloadURI(dataUrl, tienda + '.png');
-                //     },1000
-                // );
-                console.log('Creado2');
-            }
-
-        </script>
         <?php
 
-        if (isset($_GET['rangoFecha']))
-        {
-            ?>
-            <script type="text/javascript">
-
-                    <?php
-                        setlocale(LC_TIME, "es_ES");
-                        $meses = array(
-                            "Enero"   => "ene",
-                            "Febrero" => "feb",
-                            "Marzo"   => "mar",
-                            "Abril"   => "abr",
-                            "Mayo"    => "may",
-                            "Junio"   => "jun",
-                            "Julio"   => "jul",
-                            "Agosto"  => "ago",
-                            "Septiembre" => "sep",
-                            "Octubre"    => "oct",
-                            "Noviembre"  => "nov",
-                            "Diciembre"  => "dic"
-                        );
-                        // $fechaInicio = date("d", strtotime($fechaInicio)) . " " . $meses[4] . ", " . date("Y", strtotime($fechaInicio));
-
-                        //echo $fechaInicio . $fechaFin;
-                        $mesfechaInicio = strftime("%B", strtotime($fechaInicio));
-                        $mesfechaFin    = strftime("%B", strtotime($fechaFin));
-
-                        // Construyo fecha con formato para litepicker
-                        $fechaLitepicker =
-                            strftime("%d", strtotime($fechaInicio))
-                            . " "
-                            . $meses[ucfirst($mesfechaInicio)]
-                            . ", "
-                            . strftime("%Y", strtotime($fechaInicio))
-                            . " - "
-                            . strftime("%d", strtotime($fechaFin))
-                            . " "
-                            . $meses[ucfirst($mesfechaFin)]
-                            . ", "
-                            . strftime("%Y", strtotime($fechaFin));
-
-                        $fechaLitepicker = strtolower($fechaLitepicker);
-                    ?>
-
-                    setTimeout(function ()
-                    {
-                        actualizarLitePicker('<?php echo $fechaLitepicker; ?>');
-                    }, 500);
-
-            </script>
-            
-            <?php
-        }
-
-        if (file_exists('src/triggers.php'))
-        {
-            require 'src/triggers.php';
-        }
+            if (file_exists('src/triggers.php'))
+            {
+                require 'src/triggers.php';
+            }
 
         ?>
     </body>

@@ -9,59 +9,183 @@
     use Mpdf\QrCode\Output;
 
     session_start();
+    // Cargar comprobante
+    if (isset($_POST['btnCargaComprobante']))
+    {
+        // echo "btnCargaComprobante";
+        // die;
 
-        if (isset($_POST['btnGafeteCarrito'])) 
+        $idCliente = $_POST['idCliente'];
+        $idPedido  = $_POST['idPedido'];
+        $cargarComprobante = cargarComprobante($conn, $idCliente, $idPedido);
+
+        if ($cargarComprobante !== false)
         {
-            echo "btnGafeteCarrito";
-            
-            $disenoGafete = isset($_POST['disenoGafete']) ? $_POST['disenoGafete'] : '';
-            $nombreArchivo = '';
+            $nombreComprobante = $cargarComprobante;
+            $fechaPago = date("Y-m-d H:i:s");
+            $hasFile   = true;
 
-            if (empty($disenoGafete)) 
+            if (registraComprobante($conn, $nombreComprobante, $idPedido, $idCliente, $fechaPago, $hasFile))
             {
-                // Redireccionar a disenaGafete.php con un mensaje de error
-                header("Location: disenaGafete.php?msg=errorRegistroGafete");
-                exit;
+                exit(header('Location: detalle-compra.php?id=' . $idPedido . '&msg=comprobanteCargado'));
+            }
+            else
+            {
+                exit(header('Location: detalle-compra.php?id=' . $idPedido . '&msg=errorComprobanteCarga'));
+            }
+        }
+        else
+        {
+            exit(header('Location: detalle-compra.php?id=' . $idPedido . '&msg=errorComprobanteCarga&'));
+        }
+    }
+
+    if (isset($_POST['btnCrearPedido'])) 
+    {
+
+        // Crear pedido inserta en tablas:
+        // Pedidos, Plaquitas, Creditos
+        $registrarPlaquitas = false;
+        $registrarCreditos  = false;
+
+        
+        
+        $idPedido = generarIdPedido($conn);
+        $idCliente       = $_SESSION['email'];
+        $fechaPedido     = date("Y-m-d H:i:s");
+        //$envioDinamico   = $_POST["metodoEnvioDinamico"];
+        
+        //$envioDinamico   = explode(";", $envioDinamico);
+        //$tipoEnvio       = $envioDinamico[2];
+        $tipoEnvio       = "PIK"; // PIK PARA LANYARD
+
+        //$direccionEnvio  = $_POST['direccion'];
+        $direccionEnvio  = "Dirección de usuario 88";
+        $idMetodoDePago  = $_POST['metodoPago'];
+        
+        $subtotal        = 90;
+        $total           = 0;
+        $descuentos      = 90;
+        $precioEnvio = 0;    
+        //$creditosPorUsar = $_POST['creditosPorUsar'];
+        
+        $isActive        = 1;
+        $idEstatusPedido = "EP-1";
+
+        // echo "subtotal: " . $subtotal . "<br>";
+        // echo "creditosPorUsar: " . $creditosPorUsar . "<br>";
+        // echo "Descontar por credito: " . $precioPlaquita * $creditosPorUsar . "<br>";
+        // echo "descuentos: " . $descuentos . "<br>";
+        // echo "total: " . $total . "<br>";
+        
+
+        // Iniciar una transacción
+        $conn->begin_transaction();
+
+        try {
+            // Preparar la consulta SQL para insertar un nuevo pedido
+            $sqlNuevoPedido = "INSERT INTO pedidos (idPedido, idCliente, fechaPedido, idTipoEnvio, direccionEnvio, idEstatusPedido, idMetodoDePago, precioEnvio, subtotal, descuentos,  total, isActive)
+            VALUES ('$idPedido', '$idCliente', '$fechaPedido', '$tipoEnvio', '$direccionEnvio', '$idEstatusPedido', '$idMetodoDePago', '$precioEnvio', '$subtotal', '$descuentos', '$total', '$isActive')";
+
+            // Ejecutar la consulta SQL para insertar el nuevo pedido
+            $conn->query($sqlNuevoPedido);
+
+            // Verificar si se insertó correctamente el pedido
+            if ($conn->affected_rows === 1) 
+            {
+                
+
+                 
+            } else {
+                throw new Exception("Error al insertar el pedido.");
             }
 
-            // Iniciar una transacción
-            $conn->begin_transaction();
-
-            $directorioDestino = 'gafetes/users/' . $_SESSION['email'] . '/';
-
-            // Verificar si el directorio de destino no existe y crearlo si es necesario
-            if (!file_exists($directorioDestino)) 
-            {
-                mkdir($directorioDestino, 0777, true);
-            }
-
-            $nombreArchivo = subirArchivo('fileToUpload', $directorioDestino);
-
-            if ($nombreArchivo !== null) 
-            {
-                $idUsuario = $_SESSION['email']; // Asigna el valor del ID de usuario desde la sesión, ajusta según tu código
-                $query = "INSERT INTO tabla_gafetes (idUsuario, nombre_archivo, diseno) VALUES (?, ?, ?)";
-                $stmt = $conn->prepare($query);
-                $stmt->bind_param('sss', $idUsuario, $nombreArchivo, $disenoGafete);
+            // Si no se lanzó ninguna excepción, confirmamos la transacción
+            $conn->commit();
             
-                if ($stmt->execute()) {
-                    // Confirmar la transacción
-                    $conn->commit();
-            
-                    // Redireccionar a disenaGafete.php con un mensaje de éxito
-                    header("Location: disenaGafete.php?msg=exitoRegistroGafete");
-                    exit;
-                }
-            }
-            
+            // Enviar email confirmación de pedido
+            // $emailRecipiente = "ventas@pets.vendy.click";
+            // $nombreRecipiente = "Vendy Pets";
+            // $tituloCorreo = "Nuevo Pedido";
+            // $cuerpoCorreo = "Nuevo pedido creado por " . $idCliente . " a las " . date("d/m/Y H:i:s");
+            // enviaEmail($emailRecipiente, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo);
 
-            // En caso de error, revertir la transacción
-            $conn->rollback();
+            // unset($_SESSION['carrito']);
+            
+            $_SESSION['carrito'] = array(); 
+            $_SESSION['carrito']['conteoTotalPlaquitas'] = 0;
+            $_SESSION['carrito']['creditos']    = 0; 
+            $_SESSION['carrito']['subtotal']    = 0;
+            $_SESSION['carrito']['descuentos']  = 0;
+            $_SESSION['carrito']['precioEnvio'] = 0;
+            $_SESSION['carrito']['total']       = 0;
 
+            header('Location: detalle-compra.php?id=' . $idPedido . '&msg=pedidoRealizado?/#pagoEnEspera');
+            exit();
+
+        } 
+        catch (Exception $e) 
+        {
+            // En caso de error, revertimos la transacción
+            $conn->rollback();            
+            echo "[Rollback] Error: " . $e->getMessage();
+            // header('Location: carrito.php?msg=errorCrearPedido');
+            // exit();
+        }
+    }
+
+    if (isset($_POST['btnGafeteCarrito'])) 
+    {
+        echo "btnGafeteCarrito";
+        
+        $disenoGafete = isset($_POST['disenoGafete']) ? $_POST['disenoGafete'] : '';
+        $nombreArchivo = '';
+
+        if (empty($disenoGafete)) 
+        {
             // Redireccionar a disenaGafete.php con un mensaje de error
             header("Location: disenaGafete.php?msg=errorRegistroGafete");
             exit;
         }
+
+        // Iniciar una transacción
+        $conn->begin_transaction();
+
+        $directorioDestino = 'gafetes/users/' . $_SESSION['email'] . '/';
+
+        // Verificar si el directorio de destino no existe y crearlo si es necesario
+        if (!file_exists($directorioDestino)) 
+        {
+            mkdir($directorioDestino, 0777, true);
+        }
+
+        $nombreArchivo = subirArchivo('fileToUpload', $directorioDestino);
+
+        if ($nombreArchivo !== null) 
+        {
+            $idUsuario = $_SESSION['email']; // Asigna el valor del ID de usuario desde la sesión, ajusta según tu código
+            $query = "INSERT INTO tabla_gafetes (idUsuario, nombre_archivo, diseno) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param('sss', $idUsuario, $nombreArchivo, $disenoGafete);
+        
+            if ($stmt->execute()) {
+                // Confirmar la transacción
+                $conn->commit();
+        
+                // Redireccionar a disenaGafete.php con un mensaje de éxito
+                header("Location: disenaGafete.php?msg=exitoRegistroGafete");
+                exit;
+            }
+        }
+        
+
+        // En caso de error, revertir la transacción
+        $conn->rollback();
+
+        // Redireccionar a disenaGafete.php con un mensaje de error
+        header("Location: disenaGafete.php?msg=errorRegistroGafete");
+        exit;
+    }
 
     if (isset($_POST['btnRegistroAsistencia'])) 
     {
