@@ -8,7 +8,7 @@
 
     //  1 Localhost
     //  0 Web
-    $isConexionLocal = 1;
+    $isConexionLocal = 0;
     $isServidorPruebas = 0;
     $preventLogin = false;
 

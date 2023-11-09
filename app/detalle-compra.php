@@ -438,7 +438,7 @@
                                                                             else
                                                                             {
                                                                                 ?>
-                                                                                <button type="button" class="btn btn-successx f-poppins btn-lg rounded-3 fs-3 fw-500 w-100 h-100" name="button" data-bs-toggle="modal" data-bs-target="#modalDatosPago">
+                                                                                <button type="button" class="btn btn-success f-poppins btn-lg rounded-3 fs-3 fw-500 w-100 h-100" name="button" data-bs-toggle="modal" data-bs-target="#modalDatosPago">
                                                                                     <i class="far fa-credit-card me-2"></i>
                                                                                     Más formas de pago
                                                                                 </button>
@@ -777,7 +777,7 @@
                                     <div>Tarjeta: 4152 3137 5235 2307</div>
                                 </div>
                                 <div class="display-6 text-white-50">
-                                    <img class="rounded-2 shadow" src="logo-bbva.jpg" style="height: 88px;" alt="">
+                                    <img class="rounded-2 shadow" src="assets/img/logo-bbva.png" style="height: 88px;" alt="">
                                 </div>
                             </div>
                         </div>
@@ -801,7 +801,7 @@
                                     <div>Código: <span class="fs-3 fw-600">2242 1725 5612 9165</span> </div>
                                 </div>
                                 <div class="display-6 dark">
-                                    <img class="" src="oxxo.png" style="height: 88px;" alt="">
+                                    <img class="" src="assets/img/oxxo.png" style="height: 88px;" alt="">
                                 </div>
                             </div>
                         </div>
@@ -823,7 +823,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 
                                 <div class="display-6 dark">
-                                    <img class="" src="paypal.png" style="height: 88px;" alt="">
+                                    <img class="" src="assets/img/paypal.png" style="height: 88px;" alt="">
                                 </div>
                                 <div class="ms-3 text-white fs-5">
                                     <div class="btn btn-white">
