@@ -152,7 +152,7 @@
                                 <div class="row align-items-left ">
 
                                     <div class="mb-4">
-                                        <a href="mis-pedidos.php" class="btn text-white rounded-3 fw-500 fs-4" name="button">
+                                        <a href="mis-pedidos.php" class="btn btn-outline-white rounded-pill fw-500 fs-4" name="button">
                                             <i class="far fa-arrow-alt-circle-left me-2"></i>
                                             Mis Pedidos
                                         </a>
@@ -168,7 +168,7 @@
                                         
                                     
                                         <h1 class="page-header-title">                                            
-                                            Pedido <?php echo $idPedido; ?>
+                                            Pedido <?php echo $idPedido . $datosPedido['id']; ?>
                                         </h1>
                                         
                                         <div class="page-header-subtitle mb-2">
@@ -388,16 +388,16 @@
                                                                 <div class="container">
                                                                     <div class="row">
                                                                         
-                                                                        <div class="col mb-2">
+                                                                        <div class="col mb-2 w-100">
                                                                             <?php
                                                                             if (!isset($datosPedido['fechaPago']))
                                                                             {
                                                                                 if (!isset($datosPedido['comprobantePago']) && empty($datosPedido['comprobantePago']))
                                                                                 {
                                                                                     ?>
-                                                                                    <button type="button" class="btn btn-outline-primary rounded-3 w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalConfirmarPagoCliente">
+                                                                                    <button type="button" class="btn btn-outline-primary border-blue border-2 f-poppins btn-lg rounded-3 fs-3 fw-500 w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalConfirmarPagoCliente">
                                                                                         <!-- <i class="fa-solid fa-thumbs-up me-1"></i> -->
-                                                                                        <i class="fas fa-cloud-upload-alt me-1"></i>
+                                                                                        <i class="fas fa-cloud-upload-alt me-2"></i>
                                                                                         Cargar comprobante
                                                                                     </button>
                                                                                     <?php
@@ -413,8 +413,8 @@
                                                                                 <?php
                                                                             }
                                                                             ?>
-                                                                        </div>
-                                                                        <hr class="opacity-0">
+                                                                        </div> 
+
                                                                         <div class="col mb-2 w-100">
                                                                             <?php
                                                                             if (!empty($datosPedido['comprobantePago']) && !is_null($datosPedido['comprobantePago']))
@@ -438,8 +438,8 @@
                                                                             else
                                                                             {
                                                                                 ?>
-                                                                                <button type="button" class="btn btn-success btn-lg rounded-3 w-100 h-100" name="button" data-bs-toggle="modal" data-bs-target="#modalDatosPago">
-                                                                                    <i class="far fa-credit-card me-1"></i>
+                                                                                <button type="button" class="btn btn-successx f-poppins btn-lg rounded-3 fs-3 fw-500 w-100 h-100" name="button" data-bs-toggle="modal" data-bs-target="#modalDatosPago">
+                                                                                    <i class="far fa-credit-card me-2"></i>
                                                                                     Más formas de pago
                                                                                 </button>
                                                                                 <?php
@@ -731,7 +731,7 @@
                                         <img class="img-fluid mb-4" src="assets/img/support.png" alt="" style="min-width: 8.25rem" />
                                         <h5>Soporte Vendy</h5>
                                         <p class="mb-4 small">Te ayudaremos a resolver cualquier situación.</p>
-                                        <a class="btn btn-success p-3 lift rounded-3 w-100 fs-4" href="https://wa.me/+5215610346590?text=Hola, requiero ayuda con mi pedido *<?php echo $idPedido; ?>*  _[Cuenta: <?php echo $idCliente; ?>]_" target="_blank"><i class="fas fa-headset me-2"></i> Contactar a soporte</a>
+                                        <a class="btn btn-light border-2 p-3 rounded-3 w-100 fs-4" href="https://wa.me/+5215610346590?text=Hola, requiero ayuda con mi pedido *<?php echo $idPedido; ?>*  _[Cuenta: <?php echo $idCliente; ?>]_" target="_blank"><i class="fas fa-headset me-2"></i> Contactar a soporte</a>
                                     </div>
                                 </div>
                             </div>

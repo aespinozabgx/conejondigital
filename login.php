@@ -55,7 +55,7 @@
 
         </style>
     </head>
-    <body class="" style="background-image: url('rabbit.png'); background-size: 300px 300px; background-repeat: repeat;">
+    <body class="" style="background-image: url('rabbit.png'); background-size: 100px 100px; background-repeat: repeat;">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -63,7 +63,7 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <!-- Basic login form-->
-                                <div class="card bg-pink shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card bg-blue shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header justify-content-center text-center p-5">                                        
                                         <div class="text-white f-poppins display-5 fw-500">
                                             Conejón Digital                                            
@@ -98,9 +98,16 @@
                                                 if ($urlMsg == 'errorCuentaInactiva') 
                                                 {
                                                     ?>
-                                                    <div class="text-yellow text-center p-3 pt-4">
-                                                        Cuenta inactiva                                                    
-                                                        <button type="button" id="openModalBtn" class="btn btn-success rounded-pill"><i class="far fa-paper-plane me-2"></i> Reenviar correo de activación</button>                                                        
+                                                    <script>             
+                                                        var myModal = new bootstrap.Modal(document.getElementById('modalReenvioActivacionCuenta'));
+                                                    </script>
+                                                    <div class="text-white text-center px-3 pt-4 mb-1">
+                                                        Cuenta inactiva                                                        
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <button type="button" onclick="myModal.show();"; id="openModalBtn" class="btn btn-danger shadow-sm rounded-pill">
+                                                            <i class="far fa-paper-plane me-2"></i> Reenviar correo de activación
+                                                        </button>
                                                     </div>
                                                     <?php
                                                 }
@@ -164,7 +171,7 @@
                         <div class="modal-footer">
 
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>                            
-                            <button type="submit" class="btn btn-success"><i class="far fa-paper-plane me-2"></i> Enviar</button>
+                            <button type="submit" class="btn btn-success" name="btnReenvioActivacionCuenta"><i class="far fa-paper-plane me-2"></i> Enviar</button>
 
                         </div>
                     </form>
