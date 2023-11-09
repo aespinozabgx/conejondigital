@@ -6,9 +6,9 @@
     require 'php/funciones.php';
     require 'php/lock.php';
 
-    if (isset($_GET['tienda']))
+    if (isset($_GET['idPedido']))
     {
-        $tienda = $_GET['tienda'];
+        $idPedido = $_GET['idPedido'];
             
     }
 
@@ -27,6 +27,13 @@
     // die; 
 
     $registrosNoComprados = obtenerGafetesNoComprados($conn, $idUsuario);
+
+    $totalProductos = 0;
+    if (isset($registrosNoComprados) && is_array($registrosNoComprados)) 
+    {
+        $totalProductos = sizeof($registrosNoComprados);
+    }
+
     // echo "<pre>";
     // print_r($registrosNoComprados);
     // die;                                             
@@ -249,9 +256,9 @@
                                         {
                                             ?>
                                             <!-- Cantidad de productos en el carrito -->
-                                            <p class="fw-300 fs-2 border-bottom border-1 p-2 mx-2 text-indigo">
+                                            <p class="fw-400 fs-1 border-bottom border-1 p-2 mx-2 text-indigo">
                                                 <span class="fw-00">
-                                                    <?php echo sizeof($registrosNoComprados); ?>
+                                                    <?php echo $totalProductos; ?>
                                                 </span>
                                                 producto(s) en tu carrito
                                             </p>
@@ -299,7 +306,7 @@
                                                                     </div>
                                                                     
                                                                 </div>
-                                                                <img src="transferencia.jpg" class="rounded-3" alt="..." style="width: 8rem" />
+                                                                <img src="assets/img/transferencia.jpg" class="rounded-3" alt="..." style="width: 8rem" />
                                                             </div>                                                        
                                                         </div>
                                                     </label>
@@ -321,7 +328,7 @@
                                                                     </div>
                                                                     
                                                                 </div>
-                                                                <img src="oxxo.png" class="rounded-3" alt="..." style="width: 8rem" />
+                                                                <img src="assets/img/oxxo.png" class="rounded-3" alt="..." style="width: 8rem" />
                                                             </div>                                                        
                                                         </div>
                                                     </label>
@@ -357,14 +364,14 @@
                                                         <td class="text-end pb-0">
                                                             <div class="fs-3 mb-0 fw-700" id="salidaSubtotal">
                                                                 <?php
-                                                                    echo "$&nbsp;" . number_format($_SESSION['carrito']['subtotal'], 2);
+                                                                    echo "$&nbsp;" . number_format(($totalProductos*90), 2);
                                                                 ?>
                                                             </div>
                                                         </td>
                                                     </tr>
 
                                                     <!-- Descuentos -->
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td class="text-end pb-0" colspan="3"><div class="text-uppercase small fw-700 text-muted">Descuentos:</div></td>
                                                         <td class="text-end pb-0">
                                                             <div class="fs-3 mb-0 fw-600 text-danger" id="salidaDescuento">
@@ -373,15 +380,15 @@
                                                                 ?>
                                                             </div>
                                                         </td>
-                                                    </tr>
+                                                    </tr> -->
 
                                                     <!-- ENVÍO -->
                                                     <tr>
                                                         <td class="text-end pb-0" colspan="3"><div class="text-uppercase small fw-700 text-muted">Envío:</div></td>
                                                         <td class="text-end pb-0">
-                                                            <div class="fs-4 mb-0 fw-700">
+                                                            <div class="fs-4 mb-0 fw-700 text-green fa-fade">
                                                                 <span id="salidaPrecioEnvio">
-                                                                    $ <?php echo number_format("0", 2); ?>
+                                                                    GRATIS
                                                                 </span>
                                                             </div>
                                                         </td>
@@ -390,16 +397,13 @@
                                                     <!-- TOTAL -->
                                                     <tr>
                                                         <td class="text-end pb-0" colspan="3">
-                                                            <div class="text-uppercase small fw-700 fs-3 text-muted">Total a pagar:</div>
+                                                            <div class="text-uppercase small fw-700 fs-3">Total a pagar:</div>
                                                         </td>
                                                         <td class="text-end pb-0">
                                                             <!-- El id #precioTotal muestra por defecto la variable de sesion 'total', se actualiza por AJAX tomando el valor de la variable local $total -->
                                                             <div class="h5 mb-0 fw-700 fs-1 text-green" id="precioTotal">
-                                                                <span class="fw-300 fs-6 text-green">
-                                                                    $
-                                                                </span>
                                                                 <span class="fw-500 fs-1 text-green">
-                                                                    <?php echo number_format($_SESSION['carrito']['total'], 2); ?>
+                                                                    <?php echo "$&nbsp;" . number_format(($totalProductos*90), 2); ?>
                                                                 </span>
                                                             </div>
                                                         </td>
@@ -418,7 +422,7 @@
                                         if (isset($_SESSION['carrito']))
                                         {
 
-                                            echo '<p class="fw-300 small me-1 m-4">Recibirás los métodos de pago en tu correo electrónico y también podrás consultarlos en el detalle del pedido.</p>';
+                                            //echo '<p class="fw-300 small me-1 m-4">Recibirás los métodos de pago en tu correo electrónico y también podrás consultarlos en el detalle del pedido.</p>';
                                             ?>
                                             <button type="submit" class="btn btn-success fw-600 fs-6 rounded-pill mb-4 me-1" name="btnCrearPedido" value="">
                                                 Enviar pedido
