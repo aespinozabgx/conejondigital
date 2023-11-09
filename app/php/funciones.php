@@ -521,14 +521,14 @@
         {
             $row = mysqli_fetch_assoc($result);
             $lastIdPedido = $row["idPedido"];
-            $lastIdPedido = explode("VP", $lastIdPedido);
+            $lastIdPedido = explode("CD", $lastIdPedido);
             $lastNumber = (int) $lastIdPedido[1];
             $newNumber = $lastNumber + 1;
-            $idPedido = "VP" . $newNumber;
+            $idPedido = "CD" . $newNumber;
         }
         else
         {
-            $idPedido = "VP1";
+            $idPedido = "CD1";
         }
 
         return $idPedido;
