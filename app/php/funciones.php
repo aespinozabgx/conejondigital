@@ -71,6 +71,36 @@
 
     }
     
+    function obtenerGafetesComprados($conn, $idUsuario)
+    {
+        $registros = array();
+    
+        // Consulta SQL para seleccionar los registros
+        $sql = "SELECT * FROM tabla_gafetes WHERE idUsuario = ? AND isPurchased = 1";
+        
+        // Preparar la consulta
+        $stmt = $conn->prepare($sql);
+        
+        // Vincular el parámetro
+        $stmt->bind_param("s", $idUsuario);
+        
+        // Ejecutar la consulta
+        $stmt->execute();
+        
+        // Obtener el resultado
+        $result = $stmt->get_result();
+        
+        // Recorrer los resultados y almacenarlos en un array
+        while ($row = $result->fetch_assoc()) {
+            $registros[] = $row;
+        }
+    
+        // Cerrar la consulta
+        $stmt->close();
+    
+        return $registros;
+    }
+
     function obtenerGafetesNoComprados($conn, $idUsuario)
     {
         $registros = array();

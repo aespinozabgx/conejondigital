@@ -263,15 +263,10 @@
                                                         <div class="timeline-item-marker-indicator bg-success"></div>
                                                     </div>
                                                     <div class="timeline-item-content">
-
                                                         <p class="fw-bold text-dark" href="#!">Pedido Recibido</p>
-                                                        <p class=" mb-2">
+                                                        <p class="px-4 mb-2 fs-6">
                                                             <i class="fas fa-calendar-day me-1 text-muted"></i> Lo <b>compraste</b> el <span><?php echo date("d/m/Y · H:i", strtotime($datosPedido['fechaPedido'])); ?> hrs.</span>
                                                         </p>
-                                                        <div class="col-lg-8 col-12 mb-2">
-                                                            
-                                                        </div>
-
                                                     </div>
                                                 </div>
 
@@ -411,13 +406,10 @@
                                                                             else
                                                                             {
                                                                                 ?>
-                                                                                <h6>
-                                                                                    <div class="my-2 text-green rounded-2 fs-5 fw-300">
-                                                                                        <i class="far fa-check-circle me-1"></i>
-                                                                                        Pago confirmado <?php echo date("d/m/Y H:i", strtotime($datosPedido['fechaPago'])) . " hrs."; ?>
-                                                                                    </div>
-                                                                                </h6>
-                                                                                
+                                                                                <div class="mb-2 text-green rounded-2 fs-5 fw-300">
+                                                                                    <i class="far fa-check-circle me-1"></i>
+                                                                                    Pago confirmado <?php echo date("d/m/Y H:i", strtotime($datosPedido['fechaPago'])) . " hrs."; ?>
+                                                                                </div>
                                                                                 <?php
                                                                             }
                                                                             ?>
@@ -505,7 +497,7 @@
                                                             {
                                                                 ?>
                                                                 <h6>
-                                                                    <div class="btn btn-outline-danger p-2 small fw-300 rounded-2">
+                                                                    <div class="btn btn-danger-soft fw-300 rounded-pill">
                                                                         Pendiente de envío
                                                                     </div>
                                                                 </h6>
@@ -556,7 +548,7 @@
                                                             {
                                                                 ?>
                                                                 <h6>
-                                                                    <div class="btn btn-outline-danger p-2 small fw-300 rounded-2">
+                                                                    <div class="btn btn-danger-soft fw-300 rounded-pill">
                                                                         Pendiente de envío
                                                                     </div>
                                                                 </h6>
@@ -617,13 +609,13 @@
 
                                                         <div class="w-100"></div>
 
-                                                        <div class="col fs-4 text-danger fw-500 text-start">
+                                                        <!-- <div class="col fs-4 text-danger fw-500 text-start">
                                                             Descuentos:
                                                         </div>
 
                                                         <div class="col fs-4 text-danger fw-500">
                                                             - $ <?php echo number_format($datosPedido['descuentos'], 2); ?>
-                                                        </div>
+                                                        </div> -->
 
                                                     </div>
 
@@ -633,7 +625,7 @@
 
                                                     <div class="row">
                                                         
-                                                        <div class="col fs-2 fw-500 text-green text-start">Total Pagado:</div>
+                                                        <div class="col fs-2 fw-500 text-green text-start">Total:</div>
                                                         <div class="col fs-2 fw-500 text-green">
                                                             $ <?php echo number_format($datosPedido['total'], 2); ?>
                                                         </div>
@@ -650,7 +642,14 @@
                                         <!-- Project tracker card example-->
                                         <div class="card bg-primary card-collapsable mb-4">
                                             <a class="card-header text-white" href="#collapseCardExample" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                                <i class="fas fa-shopping-basket me-2"></i><?php echo sizeof($detallesProducto); ?> Productos Comprados
+                                                <i class="fas fa-shopping-basket me-2"></i>
+                                                    <?php
+                                                        if (isset($detallesProducto) && is_array($detallesProducto)) 
+                                                        {
+                                                            echo sizeof($detallesProducto);
+                                                        }
+                                                    ?> 
+                                                    Productos Comprados
                                                 <div class="card-collapsable-arrow">
                                                     <i class="fas fa-chevron-right"></i>
                                                 </div>
@@ -683,7 +682,8 @@
                                                                             <div class="fw-400 text-dark">
                                                                                 Producto <?php echo $co++; ?>                                                                                
                                                                             </div>
-                                                                            <div class="p-2">
+                                                                            <div class="p-0">
+                                                                                <div class="small text-dark">Lanyard personalizado</div>
                                                                                 <img src="assets/img/gafete/disenos/<?php echo($val['diseno']); ?>" class="rounded-img" alt="">
                                                                                 <img src="gafetes/users/<?php echo $_SESSION['email']; ?>/<?php echo $val['nombre_archivo']; ?>" class="rounded-img" alt="">
                                                                             </div> 
@@ -727,11 +727,11 @@
                                 </div>
                                 <!-- Illustration dashboard card example-->
                                 <div class="card">
-                                    <div class="card-body text-center p-5">
+                                    <div class="card-body text-center p-3">
                                         <img class="img-fluid mb-4" src="assets/img/support.png" alt="" style="min-width: 8.25rem" />
                                         <h5>Soporte Vendy</h5>
                                         <p class="mb-4 small">Te ayudaremos a resolver cualquier situación.</p>
-                                        <a class="btn btn-outline-success p-3 lift rounded-3 w-100 fs-4" href="https://wa.me/+5215610346590?text=Hola, requiero ayuda con mi pedido *<?php echo $idPedido; ?>*  _[Cuenta: <?php echo $idCliente; ?>]_" target="_blank"><i class="fas fa-headset me-2"></i> Contactar a soporte</a>
+                                        <a class="btn btn-success p-3 lift rounded-3 w-100 fs-4" href="https://wa.me/+5215610346590?text=Hola, requiero ayuda con mi pedido *<?php echo $idPedido; ?>*  _[Cuenta: <?php echo $idCliente; ?>]_" target="_blank"><i class="fas fa-headset me-2"></i> Contactar a soporte</a>
                                     </div>
                                 </div>
                             </div>

@@ -3,17 +3,15 @@
     //$urlActivacion = "localhost/";
     // Para tomar url en el Envio de correo
     
-
     // Configuro hora local
     date_default_timezone_set("America/Mexico_City");
 
     //  1 Localhost
     //  0 Web
     $isConexionLocal = 1;
-
-    // Prevent Login
-    // Pre Registro = true
+    $isServidorPruebas = 0;
     $preventLogin = false;
+
     //$preventLogin = "verifica/preregistro.php";
 
     if ($isConexionLocal)

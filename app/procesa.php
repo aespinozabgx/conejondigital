@@ -81,11 +81,16 @@
         // echo "descuentos: " . $descuentos . "<br>";
         // echo "total: " . $total . "<br>";
         
+        $gafetesNoComprados = obtenerGafetesNoComprados($conn, $idCliente);
+        // echo "<pre>";
+        // print_r($gafetesNoComprados);
+        // die;
 
         // Iniciar una transacción
         $conn->begin_transaction();
 
-        try {
+        try 
+        {
             // Preparar la consulta SQL para insertar un nuevo pedido
             $sqlNuevoPedido = "INSERT INTO pedidos (idPedido, idCliente, fechaPedido, idTipoEnvio, direccionEnvio, idEstatusPedido, idMetodoDePago, precioEnvio, subtotal, descuentos,  total, isActive)
             VALUES ('$idPedido', '$idCliente', '$fechaPedido', '$tipoEnvio', '$direccionEnvio', '$idEstatusPedido', '$idMetodoDePago', '$precioEnvio', '$subtotal', '$descuentos', '$total', '$isActive')";
@@ -96,11 +101,28 @@
             // Verificar si se insertó correctamente el pedido
             if ($conn->affected_rows === 1) 
             {
-
-                // Actualizar tabla_gafete para eliminar del carrito o de los pendeintes
-                // y asignar a cada lanyard el idPedido
-                 
-            } else {
+                // Itera los gafetes en el carrito (bdd)
+                foreach ($gafetesNoComprados as $indexGafetesNC => $dataGafetesNC) 
+                {
+                    $id = $dataGafetesNC['id'];
+        
+                    // Realiza una consulta SQL para actualizar el campo isPurchased
+                    $sql = "UPDATE tabla_gafetes SET isPurchased = 1, idPedido = ? WHERE id = ?";
+        
+                    // Prepara la consulta
+                    $stmt = $conn->prepare($sql);
+        
+                    // Vincula el valor del ID a la consulta
+                    $stmt->bind_param('si', $idPedido, $id);
+        
+                    // Ejecuta la consulta
+                    if (!$stmt->execute()) {
+                        throw new Exception("Error al actualizar el campo isPurchased para el ID: $id");
+                    }
+                }
+            } 
+            else 
+            {
                 throw new Exception("Error al insertar el pedido.");
             }
 

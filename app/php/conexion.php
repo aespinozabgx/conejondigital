@@ -17,6 +17,14 @@
 		$database	= "u854920720_conejon";
 	}
 
+	if ($isServidorPruebas)
+	{
+		$servername = "185.212.71.16";
+		$username   = "u854920720_test";
+		$password   = 'v*P9S5m>By1';
+		$database	= "u854920720_conejon_test";
+	}
+
 	$conn = mysqli_connect(
 		$servername,
 		$username,
