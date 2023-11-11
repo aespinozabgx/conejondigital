@@ -5,6 +5,14 @@
     require '../php/conexion.php';
     require '../php/funciones.php';
 
+    // LOCK
+    if (!isset($_SESSION['email']) || empty($_SESSION['email']))
+    {
+        //die('No puedes estar aquí');
+        exit(header('Location: ../../login.php?msg=requiereSesion'));
+    }
+    // END LOCK
+
     if (!isset($_SESSION['email']) || empty($_SESSION['email']))
     {
         //die('No puedes estar aquí');
@@ -16,7 +24,7 @@
 
     if (!$hasAccess) 
     {
-        exit(header('Location: ../eventos.php'));
+        exit(header('Location: ../eventos.php?msg=requieresAcceso'));
     }
 
     // var_dump($hasAccess);
@@ -259,6 +267,11 @@
                 text-shadow: 0px 0px 0px rgba(174, 77, 77, 0.68);
             }
 
+            #qrcode img
+            {
+                width: 100%;
+                height: auto;
+            }
 
         </style>
     </head>
@@ -311,6 +324,7 @@
                             <div class="card shadow border-0 rounded-4 mb-3">
                                 <div class="card-body p-4">
                                     <div class="row align-items-center gx-4">
+                                        
                                         <div class="col text-center text-lg-start mb-4 mb-lg-0">
                                             <div class="bg-light p-0 shadow-lg rounded-4">
                                                 <!-- <div class="text-primary fs-4 text-center fw-bolder mb-2">Axel Espinoza</div> -->
@@ -319,6 +333,7 @@
                                                 </div>                                        
                                             </div>
                                         </div>
+
                                         <div class="col-lg-8">
                                             <div class="">
                                                 
@@ -361,7 +376,7 @@
                                         <div class="col">
                                             <div class="text-center">
                                                 
-                                                <div class="fw-300 mb-5 display-4 px-5" style="color: #6091e6;">
+                                                <div class="fw-300 mb-5 display-4 px-2" style="color: #6091e6;">
                                                     <span class="f-lobster2italic fw-bold display-2 text-nowrap">Personaliza</span> <i class="fas fa-hand-sparkles me-2 ms-2"></i> tu acceso 
                                                 </div>                                                                                            
                                                 
@@ -577,8 +592,8 @@
             var qrcode = new QRCode(document.getElementById("qrcode"), 
             {
                 text: email,
-                width: 800,
-                height: 800
+                width: 250,
+                height: 250
             });
 
             var qrCodeImage = document.querySelector("#qrcode img");

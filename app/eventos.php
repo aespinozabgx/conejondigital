@@ -194,27 +194,50 @@
                                                                 <i class="ms-1" data-feather="external-link"></i>
                                                             </a>
                                                         </div>
-                                                        <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 d-md-none mb-2" href="acceso/">
-                                                            Mi acceso
-                                                            <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
-                                                        </a>
+                                                        
+
+                                                        <?php                                                    
+                                                            if ($hasAccess != false)
+                                                            {
+                                                            ?>
+                                                            <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 d-md-none mb-2" href="acceso/">
+                                                                Mi acceso
+                                                                <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                            </a>
+                                                            <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                ?>
+                                                                <div class="d-md-none mb-2">
+                                                                    <form action="procesa.php" method="POST">
+                                                                        <input type="hidden" name="idUsuario" value="<?php echo $idUsuario; ?>">                                                                        
+                                                                        <button type="submit" name="btnRegistroAsistencia" class="btn btn-lg btn-danger border-danger border-3 fw-500 fs-1 w-100 h-100">
+                                                                            Obtener acceso
+                                                                            <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                        ?>
+
                                                         <a class="btn btn-lg btn-green border-green border-3 fs-1 w-100 d-md-none mb-2" href="https://maps.app.goo.gl/R5SRP6jJLXRyz5k5A" target="_blank">
                                                             Ubicación
                                                             <i class="fas fa-location-arrow ms-2"></i>
                                                         </a>
+                                                        
                                                         <div class="row">
                                                             <div class="col mb-2 me-1 d-none d-md-block">
                                                                 <?php
-                                                                    if ($hasAccess !== false)
+                                                                    if ($hasAccess != false)
                                                                     {
-                                                                        
-                                                                       
-                                                                        ?>
-                                                                        <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 h-100" href="acceso/">
-                                                                            Mi acceso
-                                                                            <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
-                                                                        </a>
-                                                                        <?php
+                                                                    ?>
+                                                                    <a class="btn btn-lg btn-outline-primary border-primary border-3 fw-500 fs-1 w-100 h-100" href="acceso/">
+                                                                        Mi acceso
+                                                                        <i class="fas fa-ticket-alt ms-2 fa-flip" style="--fa-animation-duration: 2s;"></i>
+                                                                    </a>
+                                                                    <?php
                                                                     }
                                                                     else
                                                                     {
