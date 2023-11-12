@@ -1,0 +1,19 @@
+
+
+.header .lead {
+  max-width: 620px;
+}
+
+.lg-toolbar-next:before {
+  content: "";
+}
+
+.lg-toolbar-prev:before {
+  content: "";
+}
+
+/** Below CSS is completely optional **/
+.gallery-item {
+  width: 200px;
+  padding: 5px;
+}

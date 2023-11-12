@@ -1,0 +1,14 @@
+
+.dataTables_filter {
+  float: left;
+  margin-bottom: 1em;
+}
+.dataTables_filter:after {
+  clear: both;
+}
+.dt-buttons a .glyphicon {
+  visibility: hidden;
+}
+.dt-buttons a:hover .glyphicon {
+  visibility: visible;
+}
