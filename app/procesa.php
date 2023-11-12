@@ -11,6 +11,38 @@
     session_start();
 
 
+    if (isset($_POST['btnBorrarLanyardDB'])) 
+    {
+        echo "btnBorrarLanyardDB";
+        $idElemento = $_POST['idToDelete'];
+        $idUsuario = $_SESSION['email'];
+                
+        // Consulta SQL para eliminar el elemento
+        $sql = "DELETE FROM tabla_gafetes WHERE id = ? AND idUsuario = ?";
+        $stmt = $conn->prepare($sql);
+
+        // Vincular parámetros
+        $stmt->bind_param("ss", $idElemento, $idUsuario);
+
+        // Ejecuta la consulta
+        $stmt->execute();
+
+        // Verifica el número de filas afectadas
+        if ($stmt->affected_rows > 0) 
+        {
+            // Éxito al eliminar
+            header("Location: disenaGafete.php?msg=mensajeExitoDeleteCart");
+            exit;
+        } 
+        else 
+        {
+            // No se eliminaron filas (puede ser porque no coincidió el idElemento o idUsuario)
+            header("Location: disenaGafete.php?msg=mensajeErrorDeleteCart");
+            exit;
+        }
+
+    }
+
     if (isset($_POST['btnReenvioActivacionCuenta']))
     { 
 

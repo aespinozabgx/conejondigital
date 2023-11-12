@@ -47,6 +47,10 @@
         }
     }
 
+
+    $hasActivePayment = Array();
+    $hasActivePayment['existePagoActivo']  = 1;
+
     // echo "<br><br>Resultado: " . $fechaInicio . ", " . $fechaFin . "<br><br>";
     // $ventas_ganancias = getVentasGananciasTienda($conn, $idTienda, $fechaInicio, $fechaFin);
     // $total_ingresos   = getIngresosTienda($conn, $idTienda, $fechaInicio, $fechaFin);
@@ -103,7 +107,6 @@
         <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
         <!-- <script src="js/qrcode.js"></script> -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
         <style type="text/css">
  
             input[type=radio]
@@ -121,7 +124,7 @@
             .modal-fullscreen .modal-content 
             {
                 backdrop-filter: blur(10px);
-                background-color: rgba(0, 0, 0, 0.2);
+                background-color: rgba(146, 137, 137, 0.274);
                 color: #fff; /* Color del texto en el modal */
             }
 
@@ -152,12 +155,14 @@
             }
         
             /* Estilo para la imagen cuando su radio está seleccionado */
-            .design-option input:checked + img {
+            .design-option input:checked + img 
+            {
                 border: 4px solid rgb(37, 60, 193); /* Puedes personalizar el borde como desees */
             }
 
             /* Estilo para el contenedor de la imagen cuando su radio está seleccionado */
-            .design-option input:checked + img + label {
+            .design-option input:checked + img + label 
+            {
                 /* Puedes aplicar estilos adicionales al contenedor, por ejemplo, cambiar el fondo */
                 background-color: lightgray;
             }
@@ -179,49 +184,49 @@
             /*Estilos solo al icono whatsapp*/
             .whatsapp-btn i 
             {
-            color: #fff;
-            font-size: 24px;
-            animation: beat 2s ease-in-out infinite;
-            text-decoration: none;
+                color: #fff;
+                font-size: 24px;
+                animation: beat 2s ease-in-out infinite;
+                text-decoration: none;
             }
 
             /*Estilos con animation contorno respirando*/
-            @keyframes breathe {
-            0% {
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
-            }
-            70% {
-                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-            }
+            @keyframes breathe 
+            {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+                }
+                70% {
+                    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+                }
             }
 
             /*Estilos de animacion del icono latiendo*/
-            @keyframes beat {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
+            @keyframes beat 
+            {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.2);
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
  
-
         </style>
-
     </head>
     <body class="nav-fixed">
         <?php
-        // Header
-          if (file_exists('src/header.php'))
-          {
-            include 'src/header.php';
-          }
+            // Header
+            if (file_exists('src/header.php'))
+            {
+                include 'src/header.php';
+            }
         ?>
         <div id="layoutSidenav">
             <?php
@@ -234,6 +239,7 @@
             <div id="layoutSidenav_content">
             
                 <main>
+
                     <header class="page-header page-header-dark bg-indigo pb-9">
                         <div class="container-xl px-4">
                             <div class="page-header-content pt-4">
@@ -255,12 +261,13 @@
                             </div>
                         </div>
                     </header>
+                    
                     <div class="container-xl px-4 mt-n15">
-                        <div class="row">
-                            
+                        <div class="row">                            
                             <div class="col-xl-12 col-md-12 mb-4">
                                 <div class="card shadow rounded-3 mb-4 mt-5">
                                     <div class="card-body py-5">
+
                                         <div class="row align-items-center justify-content-between">
                                             <form action="procesa.php" method="post" enctype="multipart/form-data">                                            
                                                 <div class="container">
@@ -308,104 +315,124 @@
                                                         <button type="submit" name="btnGafeteCarrito" class="w-100 btn btn-primary btn-lg fs-4 fw-500">Siguiente</button>
                                                     </div>
 
-                                                    <?php
-                                                        if (!empty($registrosNoComprados)) 
-                                                        {
-                                                            ?>
-                                                            <a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modalFullscreen" class="btn rounded-pill whatsapp-btn text-white btn-lg fs-4">
-                                                                <i class="fas fa-shopping-bag me-2"></i>
-                                                                <?php echo sizeof($registrosNoComprados); ?>                                                                
-                                                            </a>
- 
-                                                            <!-- Modal de Pantalla Completa -->
-                                                            <div class="modal fade" id="modalFullscreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-fullscreen">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h3 class="modal-title text-white f-poppins" id="exampleModalLabel">
-                                                                                <i class="fas fa-shopping-cart me-1"></i> Carrito de compras
-                                                                            </h3>
-                                                                            <button type="button" class="btn btn-icon btn-sm btn-outline-white fs-6" data-bs-dismiss="modal" aria-label="Cerrar">
-                                                                                <i class="fas fa-times"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <!-- Contenido largo que requerirá desplazamiento -->
-                                                                            <div class="p-1">
-                                                                                
-                                                                                <div class="table-responsive rounded rounded-1">
-                                                                                    <table class="table table-stripped table-bordered table-hover">
-                                                                                        <thead class="">
-                                                                                            <tr class="text-white"> 
-                                                                                                <th class="bg-yellow fs-4">Producto</th>
-                                                                                                <th class="bg-yellow fs-4">Foto</th>
-                                                                                                <th class="bg-yellow fs-4">Diseño</th>
-                                                                                                <th class="bg-yellow fs-4">Precio</th>
-                                                                                                <th class="bg-yellow fs-4 text-center">Acciones</th>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody class="text-white">
-                                                                                            <?php
-                                                                                            $i = 0;
-                                                                                            // $registrosNoComprados contiene los productos del carrito
-                                                                                            foreach ($registrosNoComprados as $producto) {
-                                                                                                ?>
-                                                                                                <tr class="text-center"> 
-                                                                                                    <td>Lanyard personalizado</td>
-                                                                                                    <td>
-                                                                                                        <img src="gafetes/users/<?php echo $_SESSION['email'] . '/' . $producto['nombre_archivo']; ?>" 
-                                                                                                            class="bg-white rounded-img" alt="<?php echo $producto['nombre_archivo']; ?>">
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <img src="assets/img/gafete/disenos/<?php echo $producto['diseno']; ?>" 
-                                                                                                             class="rounded-img" alt="<?php echo $producto['diseno']; ?>">
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        $ 90.00 mxn
-                                                                                                    </td>
-                                                                                                    <td class="text-center">
-                                                                                                        <button class="btn btn-icon btn-sm btn-outline-white">
-                                                                                                            <i class="far fa-trash-alt"></i>
-                                                                                                        </button>
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <?php
-                                                                                            }
-                                                                                            ?>
-                                                                                        </tbody>                                                                                        
-                                                                                    </table>
-                                                                                </div>
-                                                                            </div>
-                                                                            <!-- Puedes agregar más contenido según sea necesario -->
-                                                                        </div>
-                                                                        <div class="modal-footer d-flex justify-content-between">
-                                                                            <div class="col fs-3 fw-500 text-start">
-                                                                                <?php
-                                                                                    $subtotal = sizeof($registrosNoComprados) * 90;
-                                                                                    $formattedSubtotal = '$ ' . number_format($subtotal, 2);
-                                                                                    echo $formattedSubtotal;
-                                                                                ?>
-                                                                            </div>
-                                                                            <div class="col-lg-2 col-sm-6">
-                                                                                <a href="pago.php" class="btn btn-lg btn-light rounded-pill w-100 fs-4">
-                                                                                    <i class="fas fa-coins me-2 fa-flip" style="--fa-animation-duration: 3s;"></i> Pagar
-                                                                                </a>
-                                                                            </div> 
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                    ?>
+                                                   
                                                 </div>
                                             </form>
                                         </div>
+                                        
+                                        <?php
+                                            //if (!empty($registrosNoComprados)) 
+                                            if (1)
+                                            {
+                                                ?>
+                                                <a href="javascript:void(0);"  data-bs-toggle="modal" data-bs-target="#modalFullscreen" class="btn rounded-pill whatsapp-btn text-white btn-lg fs-4">
+                                                    <i class="fas fa-shopping-bag me-2"></i>
+                                                    <?php echo sizeof($registrosNoComprados); ?>                                                                
+                                                </a>
+
+                                                <!-- Modal de Pantalla Completa -->
+                                                <div class="modal fade" id="modalFullscreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-fullscreen">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title text-white f-poppins" id="exampleModalLabel">
+                                                                    <i class="fas fa-shopping-cart me-1"></i> Carrito de compras
+                                                                </h3>
+                                                                <button type="button" class="btn btn-icon btn-sm btn-outline-white fs-6" data-bs-dismiss="modal" aria-label="Cerrar">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Contenido largo que requerirá desplazamiento -->
+                                                                <div class="p-1">
+                                                                    
+                                                                    <?php
+                                                                    if (!empty($registrosNoComprados)) 
+                                                                    {
+                                                                        ?>                                                                                                                                    
+                                                                        <div class="table-responsive rounded rounded-1">
+                                                                            <table class="table table-stripped table-bordered">
+                                                                                <thead class="">
+                                                                                    <tr class="text-white"> 
+                                                                                        <th class="bg-yellow fs-4">Producto</th>
+                                                                                        <th class="bg-yellow fs-4">Foto</th>
+                                                                                        <th class="bg-yellow fs-4">Diseño</th>
+                                                                                        <th class="bg-yellow fs-4">Precio</th>
+                                                                                        <th class="bg-yellow fs-4 text-center">Acciones</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody class="text-white">
+                                                                                    <?php
+                                                                                        $i = 0;
+                                                                                        // $registrosNoComprados contiene los productos del carrito
+                                                                                        foreach ($registrosNoComprados as $producto) 
+                                                                                        {
+                                                                                            ?>
+                                                                                            <tr class="text-center align-middle"> 
+                                                                                                <td>Lanyard personalizado</td>
+                                                                                                <td>
+                                                                                                    <img src="gafetes/users/<?php echo $_SESSION['email'] . '/' . $producto['nombre_archivo']; ?>" 
+                                                                                                        class="bg-white rounded-img" alt="<?php echo $producto['nombre_archivo']; ?>">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <img src="assets/img/gafete/disenos/<?php echo $producto['diseno']; ?>" 
+                                                                                                        class="rounded-img" alt="<?php echo $producto['diseno']; ?>">
+                                                                                                </td>
+                                                                                                <td class="align-middle">
+                                                                                                    $ 90.00 mxn
+                                                                                                </td>
+                                                                                                <td class="text-center align-middle">
+                                                                                                    <form action="procesa.php" method="POST">
+                                                                                                        <input type="hidden" name="idToDelete" id="" value="<?php echo $producto['id']; ?>" required>
+                                                                                                        <button class="btn btn-icon btn-outline-white" type="submit" name="btnBorrarLanyardDB">
+                                                                                                            <i class="far fa-trash-alt"></i>
+                                                                                                        </button>
+                                                                                                    </form>                                                                                                        
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                        }
+                                                                                    ?>
+                                                                                </tbody>                                                                                        
+                                                                            </table>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        echo "<div class='text-center fs-1' style='padding-top:10%;'>Aún no hay registros, personaliza tu acceso</div>";
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <!-- Puedes agregar más contenido según sea necesario -->
+                                                            </div>
+                                                            <div class="modal-footer d-flex justify-content-between">
+                                                                <div class="col fs-3 fw-500 text-start">
+                                                                    <?php
+                                                                        $subtotal = sizeof($registrosNoComprados) * 90;
+                                                                        $formattedSubtotal = '$ ' . number_format($subtotal, 2);
+                                                                        echo $formattedSubtotal;
+                                                                    ?>
+                                                                </div>
+                                                                <div class="col-lg-2 col-sm-6">
+                                                                    <a href="pago.php" class="btn btn-lg btn-light rounded-pill w-100 fs-4">
+                                                                        <i class="fas fa-coins me-2 fa-flip" style="--fa-animation-duration: 3s;"></i> Pagar
+                                                                    </a>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                        ?>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </main> 
                 <?php
                     if (file_exists('src/footer.php'))
