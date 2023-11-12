@@ -5,611 +5,687 @@
     use PHPMailer\PHPMailer\Exception;
 
     date_default_timezone_set("America/Mexico_City");
-    $fechahora = strtotime(date("Y-m-d h:i:s"));
-  
-    function cargarComprobante($conn, $idCliente, $idPedido)
-    { 
-       
-        $salida = false;
-        // if ($FILES['fileToUpload']['size'] <= 0)
-        // {
-        //     return true;
-        //     exit;
-        // }
+    $hora = strtotime(date("Y-m-d h:i:s"));
+    $time = date('Y-m-d h:i:s', $hora);
 
-        // Apunta a la carpeta del pedido
-        $target_dir = "users/" . $idCliente . "/pedidos/" . $idPedido . "/";
-
-        if (!is_dir($target_dir)) 
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        $target_file = $target_dir . "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-        $extension = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-        // Apunta al arhivo: "verifica/usr_docs/idCliente/Pagos/idPedido.ext"
-
-        $uploadOk = 1;
-
-        if(!is_dir($target_dir))
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        // Allow certain file formats
-        $allowedExt = Array('jpg', 'png', 'jpeg', 'pdf', 'webp');
-
-        if(!in_array($extension, $allowedExt))
-        {
-            $msg = "Sólo se admiten archivos 'jpg', 'png', 'jpeg', 'pdf' y 'webp'";
-            $uploadOk = 0;
-        }
-
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0)
-        {
-            return false;
-            exit();
-            // if everything is ok, try to upload file
-        }
-        else
-        {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
-            {
-                // echo "The file **" . $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION)) . "** has been uploaded.";
-                $nombre = "comprobantePago." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
-                return $nombre;
-                exit();
-            }
-            else
-            {
-                // echo "Sorry, there was an error uploading your file.";
-                return false;
-                exit();
-            }
-        }
-
-    }
-    
-    function obtenerGafetesComprados($conn, $idUsuario)
+    // INICIO DASHBOARD
+    function getTop10NoVendidos($conn, $idTienda)
     {
-        $registros = array();
-    
-        // Consulta SQL para seleccionar los registros
-        $sql = "SELECT * FROM tabla_gafetes WHERE idUsuario = ? AND isPurchased = 1";
-        
-        // Preparar la consulta
-        $stmt = $conn->prepare($sql);
-        
-        // Vincular el parámetro
-        $stmt->bind_param("s", $idUsuario);
-        
-        // Ejecutar la consulta
-        $stmt->execute();
-        
-        // Obtener el resultado
-        $result = $stmt->get_result();
-        
-        // Recorrer los resultados y almacenarlos en un array
-        while ($row = $result->fetch_assoc()) {
-            $registros[] = $row;
-        }
-    
-        // Cerrar la consulta
-        $stmt->close();
-    
-        return $registros;
-    }
-
-    function obtenerGafetesNoComprados($conn, $idUsuario)
-    {
-        $registros = array();
-    
-        // Consulta SQL para seleccionar los registros
-        $sql = "SELECT * FROM tabla_gafetes WHERE idUsuario = ? AND isPurchased = 0";
-        
-        // Preparar la consulta
-        $stmt = $conn->prepare($sql);
-        
-        // Vincular el parámetro
-        $stmt->bind_param("s", $idUsuario);
-        
-        // Ejecutar la consulta
-        $stmt->execute();
-        
-        // Obtener el resultado
-        $result = $stmt->get_result();
-        
-        // Recorrer los resultados y almacenarlos en un array
-        while ($row = $result->fetch_assoc()) {
-            $registros[] = $row;
-        }
-    
-        // Cerrar la consulta
-        $stmt->close();
-    
-        return $registros;
-    }
-    
-    function subirArchivo($nombreCampo, $directorioDestino) 
-    {
-        // Verificar si el archivo se envió correctamente
-        if (isset($_FILES[$nombreCampo]) && $_FILES[$nombreCampo]['error'] === UPLOAD_ERR_OK) 
-        {
-            $nombreArchivo = $_FILES[$nombreCampo]['name'];
-            $rutaArchivo = $directorioDestino . $nombreArchivo;
-            
-            // Validar el tipo de archivo permitido (puedes ajustar esta lista según tus necesidades)
-            $extensionesPermitidas = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'heic');
-            $extensionArchivo = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
-            if (!in_array(strtolower($extensionArchivo), $extensionesPermitidas)) 
-            {
-                return null; // El tipo de archivo no está permitido
-            }
-            
-            // Sanitizar el nombre de archivo para eliminar caracteres no deseados
-            $nombreArchivo = preg_replace("/[^a-zA-Z0-9.-_]/", "", $nombreArchivo);
-    
-            // Generar un nombre de archivo único para evitar posibles conflictos
-            $nombreArchivoUnico = uniqid() . '_' . $nombreArchivo;
-            $rutaArchivoUnico = $directorioDestino . $nombreArchivoUnico;
-    
-            // Mover el archivo subido a la ubicación deseada
-            if (move_uploaded_file($_FILES[$nombreCampo]['tmp_name'], $rutaArchivoUnico)) 
-            {
-                // Devuelve el nombre del archivo si se subió correctamente
-                return $nombreArchivoUnico;
-            }
-        }
-        return null; // Devuelve null si hubo un error al subir el archivo
-    }
-    
-    
-    function registrarAsistencia($conn, $idUsuario, $evento_id) 
-    {
-        // Verificar si el usuario ya tiene un registro para este evento
-        $sql = "SELECT * FROM registro_asistencia WHERE usuario_id = ? AND evento_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $idUsuario, $evento_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        // Si no hay un registro existente, crea uno nuevo
-        if ($result->num_rows === 0) 
-        {
-            $fechaHoraRegistro = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO registro_asistencia (usuario_id, evento_id, fecha_hora_registro) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sss", $idUsuario, $evento_id, $fechaHoraRegistro);
-    
-            if ($stmt->execute()) 
-            {
-                return true; // El registro de asistencia se creó exitosamente
-            } else {
-                return false; // Hubo un error al crear el registro
-            }
-        } 
-        else 
-        {
-            return false; // El usuario ya tiene un registro para este evento
-        }
-    }
-        
-    function getAccesoVisitante($conn, $idUsuario, $evento_id)
-    {
-        // Consulta SQL para buscar un registro del usuario para el evento especificado
-        $sql = "SELECT * FROM registro_asistencia WHERE usuario_id = ? AND evento_id = ?";
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $idUsuario, $evento_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // Comprobar si se encontró un registro
-        if ($result->num_rows > 0) 
-        {
-            // Si se encontró un registro, devolver un array con los datos
-            //return $result->fetch_assoc();
-            $array = $result->fetch_assoc();
-
-            //var_dump($array);            
-            return $array;
-            
-        } 
-        else 
-        {
-            // Si no se encontró un registro, devolver false
-            return false;
-        }
-    }
-
-    // Función para buscar mascotas por idOwner y devolver un array con los resultados
-    function buscarMascotasPorIdOwner($conn, $idOwner)
-    {
-        // Preparar la consulta
-        $query = "SELECT * FROM `mascotas` WHERE idOwner = '$idOwner' AND isActive=1";
-
-        // Ejecutar la consulta
+        $query = "SELECT productos.nombre, SUM(detallePedido.cantidad) as cantidadTotal
+                FROM detallePedido
+                INNER JOIN productos
+                ON detallePedido.idProducto = productos.idProducto
+                GROUP BY detallePedido.idProducto
+                ORDER BY cantidadTotal ASC
+                LIMIT 10";
         $result = mysqli_query($conn, $query);
-
-        // Verificar si se encontraron resultados
-        if (mysqli_num_rows($result) > 0) {
-            // Array para almacenar los resultados
-            $mascotas = array();
-
-            // Recorrer los resultados y añadirlos al array
-            while ($row = mysqli_fetch_assoc($result)) {
-                $mascotas[] = $row;
-            }
-
-            // Devolver el array de mascotas
-            return $mascotas;
-        } else {
-            // Si no se encontraron resultados, devolver un array vacío
-            return false;
-        }
-    }
-
-    function generarIdMascota($conn)
-    {
-        $sql = "SELECT idMascota FROM mascotas ORDER BY id DESC LIMIT 1";
-        $result = $conn->query($sql);
-
-        $newIdNumber = 1; // Valor predeterminado si no hay registros en la tabla
-
-        if ($result->num_rows > 0) {
-            $lastId = $result->fetch_assoc()['idMascota'];
-            $lastIdParts = explode('MSP', $lastId);
-            $newIdNumber = intval($lastIdParts[1]) + 1;
-        }
-
-        $newIdMascota = "MSP" . $newIdNumber;
-        return $newIdMascota;
-    }
-
-    function cargarFotoMascota($conn, $idCliente, $idMascota)
-    { 
-       
-        $salida = false;
-        // if ($FILES['fileToUpload']['size'] <= 0)
-        // {
-        //     return true;
-        //     exit;
-        // }
-
-        // Apunta a la carpeta del pedido
-        $target_dir = "users/" . $idCliente . "/mascotas/" . $idMascota . "/";
-
-        if (!is_dir($target_dir)) 
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        $target_file = $target_dir . "foto." . strtolower(pathinfo($_FILES['fotoMascota']['name'], PATHINFO_EXTENSION));
-        $extension = strtolower(pathinfo($_FILES['fotoMascota']['name'], PATHINFO_EXTENSION));
-        // Apunta al arhivo: "verifica/usr_docs/idCliente/Pagos/idPedido.ext"
-
-        $uploadOk = 1;
-
-        if(!is_dir($target_dir))
-        {
-            mkdir($target_dir, 0777, true);
-        }
-
-        // Allow certain file formats
-        $allowedExt = Array('jpg', 'png', 'jpeg', 'webp');
-
-        if(!in_array($extension, $allowedExt))
-        {
-            $msg = "Sólo se admiten archivos 'jpg', 'png', 'jpeg', y 'webp'";
-            $uploadOk = 0;
-        }
-
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0)
-        {
-            return false;
-            exit();
-            // if everything is ok, try to upload file
-        }
-        else
-        {
-            if (move_uploaded_file($_FILES["fotoMascota"]["tmp_name"], $target_file))
-            {
-                // echo "The file **" . $idPedido . "." . strtolower(pathinfo($_FILES['fotoMascota']['name'], PATHINFO_EXTENSION)) . "** has been uploaded.";
-                $nombre = "foto." . strtolower(pathinfo($_FILES['fotoMascota']['name'], PATHINFO_EXTENSION));
-                return $nombre;
-                exit();
-            }
-            else
-            {
-                // echo "Sorry, there was an error uploading your file.";
-                return false;
-                exit();
-            }
-        }
-
-    }
-
-    // REENVIO DE CORREO DE ACTIVACION
-    function reenvioActivacion()
-    {        
-        if (isset($_POST['email']) && isset($_POST['btnEnvioActivacion']))
-        {
-            // Almaceno email y limpio el dato
-            $email = limpiarDato($_POST['email']);
-
-            //Genero Token para activar la cuenta
-            $token = substr(str_shuffle("0123456789"), 0, 4);
-            //$token = base64_encode(openssl_random_pseudo_bytes(4));
-
-            // Genero el link que se enviará al correo, $urlActivacion en config.php
-            $linkActivacion = "<a href=' " . $urlActivacion . "app/verifica/index.php?email=". $email ."&token=". encodeToken($token) ."'>Activar ahora</a>";
-
-            // Ahora ingreso los valores previamente preparados
-            $inserto_usuario = mysqli_query($conn, "UPDATE `usuarios` SET `token` = '$token' WHERE email = '$email'");
-
-            // Verifico errores y preparo mensajes
-            if($inserto_usuario === TRUE)
-            {
-                $emailRecipiente  = $email;
-                $nombreRecipiente = $email;
-                $tituloCorreo 	  = "Activa tu cuenta vendy";
-                $cuerpoCorreo	  = '<!DOCTYPE html<html lang="es" dir="ltr<head><meta charset="utf-8"><title></title></head><body>';
-                $cuerpoCorreo	 .= "¡Felicidades! Estás a un paso de crear tu tienda vendy, usa el siguiente código para activar tu cuenta o da click en el enlace para activar tu cuenta: <br><br><b>" . $linkActivacion . "</b><br><br>Saludos.";
-                $cuerpoCorreo    .= "</body></html>";
-
-                enviaEmail($emailRecipiente, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo);
-                $message = "envioActivacionExitoso";
-            }
-            else
-            {
-                $message = "errorActivacion";
-            }
-
-            exit(header('Location: index.php?msg=' . $message));
-
-        }       
-    }
-    // FIN REENVIO DE CORREO DE ACTIVACION
-
-    function getDatosUsuario($conn, $idCliente)
-    {
-        // Consulta previa para obtener los resultados
-        $sql = "SELECT * FROM usuarios WHERE email = ?";
-        if ($stmt = $conn->prepare($sql)) 
-        {
-            $stmt->bind_param("s", $idCliente);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            
-            if ($result->num_rows > 0) 
-            {
-                $row = $result->fetch_assoc();
-                return $row;
-            } 
-            else 
-            { 
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    function generarTokenActivacion() 
-    {
-        $token = '';
-  
-        for ($i = 0; $i < 4; $i++) 
-        {
-            $randomDigit = random_int(0, 9);
-            $token .= $randomDigit;
-        }
-        
-        return $token;
-    }
-
-    function obtenerDatosDeContacto($conn, $idMascota) 
-    {
-        $query = "SELECT * FROM datosDeContacto WHERE idMascota = '$idMascota' ORDER BY idMediosDeContacto DESC, fechaRegistro ASC";
-        $result = mysqli_query($conn, $query);
-        
-        if (!$result || mysqli_num_rows($result) === 0) {
-            return false;
-        }
-        
-        $registros = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $registros[] = $row;
-        }
-        
-        return $registros;
-    }    
-    
-    function registraComprobante($conn, $nombreComprobante, $idPedido, $idCliente, $fechaPago)
-    {
-
-        // Registra el comprobante de pago cargado al servidor + datos del pedido
-        $sql = "UPDATE pedidos SET
-                    idEstatusPedido = 'EP-2',
-                    fechaPago = '$fechaPago',
-                    comprobantePago = '$nombreComprobante'
-                WHERE
-                    idPedido  = '$idPedido'
-                AND
-                    idCliente = '$idCliente'";
-
-        $response = false;
-        if (mysqli_query($conn, $sql))
-        {
-            //echo "New record created successfully";
-            $response = true;
-        }
-        return $response;
-
-    }
-
-    function getProductosComprados($conn, $idPedido, $idCliente)
-    {
-        $sql = "SELECT
-                    pedidos.*,
-                    tabla_gafetes.*
-                FROM
-                    pedidos
-                INNER JOIN tabla_gafetes ON
-                    tabla_gafetes.idPedido = pedidos.idPedido
-                WHERE
-                    pedidos.idPedido = '$idPedido'";
-
-        $result = mysqli_query($conn, $sql);
-
         if (mysqli_num_rows($result) > 0)
         {
-            // output data of each row
-            while($row = mysqli_fetch_assoc($result))
-            {
-                $data[]= $row;
-            }
-
-            return $data;
+        while($row = mysqli_fetch_array($result))
+        {
+            echo "Producto: " . $row['nombre'] . " | Cantidad vendida: " . $row['cantidadTotal'] . "<br>";
+        }
         }
         else
         {
-            return false;
+        echo "No hay resultados";
         }
     }
 
-    function getDatosPedido($conn, $idPedido, $idCliente)
+    function getTop10Vendidos($conn, $idTienda)
+    {
+        $query = "SELECT productos.nombre, SUM(detallePedido.cantidad) as cantidadTotal
+                FROM detallePedido
+                INNER JOIN productos
+                ON detallePedido.idProducto = productos.idProducto
+                GROUP BY detallePedido.idProducto
+                ORDER BY cantidadTotal DESC
+                LIMIT 10";
+        $result = mysqli_query($conn, $query);
+        if (mysqli_num_rows($result) > 0)
+        {
+            while($row = mysqli_fetch_array($result))
+            {
+            return "Producto: " . $row['nombre'] . " | Cantidad vendida: " . $row['cantidadTotal'] . "<br>";
+            }
+        }
+        else
+        {
+            return "No hay resultados";
+        }
+    }
+
+    function getTotalPedidosHoy($conn, $idTienda)
+    {
+        $dia = date("d");
+        $mes = date("m");
+        $anio = date("Y");
+        $query = "SELECT COUNT(*) as totalPedidos FROM pedidos WHERE MONTH(fechaPedido) = '$mes' AND DAY(fechaPedido) = '$dia' AND YEAR(fechaPedido) = '$anio' AND idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_array($result);
+        $totalPedidos = $row['totalPedidos'];
+        echo $totalPedidos;
+    }
+
+    function getTotalPedidosMesActual($conn, $idTienda)
+    {
+        $mesActual = date("m");
+        $query = "SELECT COUNT(*) as totalPedidos FROM pedidos WHERE MONTH(fechaPedido) = '$mesActual' AND idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_array($result);
+        $totalPedidos = $row['totalPedidos'];
+        echo $totalPedidos;
+    }
+
+    function getTotalVendidoDiaActual($conn, $idTienda)
+    {
+        $totalVendido = 0;
+        $fechaActual = date("Y-m-d");
+        $query = "SELECT total FROM pedidos WHERE fechaPedido BETWEEN '$fechaActual 00:00:00' AND '$fechaActual 23:59:59' AND idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $query);
+        while($row = mysqli_fetch_array($result)) {
+            $totalVendido += $row['total'];
+        }
+        echo $totalVendido;
+    }
+
+    function getTotalVendidoMesActual($conn, $idTienda)
+    {
+        $totalVendido = 0;
+        $mesActual = date("m");
+        $query = "SELECT total FROM pedidos WHERE MONTH(fechaPedido) = '$mesActual' AND idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $query);
+        while($row = mysqli_fetch_array($result))
+        {
+            $totalVendido += $row['total'];
+        }
+        echo number_format($totalVendido, 0);
+    }
+    // FIN DASHBOARD
+
+    function getCategoriasMasVendidas($conn, $idTienda)
     {
         $sql = "SELECT
-                    pedidos.*,
-                    CAT_estatusPedido.nombre AS estatusEnvio
+                    p.nombre,
+                    p.idProducto,
+                    p.unidadVenta,
+                    p.idCategoria,
+                    c.nombre AS nombreCategoria,
+                    COUNT(d.idPedido) AS num_pedidos,
+                    SUM(d.cantidad) AS cantidad_vendida
                 FROM
-                    pedidos
-                INNER JOIN CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
+                    detallePedido d
+                JOIN productos p ON
+                    d.idProducto = p.idProducto
+                INNER JOIN pedidos pe ON
+                    d.idPedido = pe.idPedido
+                JOIN categoriasTienda c ON
+                    p.idCategoria = c.idCategoria
                 WHERE
-                    pedidos.idCliente = '$idCliente' AND pedidos.idPedido = '$idPedido' AND pedidos.isActive = 1";
+                    pe.isActive = 1 AND pe.idTienda = '$idTienda'
+                GROUP BY
+                    p.idCategoria
+                ORDER BY
+                    cantidad_vendida
+                DESC LIMIT 5";
 
-        $result = mysqli_query($conn, $sql);
+        // Ejecución de la consulta
+        $resultado = mysqli_query($conn, $sql);
+
+        if ($resultado->num_rows == 0)
+        {
+            // No hay registros para la tienda en cuestión
+            return false;
+        }
+        else
+        {
+            $datos = array();
+            while ($fila = mysqli_fetch_assoc($resultado))
+            {
+            $datos[] = $fila;
+            }
+            return $datos;
+        }
+    }
+
+    function getProductosMasVendido($conn, $idTienda)
+    {
+        $sql = "SELECT p.nombre, p.idProducto, p.unidadVenta,
+                        COUNT(d.idPedido) AS num_pedidos,
+                        SUM(d.cantidad) AS cantidad_vendida,
+                        p.costo,
+                        p.precio,
+                        (p.precio - p.costo) AS margen_ganancia
+                FROM detallePedido d
+                JOIN productos p ON d.idProducto = p.idProducto
+                INNER JOIN pedidos pe ON d.idPedido = pe.idPedido
+                WHERE pe.isActive = 1
+                AND pe.idTienda = '$idTienda'
+                GROUP BY p.idProducto
+                ORDER BY cantidad_vendida DESC
+                LIMIT 10";
+
+        // Ejecución de la consulta
+        $resultado = mysqli_query($conn, $sql);
+
+        // Comprobación del resultado
+        if ($resultado->num_rows == 0)
+        {
+            // No hay registros para la tienda en cuestión
+            return false;
+        }
+        else
+        {
+            $datos = array();
+            while ($fila = mysqli_fetch_assoc($resultado))
+            {
+            $datos[] = $fila;
+            }
+            return $datos;
+        }
+    }
+
+    function consultarPedidosEfectivoTurno($conn, $idTienda, $fechaInicioTurno, $fechaActual)
+    {
+        $idMetodoDePago = "CASH";
+        $stmt = $conn->prepare("SELECT SUM(total) as total FROM pedidos WHERE idTienda = ? AND idMetodoDePago = ? AND isActive = 1 AND fechaPedido BETWEEN ? AND ? ORDER BY fechaPedido ASC");
+        $stmt->bind_param("ssss", $idTienda, $idMetodoDePago, $fechaInicioTurno, $fechaActual);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $pedidos = 0;
+
+        if ($result->num_rows > 0)
+        {
+            $row = $result->fetch_assoc();
+            $pedidos = $row['total'];
+        }
+        return $pedidos;
+    }
+
+
+    function obtener_ingresos_y_egresos_por_tienda($conn, $idTienda, $fechaInicioTurno, $fechaActual)
+    {
+        $result = array(
+            'ingresos' => 0,
+            'egresos' => 0
+        );
+
+        $fecha = date("Y-m-d");
+        $stmt = $conn->prepare("SELECT idTipoMovimiento, SUM(monto) as total FROM ingresos_egresos_Tienda WHERE idTienda = ? AND fechaMovimiento BETWEEN ? AND ? GROUP BY idTipoMovimiento");
+        $stmt->bind_param("sss", $idTienda, $fechaInicioTurno, $fechaActual);
+        $stmt->execute();
+        $stmt->bind_result($tipoMovimiento, $total);
+
+        while ($stmt->fetch()) {
+            if ($tipoMovimiento == "Ingreso Efectivo") {
+                $result['ingresos'] = $total;
+            } else if ($tipoMovimiento == "Egreso Efectivo") {
+                $result['egresos'] = $total;
+            }
+        }
+        return $result;
+    }
+
+
+    function isTurnoCajaActivo($conn, $idTienda, $idUsuario)
+    {
+        // Obtener el último registro de la tabla bitacoraCaja para la tienda en cuestión
+        $query = "SELECT * FROM bitacoraCaja WHERE idTienda='$idTienda' ORDER BY fechaApertura DESC LIMIT 1";
+        $result = $conn->query($query);
+        $efectivoInicial   = 0;
+        $fechaAperturaCaja = "";
+        $usuarioTurno = "";
+        $idTurno = "";
 
         if (!$result)
         {
-            return false;
+            // Error al ejecutar la consulta
+            $response = "errorConsulta";
+            $estatus = false;
         }
-
-        $data = array();
-
-        while ($row = mysqli_fetch_assoc($result))
+        else if ($result->num_rows == 0)
         {
-            $data = $row;
-        }
-
-        return $data;
-    }
-    
-    function generarIdPedido($conn)
-    {
-        // Obtenemos el último idPedido y generamos un nuevo ID de pedido
-        $sql = "SELECT idPedido FROM pedidos ORDER BY id DESC LIMIT 1";
-        $result = mysqli_query($conn, $sql);
-        $newNumber = 0;
-        
-        if (mysqli_num_rows($result) > 0)
-        {
-            $row = mysqli_fetch_assoc($result);
-            $lastIdPedido = $row["idPedido"];
-            $lastIdPedido = explode("CD", $lastIdPedido);
-            $lastNumber = (int) $lastIdPedido[1];
-            $newNumber = $lastNumber + 1;
-            $idPedido = "CD" . $newNumber;
+            // No hay registros para la tienda en cuestión
+            $response = "noHayRegistros";
+            $estatus = false;
         }
         else
         {
-            $idPedido = "CD1";
-        }
 
-        return $idPedido;
+            $row = $result->fetch_assoc();
+            $usuarioTurno      = $row['idUsuario'];
+            $fechaAperturaCaja = $row['fechaApertura'];
+            $idTurno           = $row['id'];
+
+            if ($row['fechaCierre'] === null)
+            {
+                // Existe un turno activo para la tienda en cuestión
+                if ($row['idUsuario'] === $idUsuario)
+                {
+                    // El turno activo es del usuario en cuestión
+                    $response = "turnoActivoUsuarioActual";
+                    $estatus  = true;
+                }
+                else
+                {
+                    // El turno activo no es del usuario en cuestión
+                    $response = "turnoActivoNotUsuarioActual";
+                    $estatus = false;
+                }
+                $efectivoInicial = $row['efectivoInicial'];
+            }
+            else
+            {
+                // No hay un turno activo para la tienda en cuestión
+                $response = "turnoCajaInactivo";
+                $estatus  = false;
+            }
+        }
+        return array('estatus'  => $estatus,
+                    'response' => $response,
+                    'efectivoInicial' => $efectivoInicial,
+                    'fechaApertura'   => $fechaAperturaCaja,
+                    'usuarioTurno'    => $usuarioTurno,
+                    'idTurno'         => $idTurno);
     }
 
-
-    function getEnviosTienda($conn)
+    function obtenerPedidosAbiertos($conn, $idTienda, $fechaInicio, $fechaFin)
     {
+
+
+        // Consulta SQL
         $sql = "SELECT
-        *
-        FROM
-            enviosTienda
-        WHERE
-            enviosTienda.isActive = 1
-        ORDER BY
-            enviosTienda.precioEnvio ASC";
+                        COUNT(idPedido) AS conteo
+                    FROM
+                        pedidos
+                    WHERE
+                        idEstatusPedido != 'EP-4'
+                    AND idTienda = '$idTienda'
+                    AND pedidos.isActive = 1";
 
-        $stmt = $conn->prepare($sql);
+        if (!is_null($fechaInicio) || !is_null($fechaFin))
+        {
+            $sql .= " AND DATE(fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'";
+        }
 
-        $stmt->execute();
-        $result = $stmt->get_result();
+        // echo $sql;
+        // Ejecutar la consulta
+        $resultados = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            $data = $result->fetch_all(MYSQLI_ASSOC);
-            return $data;
-        } else {
+        if (!$resultados)
+        {
             return false;
         }
 
+        $datos = [];
+        while ($fila = $resultados->fetch_assoc())
+        {
+            $datos = $fila;
+        }
+        return $datos;
     }
 
-    function getCategoriasTienda($conn, $managedStore)
+    function getVentasMetodoDePagoTienda($conn, $idTienda, $fechaInicio, $fechaFin)
     {
-        $sql = "SELECT c.idCategoria, c.nombre, COUNT(p.id) AS numProductos
-                FROM categoriasTienda c
-                LEFT JOIN productos p ON c.idCategoria = p.idCategoria AND p.idTienda = ?
-                WHERE c.idTienda = ?
-                GROUP BY c.idCategoria, c.nombre
-                ORDER BY c.nombre ASC, COUNT(p.id) ASC";
+        // Consulta SQL
+        $sql = "SELECT
+                    pedidos.idTienda,
+                    pedidos.idMetodoDePago,
+                    pedidos.fechaPedido,
+                    pedidos.fechaPago,
+                    pedidos.idPedido,
+                    pedidos.subtotal as subtotal_pedidos,
+                    pedidos.total as total_pedidos,
+                    CAT_metodoDePago.nombre as nombre_metodoPago,
+                    CAT_metodoDePago.icono as icono
+                FROM
+                    `pedidos`
+                LEFT JOIN CAT_metodoDePago
+                ON pedidos.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
+                WHERE pedidos.idTienda = '$idTienda'
+                AND DATE(pedidos.fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'
+                AND pedidos.isActive = 1
+                ORDER BY pedidos.fechaPedido
+                LIMIT 10"; // <-- Agregar la cláusula LIMIT aquí
 
-        $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "ss", $managedStore, $managedStore);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        return $data;
+        $resultados = $conn->query($sql);
+
+        if ($resultados->num_rows > 0)
+        {
+            $datos = [];
+            while ($fila = $resultados->fetch_assoc())
+            {
+                $datos[] = $fila;
+            }
+            return $datos;
+        }
+        else
+        {
+
+            return false;
+        }
     }
-    
 
-    function getGeneralesMascota($conn, $idMascota)
+    function getVentaGananciaPorMesTienda($conn, $idTienda)
     {
-        // Preparar la consulta
-        $query = "SELECT * FROM `mascotas` WHERE idMascota = '$idMascota'";
+        $anio = date("Y");
+        $sql = "SELECT
+                    MONTH(pedidos.fechaPedido) AS mes,
+                    ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2) AS total_Venta,
+                    ROUND(SUM(detallePedido.costoUnitario * detallePedido.cantidad), 2) AS total_Costo,
+                    ((ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2)) - (ROUND(SUM(detallePedido.costoUnitario * detallePedido.cantidad), 2))) AS total_Ganancia
+                FROM
+                    detallePedido
+                INNER JOIN pedidos ON detallePedido.idPedido = pedidos.idPedido
+                INNER JOIN tiendas ON pedidos.idTienda = tiendas.idTienda
+                WHERE
+                    tiendas.idTienda = '$idTienda' AND YEAR(pedidos.fechaPedido) = '$anio'
+                GROUP BY
+                    MONTH(pedidos.fechaPedido)";
 
-        // Ejecutar la consulta
+        $resultados = $conn->query($sql);
+
+        if (!$resultados)
+        {
+            return false;
+        }
+
+        $datos = [];
+
+        while ($fila = $resultados->fetch_assoc())
+        {
+            $datos[] = $fila;
+        }
+
+        $resultados->free();
+        return $datos;
+    }
+
+
+    function getGananciasPorPedido($conn)
+    {
+        $anio = date("Y");
+        $sql = "SELECT
+                    ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2) AS total_Venta,
+                    ROUND(SUM(detallePedido.costoUnitario * detallePedido.cantidad), 2) AS total_Costo,
+                    ((ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2))
+                    -
+                    (ROUND(SUM(detallePedido.costoUnitario * detallePedido.cantidad), 2))) AS total_Ganancia
+                FROM
+                    detallePedido
+                INNER JOIN pedidos ON detallePedido.idPedido = pedidos.idPedido
+                INNER JOIN tiendas ON pedidos.idTienda = tiendas.idTienda
+                WHERE
+                    tiendas.idTienda = 'velasartesanales' AND YEAR(pedidos.fechaPedido) = '$anio'
+                GROUP BY
+                    detallePedido.idPedido";
+
+        $resultados = $conn->query($sql);
+
+        if (!$resultados)
+        {
+            return false;
+        }
+
+        $datos = [];
+
+        while ($fila = $resultados->fetch_assoc())
+        {
+            $datos[] = $fila;
+        }
+
+        $resultados->free();
+        return $datos;
+    }
+
+    function getVentasGananciasTienda($conn, $idTienda, $fechaInicio, $fechaFin)
+    {
+        $fechaInicioUnix = strtotime($fechaInicio);
+        $fechaFinUnix = strtotime($fechaFin);
+
+        $fechaInicio = date('Y-m-d', $fechaInicioUnix);
+        $fechaFin = date('Y-m-d', $fechaFinUnix);
+
+        $query = "SELECT
+                    COUNT(DISTINCT(detallePedido.idPedido)) AS total_CantidadPedidos,
+                    ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2) AS total_Venta,
+                    ROUND(SUM(detallePedido.costoUnitario  * detallePedido.cantidad), 2) AS total_Costo,
+                    (
+                        (ROUND(SUM(detallePedido.precioUnitario * detallePedido.cantidad), 2))
+                        -
+                        (ROUND(SUM(detallePedido.costoUnitario  * detallePedido.cantidad), 2))
+                    ) AS total_Ganancia
+                FROM
+                    detallePedido
+                INNER JOIN
+                    pedidos ON detallePedido.idPedido = pedidos.idPedido
+                INNER JOIN
+                    tiendas ON pedidos.idTienda = tiendas.idTienda
+                WHERE
+                    tiendas.idTienda = '$idTienda'
+                AND
+                    DATE(pedidos.fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'
+                GROUP BY
+                    detallePedido.idTienda";
+
         $result = mysqli_query($conn, $query);
 
-        // Verificar si se encontraron resultados
-        if (mysqli_num_rows($result) > 0) 
+        if (mysqli_num_rows($result) == 0)
         {
-            // Array para almacenar los resultados
-            $mascotas = array();
-
-            // Recorrer los resultados y añadirlos al array
-            while ($row = mysqli_fetch_assoc($result)) 
-            {
-                $mascotas = $row;
-            }
-
-            // Devolver el array de mascotas
-            return $mascotas;
-        } 
-        else 
-        {
-            // Si no se encontraron resultados, devolver un array vacío
-            return false;
+            $rows = array(
+                'total_CantidadPedidos' => 0,
+                'total_Venta' => 0,
+                'total_Costo' => 0,
+                'total_Ganancia' => 0,
+            );
+            return $rows;
         }
+
+        $rows = array();
+        while ($row = mysqli_fetch_assoc($result))
+        {
+            $rows = $row;
+        }
+
+        return $rows;
+        var_dump($rows);
+    }
+
+    function getOperacionesIngresosTienda($conn, $idTienda, $fechaInicio, $fechaFin)
+    {
+
+        $venta_global = 0;
+        $ingreso_global = 0;
+
+        // echo $fechaInicio . " * " . $fechaFin . "<br>";
+        // CALCULO LA VENTA GLOBAL
+        echo $query = "SELECT * FROM
+                    pedidos
+                INNER JOIN
+                    CAT_metodoDePago
+                ON
+                    pedidos.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
+                WHERE
+                    pedidos.idTienda = '$idTienda'
+                AND
+                    DATE(pedidos.fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'
+                AND
+                    pedidos.isActive = 1";
+        echo "<br>";
+        $result = mysqli_query($conn, $query);
+
+        // Verificar si la consulta es exitosa
+        if (!$result)
+        {
+            die("La consulta a la base de datos ha fallado: " . mysqli_error($conn));
+        }
+
+        // Almacenar los resultados en un array
+        $ventaPedidos = array();
+        while ($row = mysqli_fetch_assoc($result))
+        {
+            $ventaPedidos[] = $row;
+        }
+
+
+        // echo "Venta Global: <br>";
+        // echo "<pre>";
+        foreach ($ventaPedidos as $venta)
+        {
+            echo $venta['icono'] . "";
+        }
+
+
+        // CALCULO INGRESO GLOBAL
+        $query = "SELECT COALESCE(ROUND(SUM(monto), 2), 0) as ingreso_global
+                FROM ingresos_egresos_Tienda
+                WHERE idTienda = '$idTienda'
+                AND idTipoMovimiento = 'Ingreso'
+                AND DATE(ingresos_egresos_Tienda.fechaMovimiento) BETWEEN '$fechaInicio' AND '$fechaFin'";
+
+        $resultIngresoTotal = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($resultIngresoTotal) == 0)
+        {
+            $ingreso_global = 0;
+        }
+        else
+        {
+            $rowDB = mysqli_fetch_assoc($resultIngresoTotal);
+            $ingreso_global = $rowDB['ingreso_global'];
+        }
+        // echo "Ingreso: ";
+        // var_dump($ingreso_global);
+        $total = 0;
+        $total += ($venta_global +$ingreso_global);
+
+        return $total;
     }
 
 
+    function getIngresosTienda($conn, $idTienda, $fechaInicio, $fechaFin)
+    {
+
+        $venta_global = 0;
+        $ingreso_global = 0;
+
+        // CALCULO LA VENTA GLOBAL
+        $query = "SELECT ROUND(SUM(pedidos.total), 2) as venta_global FROM pedidos
+                WHERE pedidos.idTienda = '$idTienda'
+                AND DATE(pedidos.fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'";
+        $resultVentaTotal = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($resultVentaTotal) == 0)
+        {
+            $venta_global = 0;
+        }
+        else
+        {
+            $rowDB = mysqli_fetch_assoc($resultVentaTotal);
+            $venta_global = $rowDB['venta_global'];
+        }
+
+        // echo "Venta Global: <br>";
+        // var_dump($venta_global);
+
+        // CALCULO INGRESO GLOBAL
+        $query = "SELECT COALESCE(ROUND(SUM(monto), 2), 0) as ingreso_global
+                FROM ingresos_egresos_Tienda
+                WHERE idTienda = '$idTienda'
+                AND idTipoMovimiento = 'Ingreso'
+                AND DATE(ingresos_egresos_Tienda.fechaMovimiento) BETWEEN '$fechaInicio' AND '$fechaFin'";
+
+        $resultIngresoTotal = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($resultIngresoTotal) == 0)
+        {
+            $ingreso_global = 0;
+        }
+        else
+        {
+            $rowDB = mysqli_fetch_assoc($resultIngresoTotal);
+            $ingreso_global = $rowDB['ingreso_global'];
+        }
+        // echo "Ingreso: ";
+        // var_dump($ingreso_global);
+        $total = 0;
+        $total += ($venta_global +$ingreso_global);
+
+        return $total;
+    }
+
+    function getEgresosTienda($conn, $idTienda, $fechaInicio, $fechaFin)
+    {
+        $venta_global = 0;
+        $ingreso_global = 0;
+
+        // CALCULO LA INVERSIÓN DE LOS PRODUCTOS
+        $query = "SELECT
+                    ROUND(SUM(detallePedido.costoUnitario * detallePedido.cantidad), 2) AS inversion_productos
+                FROM
+                    detallePedido
+                INNER JOIN
+                    pedidos ON detallePedido.idPedido = pedidos.idPedido
+                INNER JOIN
+                    tiendas ON pedidos.idTienda = tiendas.idTienda
+                WHERE
+                    tiendas.idTienda = '$idTienda'
+                AND
+                    DATE(pedidos.fechaPedido) BETWEEN '$fechaInicio' AND '$fechaFin'";
+
+        $resultInversionTotal = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($resultInversionTotal) == 0)
+        {
+            $inversion_productos = 0;
+        }
+        else
+        {
+            $rowDB = mysqli_fetch_assoc($resultInversionTotal);
+            $inversion_productos = $rowDB['inversion_productos'];
+        }
+
+        // echo "inversion_productos: <br>";
+        // var_dump($inversion_productos);
+
+        // CALCULO INGRESO GLOBAL
+        $query = "SELECT COALESCE(ROUND(SUM(monto), 2), 0) as egreso_global
+                FROM ingresos_egresos_Tienda
+                WHERE idTienda = '$idTienda'
+                AND idTipoMovimiento = 'Egreso'
+                AND DATE(ingresos_egresos_Tienda.fechaMovimiento) BETWEEN '$fechaInicio' AND '$fechaFin'";
+
+        $resultEgresoTotal = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($resultEgresoTotal) == 0)
+        {
+            $egreso_global = 0; // Fix: changed variable name to match
+        }
+        else
+        {
+            $rowDB = mysqli_fetch_assoc($resultEgresoTotal);
+            $egreso_global = $rowDB['egreso_global'];
+        }
+
+        // echo "Egreso: ";
+        // var_dump($egreso_global);
+
+        $total = 0;
+        $total += ($inversion_productos + $egreso_global);
+
+        return $total;
+    }
+
+    function existeBarcode($conn, $idTienda, $barcode)
+    {
+        $query = "SELECT barcode FROM productos WHERE idTienda = ? AND barcode = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ss", $idTienda, $barcode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
+    }
 
     function generarBarcode($conn, $idTienda)
     {
@@ -635,7 +711,1454 @@
         }
     }
 
-    
+    function getSucursalesTienda($conn, $idTienda)
+    {
+        $sucursales = array();
+        $sql = "SELECT * FROM sucursalesTienda WHERE idTienda = '$idTienda' AND isActive = 1 ORDER BY isPrincipal DESC, nombreSucursal ASC";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) == 0)
+        {
+            return false;
+        }
+        else
+        {
+            while ($row = mysqli_fetch_assoc($result))
+            {
+                $sucursales[] = $row;
+            }
+            return $sucursales;
+        }
+    }
+
+    function contarCarrito($idTienda)
+    {
+        $conteoProductos = 0;
+        $requiereEnvio   = false;
+
+        if (isset($_SESSION[$idTienda]))
+        {
+            foreach ($_SESSION[$idTienda] as $index => $value)
+            {
+                if ($_SESSION[$idTienda][$index]['unidadVenta'] == "Kilogramos")
+                {
+                    //echo "Kilos";
+                    $conteoProductos += 1;
+                }
+                else
+                {
+                    $conteoProductos += $_SESSION[$idTienda][$index]['stock'];
+                }
+                if (($_SESSION[$idTienda][$index]['requiereEnvio']+0) == 1)
+                {
+                    //echo "Suma<br>";
+                    $requiereEnvio = true;
+                }
+            }
+        }
+        return $conteoProductos;
+    }
+
+    function getDetallesProductoImg($conn, $idTienda, $idProducto)
+    {
+        $sql = "SELECT
+                    productos.*,
+                    imagenProducto.*
+                FROM
+                    productos
+                LEFT JOIN
+                    imagenProducto
+                ON
+                    productos.idTienda = imagenProducto.idTienda
+                AND
+                    productos.idProducto = imagenProducto.idProducto
+                WHERE
+                    imagenProducto.idTienda = '$idTienda'
+                AND
+                    productos.idTienda   = '$idTienda'
+                AND
+                    productos.isActive   = 1
+                AND
+                    productos.inventario > 0
+                AND
+                    productos.idProducto = '$idProducto'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) == 0) {
+            return false;
+        }
+
+        $rows = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    function getDatosProducto($conn, $idTienda, $barcode)
+    {
+        $sql = "SELECT
+                    producto.*, imgProducto.url AS url
+                FROM productos AS producto
+                LEFT JOIN
+                    imagenProducto AS imgProducto
+                ON
+                    producto.idProducto = imgProducto.idProducto
+                AND
+                    imgProducto.isPrincipal = 1
+                WHERE
+                    producto.idTienda = '$idTienda'
+                AND
+                    producto.isActive = 1
+                AND
+                    producto.barcode = '$barcode'
+                GROUP BY
+                    producto.nombre
+                ORDER BY
+                    producto.nombre ASC";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            $row = $result->fetch_assoc();
+            return $row;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function validarPickupTienda($conn, $idTienda)
+    {
+        $idTipoEnvio = "PIK";
+        $sql = "SELECT * FROM enviosTiendas WHERE idTienda = '$idTienda' AND idTipoEnvio = '$idTipoEnvio'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0)
+        {
+            // Hay resultados
+            return true;
+        }
+        else
+        {
+            // No hay resultados
+            return false;
+        }
+    }
+
+    function getImagenesProducto($conn, $idProducto, $idTienda)
+    {
+        // Preparar la consulta
+        $stmt = mysqli_prepare($conn, "SELECT * FROM imagenProducto WHERE idTienda = ? AND idProducto = ?");
+        mysqli_stmt_bind_param($stmt, "ss", $idTienda, $idProducto);
+
+        // Ejecutar la consulta
+        mysqli_stmt_execute($stmt);
+
+        // Obtener el resultado
+        $result = mysqli_stmt_get_result($stmt);
+
+        // Verificar si hay filas
+        if (mysqli_num_rows($result) === 0)
+        {
+            return false;
+        }
+
+        // Almacenar el resultado en un array
+        $imagenes = array();
+        while ($row = mysqli_fetch_assoc($result))
+        {
+            $imagenes[] = $row;
+        }
+        // Devolver el array con las imágenes
+        return $imagenes;
+    }
+
+    function getMetodosDePagoTienda($conn, $idTienda)
+    {
+        $query = "SELECT
+                    metodosDePagoTienda.*,
+                    CAT_metodoDePago.nombre,
+                    CAT_metodoDePago.icono,
+                    CAT_metodoDePago.hasOnlinePayment,
+                    CAT_metodoDePago.hasDeliveryPayment
+                FROM
+                    metodosDePagoTienda
+                INNER JOIN
+                    CAT_metodoDePago
+                ON
+                    metodosDePagoTienda.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
+                WHERE
+                    metodosDePagoTienda.idTienda = '$idTienda'
+                ORDER BY
+                    CAT_metodoDePago.nombre ASC";
+
+        $result = $conn->query($query);
+        $data = array();
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function guardarEnvioNuevo($conn, $idTienda, $nombreEnvio, $precioEnvio, $hasOnlinePayment, $hasDeliveryPayment)
+    {
+        $isActive    = 1;
+        $idTipoEnvio = "DOM";
+
+        // Consulta para verificar si ya existe un envío con el mismo nombre
+        $queryVerificacion = "SELECT id FROM enviosTiendas WHERE nombreEnvio = '$nombreEnvio' AND idTienda = '$idTienda'";
+        $resultadoVerificacion = mysqli_query($conn, $queryVerificacion);
+
+        // Si no se encuentra un envío con el mismo nombre, se procede a insertar
+            if (mysqli_num_rows($resultadoVerificacion) == 0)
+            {
+                // Consulta para insertar el nuevo envío
+                $query = "INSERT INTO enviosTiendas (idTipoEnvio, idTienda, nombreEnvio, precioEnvio, hasOnlinePayment, hasDeliveryPayment, isActive) VALUES ('$idTipoEnvio', '$idTienda', '$nombreEnvio', '$precioEnvio', '$hasOnlinePayment', '$hasDeliveryPayment', '$isActive')";
+
+                // Ejecución de la consulta
+                $resultado = mysqli_query($conn, $query);
+
+                if ($resultado)
+                {
+                    $respuesta["resultado"] = true;
+                }
+                else
+                {
+                    $respuesta["resultado"] = false;
+                    $respuesta["error"] = base64_encode("Error al insertar el nuevo envío: " . mysqli_error($conn));
+                }
+            }
+            else
+            {
+                $respuesta["resultado"] = false;
+                $respuesta["error"] = base64_encode("Ya existe un envío con el mismo nombre para la tienda especificada");
+            }
+            return $respuesta;
+
+    }
+
+    function getEnviosTiendaPago($conn, $idTienda)
+    {
+        $sql = "SELECT
+                    CAT_tipoEnvio.idEnvio,
+                    CAT_tipoEnvio.nombre,
+                    enviosTiendas.id,
+                    enviosTiendas.idTienda,
+                    enviosTiendas.nombreEnvio,
+                    enviosTiendas.precioEnvio,
+                    enviosTiendas.hasOnlinePayment,
+                    enviosTiendas.hasDeliveryPayment
+                FROM
+                    enviosTiendas
+                JOIN
+                    CAT_tipoEnvio
+                ON
+                    enviosTiendas.idTipoEnvio = CAT_tipoEnvio.idEnvio
+                WHERE
+                    CAT_tipoEnvio.isActive = 1
+                AND
+                    enviosTiendas.idTienda = ?
+                ORDER BY
+                    precioEnvio
+                ASC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $idTienda);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0)
+        {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getEnviosTiendaConfig($conn, $idTienda)
+    {
+        $sql = "SELECT
+                    CAT_tipoEnvio.idEnvio,
+                    CAT_tipoEnvio.nombre,
+                    enviosTiendas.id,
+                    enviosTiendas.idTienda,
+                    enviosTiendas.nombreEnvio,
+                    enviosTiendas.precioEnvio,
+                    enviosTiendas.hasOnlinePayment,
+                    enviosTiendas.hasDeliveryPayment
+                FROM
+                    enviosTiendas
+                JOIN
+                    CAT_tipoEnvio
+                ON
+                    enviosTiendas.idTipoEnvio = CAT_tipoEnvio.idEnvio
+                WHERE
+                    CAT_tipoEnvio.isActive = 1
+                AND
+                    enviosTiendas.idTienda = ?
+                AND
+                    CAT_tipoEnvio.idEnvio != 'PIK'
+                ORDER BY
+                    precioEnvio, nombre
+                ASC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $idTienda);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0)
+        {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getTiendasOwner($conn, $idUsuario)
+    {
+        $sql  = "SELECT * FROM tiendas WHERE administradoPor = ? AND isActive = 1";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $idUsuario);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $count  = mysqli_num_rows($result);
+        if ($count === 0) {
+            return false;
+        } else {
+            $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $data;
+        }
+    }
+
+    function isIdTiendaAvailable($conn, $idTienda)
+    {
+
+        // Realizar la consulta en la base de datos para verificar si el idTienda existe
+        $sql = "SELECT COUNT(*) FROM tiendas WHERE idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $sql);
+
+        // Verificar si la consulta fue exitosa
+        if (!$result)
+        {
+            return false;
+        }
+
+        // Obtener el número de filas afectadas por la consulta
+        $row = mysqli_fetch_array($result);
+        $count = $row[0];
+
+        // Verificar si el idTienda existe en la base de datos
+        if ($count > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    function generaIdCategoria($conn, $idTienda)
+    {
+        // Generar una cadena única de longitud fija utilizando SHA-256
+        $idCategoria = hash('sha256', uniqid());
+        $idCategoria = substr($idCategoria, 0, 28);
+
+        // Verificar si el ID aleatorio ya está en uso en la tabla de categorías
+        $query = "SELECT * FROM categoriasTienda WHERE idCategoria = '$idCategoria' AND idTienda = '$idTienda'";
+        $result = mysqli_query($conn, $query);
+
+        // Si el ID aleatorio ya está en uso, volver a generar un ID aleatorio
+        while (mysqli_num_rows($result) > 0)
+        {
+            $idCategoria = hash('sha256', uniqid());
+            $idCategoria = substr($idCategoria, 0, 28);
+            $result = mysqli_query($conn, $query);
+        }
+
+        // Devolver el ID único generado
+        return $idCategoria;
+    }
+
+
+    function getDetallesProducto($conn, $idPedido, $idCliente, $idTienda)
+    {
+        $sql = "SELECT
+                    productos.*,
+                    detallePedido.*
+                FROM
+                    detallePedido
+                INNER JOIN productos ON
+                    (
+                        (
+                            detallePedido.idTienda = productos.idTienda
+                        ) AND(
+                            detallePedido.idProducto = productos.idProducto
+                        )
+                    )
+                WHERE
+                    detallePedido.idPedido  = '$idPedido'
+                AND
+                    detallePedido.idCliente = '$idCliente'
+                AND
+                    detallePedido.idTienda  = '$idTienda'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            $i = 0;
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data[$i]["idProducto"]       = $row["idProducto"];
+                $data[$i]["idTienda"]         = $row["idTienda"];
+                $data[$i]["nombre"]           = $row["nombre"];
+                $data[$i]["descripcion"]      = $row["descripcion"];
+                $data[$i]["idPedido"]         = $row["idPedido"];
+                $data[$i]["cantidad"]         = $row["cantidad"];
+                $data[$i]["precioUnitario"]   = $row["precioUnitario"];
+                $i++;
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function decodeIdVendedor($encoded)
+    {
+        return base64_decode(base64_decode($encoded));
+    }
+
+    function encodeIdVendedor($encoded)
+    {
+        return base64_encode(base64_encode($encoded));
+    }
+
+    function getProductosTiendaPOS($conn, $idTienda, $limiteRegistros)
+    {
+        $sql = "SELECT
+                    productos.*,
+                    imagenProducto.url
+                FROM
+                    productos
+                LEFT JOIN
+                    imagenProducto
+                ON
+                    productos.idProducto = imagenProducto.idProducto
+                AND
+                    productos.idTienda   = imagenProducto.idTienda
+                WHERE
+                    productos.idTienda = '$idTienda'
+                AND productos.isActive = 1
+                AND imagenProducto.isPrincipal = 1
+                ORDER BY productos.id DESC, productos.inventario DESC";
+
+        if ($limiteRegistros>1)
+        {
+            $sql .= " LIMIT $limiteRegistros;";
+        }
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getProductosTiendaPerfilPublico($conn, $idTienda, $limiteRegistros)
+    {
+        $sql = "SELECT
+        productos.*,
+        imagenProducto.url,
+        categoriasTienda.nombre as nombreCategoria
+    FROM
+        productos
+    LEFT JOIN
+        imagenProducto ON productos.idProducto = imagenProducto.idProducto AND productos.idTienda = imagenProducto.idTienda AND imagenProducto.isPrincipal = 1
+    LEFT JOIN
+        categoriasTienda ON productos.idCategoria = categoriasTienda.idCategoria
+    WHERE
+        productos.idTienda = '$idTienda' AND productos.isActive = 1 AND productos.isActiveOnlineStore = 1
+    ORDER BY
+        categoriasTienda.nombre ASC, productos.nombre ASC;
+    ";
+
+        if ($limiteRegistros>1)
+        {
+            $sql .= " LIMIT $limiteRegistros;";
+        }
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function hasCalificacionPedido($conn, $idPedido)
+    {
+        $query = "SELECT * FROM reputacionTienda WHERE idPedido = '$idPedido'";
+
+        // echo $query;
+        if(!$conn)
+        {
+            die("Error al conectar con la base de datos: " . mysqli_connect_error());
+        }
+
+        $result = mysqli_query($conn, $query);
+
+        if(mysqli_num_rows($result) > 0)
+        {
+            $reputacion = array();
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $reputacion = $row;
+            }
+            return $reputacion;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getPedidosCalificados($conn, $idTienda)
+    {
+        $query = "SELECT
+                    pedidos.*,
+                    reputacionTienda.*,
+                    usuarios.*
+                FROM
+                    pedidos
+                INNER JOIN reputacionTienda ON pedidos.idTienda = reputacionTienda.idTienda AND pedidos.idPedido = reputacionTienda.idPedido
+                INNER JOIN usuarios ON reputacionTienda.idCliente = usuarios.email
+                WHERE
+                    pedidos.idTienda = '$idTienda'";
+
+        // echo $query;
+        if(!$conn)
+        {
+            die("Error al conectar con la base de datos: " . mysqli_connect_error());
+        }
+
+        $result = mysqli_query($conn, $query);
+
+        if(mysqli_num_rows($result) > 0)
+        {
+            $reputacion = array();
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $reputacion[] = $row;
+            }
+            return $reputacion;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getDireccionesCliente($conn, $idCliente)
+    {
+
+        // Creamos la consulta SQL
+        $sql = "SELECT * FROM direccionesClientes WHERE idCliente = '$idCliente' AND isActive = 1";
+
+        // Ejecutamos la consulta
+        $result = mysqli_query($conn, $sql);
+
+        // Verificamos si la consulta ha devuelto algún resultado
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getTotalesPorUsuario($conn, $idTienda, $fechaInicio, $fechaFin)
+    {
+
+        // Creamos la consulta SQL
+        $sql = "SELECT
+                    COUNT(*) AS num_registros,
+                    SUM(SUBSTRING_INDEX(total, ';', 1)) AS subtotal,
+                    SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(total, ';', 2), ';', -1)) AS descuento,
+                    SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(total, ';', 3), ';', -1)) AS envio,
+                    SUM(SUBSTRING_INDEX(total, ';', -1)) AS total
+                FROM pedidos
+                WHERE email = '$idTienda'
+                AND fechaPedido
+                BETWEEN '$fechaInicio'
+                AND '$fechaFin'";
+
+        // Ejecutamos la consulta
+        $result = mysqli_query($conn, $sql);
+
+        // Verificamos si la consulta ha devuelto algún resultado
+        if (mysqli_num_rows($result) > 0)
+        {
+            // Si hay resultados, obtenemos el primer y único resultado
+            $row = mysqli_fetch_assoc($result);
+
+            // Devolvemos el resultado como un array
+            return $row;
+        }
+        else
+        {
+            // Si no hay resultados, devolvemos false
+            return false;
+        }
+    }
+
+    function getArticulosTienda($conn, $managedStore)
+    {
+        $managedStore ."<br>";
+        $sql = "SELECT
+                    productos.*,
+                    categoriasTienda.nombre AS nombreCategoria
+                FROM
+                    productos
+                INNER JOIN categoriasTienda ON productos.idCategoria = categoriasTienda.idCategoria
+                WHERE
+                    productos.idTienda = ?
+                AND productos.isActive = 1";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $managedStore);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        return $data;
+    }
+
+    function getCategoriasTienda($conn, $managedStore)
+    {
+        $sql = "SELECT c.idCategoria, c.nombre, COUNT(p.id) AS numProductos
+                FROM categoriasTienda c
+                LEFT JOIN productos p ON c.idCategoria = p.idCategoria AND p.idTienda = ?
+                WHERE c.idTienda = ?
+                GROUP BY c.idCategoria, c.nombre
+                ORDER BY c.nombre ASC, COUNT(p.id) ASC";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $managedStore, $managedStore);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        return $data;
+    }
+
+    function getCategoriasConProductos($conn, $managedStore)
+    {   
+        $sql = "SELECT c.idCategoria, IFNULL(c.nombre, 'Sin categoria') AS nombre
+                FROM categoriasTienda c
+                LEFT JOIN (
+                    SELECT DISTINCT idCategoria
+                    FROM productos
+                    WHERE idTienda = ? AND isActive = 1
+                ) p ON c.idCategoria = p.idCategoria
+                WHERE c.idTienda = ? AND (p.idCategoria IS NOT NULL OR c.idCategoria IS NULL)
+                ORDER BY nombre ASC";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $managedStore, $managedStore);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        return $data;
+    }
+
+
+    function validarPagoActivo($conn, $idTienda)
+    {
+        $query = "SELECT *
+                FROM payments
+                WHERE idTienda = ?
+                ORDER BY fechaInicioPlan DESC
+                LIMIT 1";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $idTienda);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0)
+        {
+            // No hay pagos para esta tienda
+            return false;
+        }
+
+        $row = $result->fetch_assoc();
+
+        $fechaInicioUltimoPago = new DateTime($row['fechaInicioPlan']);
+        $fechaInicioUltimoPago->setTime(0, 0, 0);
+
+        $fechaFinUltimoPago = new DateTime($row['fechaFinPlan']);
+        $fechaFinUltimoPago->setTime(0, 0, 0);
+
+        $fechaActual = new DateTime();
+        $fechaActual->setTime(0, 0, 0);
+
+        $existePagoActivo = false;
+        if ($fechaActual >= $fechaInicioUltimoPago && $fechaActual <= $fechaFinUltimoPago)
+        {
+            $existePagoActivo = true;
+        }
+
+        $diasTranscurridos = $fechaInicioUltimoPago->diff($fechaActual)->format('%a');
+
+        $diasRestantes = 0;
+        if ($fechaFinUltimoPago > $fechaActual)
+        {
+            $diasRestantes = $fechaActual->diff($fechaFinUltimoPago)->format('%a');
+        }
+
+        $diasExpirado = 0;
+        if ($fechaActual > $fechaFinUltimoPago)
+        {
+            $diasExpirado = $fechaFinUltimoPago->diff($fechaActual)->format('%a');
+        }
+
+        return array(
+            'fechaInicioUltimoPago' => $fechaInicioUltimoPago,
+            'fechaFinUltimoPago' => $fechaFinUltimoPago,
+            'existePagoActivo' => $existePagoActivo,
+            'diasTranscurridos' => $diasTranscurridos,
+            'diasRestantes' => $diasRestantes,
+            'diasExpirado' => $diasExpirado
+        );
+    }
+
+    function ocultarNombreCliente($string)
+    {
+        // Obtener el primer caracter de la cadena
+        $first_char = ucwords(substr($string, 0, 1));
+
+        // Obtener la longitud de la cadena
+        $string_length = strlen($string);
+
+        // Generar una cadena de asteriscos con la longitud de la cadena menos 1 (para excluir el primer caracter)
+        $mask = str_repeat('*', $string_length - 1);
+
+        // Devolver la cadena con el primer caracter y la máscara de asteriscos
+        return $first_char . $mask;
+    }
+
+    function showStars($rating)
+    {
+        $fullStars = intval($rating / 2);
+        $halfStar = ($rating / 2) - $fullStars >= 0.5;
+        $emptyStars = 5 - $fullStars - ($halfStar ? 1 : 0);
+
+        if ($rating < 1)
+        {
+        echo '<i class="fas fa-star-half-alt text-yellow"></i>';
+        }
+        else
+        {
+            for ($i = 0; $i < $fullStars; $i++)
+            {
+                echo '<i class="fas fa-star text-yellow"></i>';
+            }
+            if ($halfStar)
+            {
+                echo '<i class="fas fa-star-half-alt text-yellow"></i>';
+            }
+        }
+
+        for ($i = 0; $i < $emptyStars; $i++)
+        {
+            echo '<i class="far fa-star text-yellow"></i>';
+        }
+    }
+
+    function getComentariosTienda($conn, $idTienda)
+    {
+        $sql = "SELECT reputacionTienda.*, usuarios.*, pedidos.idPedido
+                FROM reputacionTienda
+                INNER JOIN usuarios ON reputacionTienda.idCliente = usuarios.email
+                INNER JOIN pedidos ON reputacionTienda.idPedido = pedidos.idPedido
+                WHERE reputacionTienda.idTienda = '$idTienda' AND reputacionTienda.comentario IS NOT NULL
+                AND pedidos.isActive = 1
+                ORDER BY RAND()
+                LIMIT 5";
+
+
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result)
+        {
+            // Si hay un error en la ejecución de la consulta, se muestra un mensaje y se detiene la ejecución del script
+            die("Error al ejecutar la consulta: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            $comentarios = array();
+            while ($row = mysqli_fetch_assoc($result))
+            {
+            $comentarios[] = $row;
+            }
+            return $comentarios;
+            // echo "ok";
+        }
+        else
+        {
+            return false;
+            // echo "error";
+        }
+    }
+
+    function getReputacionTienda($conn, $tienda)
+    {
+        $idTienda = $tienda['idTienda'];
+        // Verificar la conexión
+        if (!$conn)
+        {
+            return false;
+        }
+
+        // Preparar el query
+        $sql = "SELECT
+                    AVG(reputacionTienda.calificacion) AS calificacion
+                FROM
+                    reputacionTienda
+                INNER JOIN pedidos ON reputacionTienda.idPedido = pedidos.idPedido
+                WHERE
+                    pedidos.isActive = 1 
+                AND    
+                    pedidos.idTienda = '$idTienda';";
+
+        // Ejecutar el query
+        $result = mysqli_query($conn, $sql);
+
+        // Verificar si se obtuvo algún resultado
+        if (mysqli_num_rows($result) == 0)
+        {
+            return false;
+        }
+
+        // Obtener el resultado como un array asociativo
+        $row = mysqli_fetch_assoc($result);
+
+        // Cerrar la conexión a la base de datos
+        // mysqli_close($conn);
+
+        // Verificar si se obtuvo una calificación nula
+        if (is_null($row['calificacion']))
+        {
+            return false;
+        }
+
+        // Devolver el array con la información
+        return $row;
+    }
+
+    function restaInventarioProducto($conn, $idTienda, $idProducto, $stock)
+    {
+
+        $sql ="UPDATE `productos` SET inventario = inventario - $stock WHERE idTienda = '$idTienda' AND idProducto = '$idProducto'";
+
+        if (mysqli_query($conn, $sql))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+
+    }
+
+    function getProductosComprados($conn, $idPedido, $idTienda)
+    {
+        $sql = "SELECT
+                    productos.*,
+                    detallePedido.*
+                FROM
+                    detallePedido
+                INNER JOIN productos ON
+                    (
+                        (
+                            detallePedido.idTienda = productos.idTienda
+                        ) AND(
+                            detallePedido.idProducto = productos.idProducto
+                        )
+                    )
+                WHERE
+                    detallePedido.idPedido = '$idPedido' AND detallePedido.idTienda = '$idTienda'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+                $data[]= $row;
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function cierrePedido($conn, $idPedido, $idCliente, $idTienda)
+    {
+        $fechaCierrePedido = date("Y-m-d h:i:s");
+        $sql = "UPDATE pedidos SET idEstatusPedido = 'EP-4', fechaCierrePedido = '$fechaCierrePedido' WHERE idPedido = '$idPedido' AND idTienda = '$idTienda'";
+
+        $response = false;
+        if (mysqli_query($conn, $sql))
+        {
+            //echo "New record created successfully";
+            $response = true;
+        }
+
+        return $response;
+
+    }
+
+    function guardarEnvio($conn, $guiaEnvio, $nombrePaqueteria, $fechaEnvio, $idPedido, $idCliente)
+    {
+
+        if (empty($guiaEnvio) || empty($nombrePaqueteria))
+        {
+            $sql = "UPDATE pedidos SET fechaEnvio = '$fechaEnvio', idEstatusPedido = 'EP-3' WHERE idPedido = '$idPedido' AND idCliente = '$idCliente'";
+        }
+        else
+        {
+            $sql = "UPDATE pedidos SET guiaEnvio = '$guiaEnvio', paqueteriaEnvio = '$nombrePaqueteria', fechaEnvio = '$fechaEnvio', idEstatusPedido = 'EP-3' WHERE idPedido = '$idPedido' AND idCliente = '$idCliente'";
+        }
+
+        $response = false;
+        if (mysqli_query($conn, $sql))
+        {
+            //echo "New record created successfully";
+            $response = true;
+        }
+        return $response;
+    }
+
+    function registraComprobante($conn, $nombreComprobante, $idPedido, $idCliente, $fechaPago, $hasFile)
+    {
+
+
+        if (is_bool($hasFile) && $hasFile == true)
+        {
+            // Registra el comprobante de pago cargado al servidor + datos del pedido
+            $sql = "UPDATE pedidos SET
+                        idEstatusPedido = 'EP-2',
+                        fechaPago = '$fechaPago',
+                        comprobantePago = '$nombreComprobante'
+                    WHERE
+                        idPedido  = '$idPedido'
+                    AND
+                        idCliente = '$idCliente'";
+        }
+        else
+        {
+            // Registra datos del pedido sin comprobante de pago
+            $sql = "UPDATE pedidos SET
+                        idEstatusPedido = 'EP-2',
+                        fechaPago = '$fechaPago'
+                    WHERE
+                        idPedido = '$idPedido'
+                    AND
+                        idCliente = '$idCliente'";
+        }
+
+        if (is_null($fechaPago))
+        {
+            $sql = "UPDATE pedidos SET comprobantePago = '$nombreComprobante' WHERE idPedido = '$idPedido' AND idCliente = '$idCliente'";
+        }
+        // echo $nombreComprobante;
+
+        $response = false;
+        if (mysqli_query($conn, $sql))
+        {
+            //echo "New record created successfully";
+            $response = true;
+        }
+        return $response;
+
+    }
+
+    function cargarComprobante($conn, $idCliente, $idPedido)
+    {
+        $sql = "SELECT idTienda FROM pedidos WHERE idCliente = '$idCliente' AND idPedido = '$idPedido'";
+        $resultado = mysqli_query($conn, $sql);
+
+        // Verificación del resultado
+        if ($resultado)
+        {
+            // La consulta se ejecutó correctamente
+            $fila = mysqli_fetch_assoc($resultado);
+            $idTienda = $fila['idTienda'];
+        }
+        // else
+        // {
+        //     // Ocurrió un error al ejecutar la consulta
+        //     return false;
+        //     exit;
+        // }
+
+        $salida = false;
+        // if ($FILES['fileToUpload']['size'] <= 0)
+        // {
+        //     return true;
+        //     exit;
+        // }
+
+        // Apunta a la carpeta del pedido
+        $target_dir = "verifica/usr_docs/" . $idTienda . "/pedidos/" . $idPedido . "/";
+
+        if(is_dir($target_dir))
+        {
+        }
+        else
+        {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $target_file = $target_dir . $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+        // Apunta al arhivo: "verifica/usr_docs/idCliente/Pagos/idPedido.ext"
+
+        $uploadOk = 1;
+
+        if(!is_dir($target_dir))
+        {
+            mkdir($target_dir, 0777, true);
+        }
+
+        // Check if file already exists
+        // if (file_exists($target_file))
+        // {
+        //     echo "Sorry, file already exists.";
+        //     $uploadOk = 0;
+        // }
+
+        // Check file size
+        // if ($_FILES["fileToUpload"]["size"] > 500000)
+        // {
+        //     echo "Sorry, your file is too large.";
+        //     $uploadOk = 0;
+        // }
+
+        // Allow certain file formats
+        $allowedExt = Array('jpg', 'png', 'jpeg', 'pdf', 'webp');
+
+        if(!in_array($extension, $allowedExt))
+        {
+            $msg = "Sólo se admiten archivos 'jpg', 'png', 'jpeg' y 'pdf'. ";
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0)
+        {
+            return false;
+            exit();
+            // if everything is ok, try to upload file
+        }
+        else
+        {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
+            {
+                // echo "The file **" . $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION)) . "** has been uploaded.";
+                $nombre = $idPedido . "." . strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
+                return $nombre;
+                exit();
+            }
+            else
+            {
+                // echo "Sorry, there was an error uploading your file.";
+                return false;
+                exit();
+            }
+        }
+
+    }
+
+    function getDatosCliente($conn, $idCliente)
+    {
+        $sql = "SELECT
+                *
+                FROM
+                usuarios
+                WHERE
+                    email = '$idCliente'
+                AND isActive = 1";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data["nombre"]   = $row["nombre"];
+                $data["paterno"]  = $row["paterno"];
+                $data["materno"]  = $row["materno"];
+                $data["telefono"] = $row["telefono"];
+
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getNombreVendedor($conn, $idVendedor)
+    {
+        $sql = "SELECT
+                *
+                FROM
+                usuarios
+                WHERE
+                    email = '$idVendedor'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data["nombre"]   = $row["nombre"];
+                $data["paterno"] = $row["paterno"];
+                $data["materno"]  = $row["materno"];
+
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getListadoMediosContactoDisponible($conn, $idTienda)
+    {
+        $sql = "SELECT * FROM CAT_mediosContacto
+                WHERE idMediosContacto
+                NOT IN
+                (
+                    SELECT DISTINCT idMediosContacto
+                    FROM contactoTiendas
+                    WHERE isActive = 1 AND idTienda = '$idTienda'
+                )
+                AND isActive = 1 ORDER BY alias ASC";
+
+
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0)
+        {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getMediosContactoVendedor($conn, $idTienda)
+    {
+        $sql = "SELECT
+                    contactoTiendas.*,
+                    CAT_mediosContacto.*
+                FROM
+                    contactoTiendas
+                INNER JOIN
+                    CAT_mediosContacto ON contactoTiendas.idMediosContacto = CAT_mediosContacto.idMediosContacto
+                WHERE
+                    contactoTiendas.idTienda = '$idTienda' AND contactoTiendas.isActive = 1
+                ORDER BY
+                    CAT_mediosContacto.alias
+                DESC";
+
+
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0)
+        {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getDireccionPedidoDetalle($conn, $idEnvio, $idDireccionEnvio, $idCliente, $idTienda)
+    {
+
+        // e/cho $idEnvio . "<br>" . $idDireccionEnvio . "<br>" . $idCliente . "<br>" . $idTienda;
+        $consultaDB = 0;
+        $recolectarSucursal = 0;
+        $msg = "";
+        $output = Array();
+
+        switch ($idEnvio)
+        {
+
+        case 'DOM': // Paquetería
+            $consultaDB = 1;
+            $output['msg'] = "Recibirás tu paquete en:";
+            break;
+
+        case 'PIK': // Sucursal
+            $consultaDB = 1;
+            $recolectarSucursal = 1;
+            $output['msg'] = "Podrás recolectar tu paquete en:";
+            break;
+
+
+        default:
+            // code...
+            break;
+
+        }
+        //echo "consultaDB: " . $consultaDB . "<br>";
+
+        if ($consultaDB)
+        {
+            $datos;
+            $i = 0;
+
+            if ($recolectarSucursal)
+            {
+
+                $sql = "SELECT * FROM sucursalesTienda WHERE idTienda = '$idTienda' AND idSucursal = '$idDireccionEnvio'";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0)
+                {
+                    // output data of each row
+                    while ($row = mysqli_fetch_assoc($result))
+                    {
+                        $datos['id']              = $row['id'];
+                        $datos['idSucursal']      = $row['idSucursal'];
+                        $datos['nombreSucursal']  = $row['nombreSucursal'];
+                        $datos['codigoPostal']    = $row['codigoPostal'];
+                        $datos['estado']          = $row['estado'];
+                        $datos['isPrincipal']     = $row['isPrincipal'];
+
+
+                        $datos['calle']     = $row['calle'];
+                        $datos['numeroExterior']     = $row['numeroExterior'];
+                        $datos['interiorDepto']     = $row['interiorDepto'];
+                        $datos['colonia']     = $row['colonia'];
+
+                        $datos['codigoPostal']     = $row['codigoPostal'];
+                        $datos['municipioAlcaldia']     = $row['municipioAlcaldia'];
+                        $datos['estado']     = $row['estado'];
+                    }
+
+                    $direccion  = "";
+                    $direccion .= ucfirst($datos['calle']) . ' ' . $datos['numeroExterior'];
+
+                    if (!empty($datos['interiorDepto']))
+                    {
+                        $direccion .= ', No. Interior o Depto. ' . $datos['interiorDepto'];
+                    }
+
+                    $direccion .= ', Colonia ' . $datos['colonia'] . ', C.P. ' . $datos['codigoPostal'] . ', Municipio/Alcaldía: ' . $datos['municipioAlcaldia'] . ', ' . $datos['estado'];
+
+                    $output['alias']     = $datos['nombreSucursal'];
+                    $output['direccion'] = $direccion;
+
+                    return $output;
+                }
+                else
+                {
+                    return $output;
+                }
+
+            }
+            else
+            {
+
+                $sql = "SELECT * FROM direccionesClientes WHERE idCliente = '$idCliente' AND idDireccion = '$idDireccionEnvio'";
+                $result = mysqli_query($conn, $sql);
+
+                if (mysqli_num_rows($result) > 0)
+                {
+                    // output data of each row
+                    while ($row = mysqli_fetch_assoc($result))
+                    {
+                        $output['direccion'] = $row['direccion'];
+                        $output['alias']     = $row['aliasDireccion'];
+                    }
+
+                    return $output;
+                }
+                else
+                {
+                    return $output;
+                }
+
+            }
+
+        }
+        else
+        {
+            return $output;
+        }
+
+    }
+
+    function getDatosPedidoCliente($conn, $idPedido, $idCliente)
+    {
+        $sql = "SELECT
+                    pedidos.*,
+                    CAT_estatusPedido.nombre AS estatusEnvio
+                FROM
+                    pedidos
+                INNER JOIN 
+                    CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
+                WHERE
+                    pedidos.idCliente = '$idCliente' 
+                AND 
+                    pedidos.idPedido = '$idPedido' 
+                AND 
+                    pedidos.isActive = 1";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result)
+        {
+            return false;
+        }
+
+        $data = array();
+
+        while ($row = mysqli_fetch_assoc($result))
+        {
+            $data = $row;
+        }
+
+        return $data;
+    }
+
+    function getDatosPedido($conn, $idPedido, $idTienda)
+    {
+        $sql = "SELECT
+                    CAT_estatusPedido.*,
+                    pedidos.*,
+                    CAT_metodoDePago.nombre AS nombreMetodoPago
+                FROM
+                    pedidos
+                INNER JOIN CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
+                LEFT JOIN CAT_metodoDePago ON pedidos.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
+                WHERE
+                    pedidos.idPedido = '$idPedido' AND pedidos.idTienda = '$idTienda' AND pedidos.isActive = 1;";
+
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0)
+        {
+            $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+            return $row;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function generarIDSucursal($conn)
+    {
+        // Obtener el último consecutivo registrado en la tabla pedidos
+        $sql = "SELECT MAX(CAST(RIGHT(idSucursal, LENGTH(idSucursal) - 4) AS UNSIGNED)) AS ultimo_consecutivo
+                FROM sucursalesTienda
+                WHERE idSucursal REGEXP '^SUC-[0-9]+$'";
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            $row = mysqli_fetch_assoc($result);
+            $ultimo_consecutivo = $row['ultimo_consecutivo'];
+        }
+        else
+        {
+            // Si no hay registros, empezar desde 1
+            $ultimo_consecutivo = 0;
+        }
+
+        // Generar el nuevo consecutivo
+        $nuevo_consecutivo = $ultimo_consecutivo + 1;
+
+        // Construir el nuevo idPedido con el formato ddmmyyyy-consecutivo
+        $nuevo_idPedido = 'SUC-' . $nuevo_consecutivo;
+
+        return $nuevo_idPedido;
+    }
 
     function generaIdDireccionEntrega($conn, $idCliente)
     {
@@ -814,7 +2337,7 @@
         <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tr>
         <td class="pad" style="text-align:center;width:100%;">
-        <h1 style="margin: 0; color: #754aff; direction: ltr; font-family: "Cabin", Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 33px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><a href="httsp://mayoristapp.mx" rel="noopener" style="color: #754aff;" target="_blank">mayoristapp.mx</a></h1>
+        <h1 style="margin: 0; color: #754aff; direction: ltr; font-family: "Cabin", Arial, "Helvetica Neue", Helvetica, sans-serif; font-size: 33px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><a href="https://vendy.click" rel="noopener" style="color: #754aff;" target="_blank">Vendy</a></h1>
         </td>
         </tr>
         </table>
@@ -841,7 +2364,7 @@
         <table border="0" cellpadding="0" cellspacing="0" class="image_block block-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tr>
         <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
-        <div align="center" class="alignment" style="line-height:10px"><img alt="Pedido Enviado" class="big" src="https://mayoristapp.mx/app/assets/img/mail/pedido-enviado.png" style="display: block; height: auto; border: 0; width: 441px; max-width: 100%;" title="Pedido Enviado" width="441"/></div>
+        <div align="center" class="alignment" style="line-height:10px"><img alt="Pedido Enviado" class="big" src="https://vendy.click/app/assets/img/mail/pedido-enviado.png" style="display: block; height: auto; border: 0; width: 441px; max-width: 100%;" title="Pedido Enviado" width="441"/></div>
         </td>
         </tr>
         </table>
@@ -849,12 +2372,12 @@
         <tr>
         <td class="pad" style="padding-bottom:40px;padding-top:30px;text-align:center;">
         <div align="center" class="alignment">
-        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://mayoristapp.mx/app/detalleCompra.php?id=';
+        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://vendy.click/app/detalleCompra.php?id=';
 
             $data .= $idPedido;
             $data .='" style="height:56px;width:180px;v-text-anchor:middle;" arcsize="9%" stroke="false" fillcolor="#4f7eef"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:18px"><![endif]-->
 
-            <a href="https://mayoristapp.mx/app/detalleCompra.php?id=';
+            <a href="https://vendy.click/app/detalleCompra.php?id=';
 
             $data .= $idPedido;
             $data .= '" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#4f7eef;border-radius:5px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:10px;padding-bottom:10px;font-family:Oswald, Arial, Helvetica Neue, Helvetica, sans-serif;font-size:18px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
@@ -905,8 +2428,8 @@
         <tr>
         <td class="pad" style="padding-left:20px;padding-right:20px;text-align:left;padding-bottom:20px;">
         <div align="left" class="alignment">
-        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://mayoristapp.mx/#registro" style="height:44px;width:152px;v-text-anchor:middle;" arcsize="19%" stroke="false" fillcolor="#dbe430"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#000000; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
-            <a href="https://mayoristapp.mx/#registro" style="text-decoration:none;display:inline-block;color:#000000;background-color:#dbe430;border-radius:8px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:10px;padding-bottom:10px;font-family:Oswald, Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
+        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://vendy.click/#registro" style="height:44px;width:152px;v-text-anchor:middle;" arcsize="19%" stroke="false" fillcolor="#dbe430"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#000000; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
+            <a href="https://vendy.click/#registro" style="text-decoration:none;display:inline-block;color:#000000;background-color:#dbe430;border-radius:8px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:10px;padding-bottom:10px;font-family:Oswald, Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
                     <span style="padding-left:25px;padding-right:25px;font-size:16px;display:inline-block;letter-spacing:normal;">
                             <span dir="ltr" style="word-break: break-word; line-height: 24px;">
                                     CREAR MI TIENDA
@@ -923,7 +2446,7 @@
         <table border="0" cellpadding="0" cellspacing="0" class="image_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
         <tr>
         <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;padding-top:25px;">
-        <div align="center" class="alignment" style="line-height:10px"><img alt="Back to School" src="https://mayoristapp.mx/app/assets/img/mail/tienda-ejemplo.png" style="display: block; height: auto; border: 0; width: 146px; max-width: 100%;" title="Back to School" width="146"/></div>
+        <div align="center" class="alignment" style="line-height:10px"><img alt="Back to School" src="https://vendy.click/app/assets/img/mail/tienda-ejemplo.png" style="display: block; height: auto; border: 0; width: 146px; max-width: 100%;" title="Back to School" width="146"/></div>
         </td>
         </tr>
         </table>
@@ -977,7 +2500,7 @@
         <td class="pad">
         <div style="font-family: Tahoma, Verdana, sans-serif">
         <div class="" style="font-size: 12px; font-family: "Ubuntu", Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #ffffff; line-height: 1.2;">
-        <p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><span style="font-size:26px;"><strong><a href="httsp://mayoristapp.mx" rel="noopener" style="color: #ffffff;" target="_blank">mayoristapp.mx</a></strong></span><span style="font-size:18px;"><a href="httsp://mayoristapp.mx" rel="noopener" style="text-decoration: underline; color: #ffffff;" target="_blank"></a></span></p>
+        <p style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 19.2px;"><span style="font-size:26px;"><strong><a href="httsp://vendy.click" rel="noopener" style="color: #ffffff;" target="_blank">vendy.click</a></strong></span><span style="font-size:18px;"><a href="httsp://vendy.click" rel="noopener" style="text-decoration: underline; color: #ffffff;" target="_blank"></a></span></p>
         </div>
         </div>
         </td>
@@ -1163,7 +2686,7 @@
     <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
     <tr>
     <td class="pad" style="text-align:center;width:100%;padding-top:40px;">
-    <h1 style="margin: 0; color: #ffffff; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><a href="mayoristapp.mx" rel="noopener" style="text-decoration: none; color: #ffffff;" target="_blank"><span class="tinyMce-placeholder">mayoristapp.mx</span></a></h1>
+    <h1 style="margin: 0; color: #ffffff; direction: ltr; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><a href="vendy.click" rel="noopener" style="text-decoration: none; color: #ffffff;" target="_blank"><span class="tinyMce-placeholder">Vendy</span></a></h1>
     </td>
     </tr>
     </table>
@@ -1225,7 +2748,7 @@
     <table border="0" cellpadding="0" cellspacing="0" class="image_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
     <tr>
     <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
-    <div align="center" class="alignment" style="line-height:10px"><img alt="Alternate text" class="big" src="https://mayoristapp.mx/app/assets/img/mail/plantillaOrdenConfirmada/round_corner.png" style="display: block; height: auto; border: 0; width: 680px; max-width: 100%;" title="Alternate text" width="680"/></div>
+    <div align="center" class="alignment" style="line-height:10px"><img alt="Alternate text" class="big" src="https://vendy.click/app/assets/img/mail/plantillaOrdenConfirmada/round_corner.png" style="display: block; height: auto; border: 0; width: 680px; max-width: 100%;" title="Alternate text" width="680"/></div>
     </td>
     </tr>
     </table>
@@ -1250,7 +2773,7 @@
     <td class="pad" style="padding-bottom:10px;padding-left:35px;padding-right:10px;padding-top:35px;">
     <div style="font-family: sans-serif">
     <div class="" style="font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #030303; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:18px;"><strong><span style="">Dirección de envío</span></strong></span></p>
+    <p style="margin: 0; font-size: 14px; mso-line-height-alt: 16.8px;"><span style="font-size:18px;"><strong><span style="">Dirección de envío:</span></strong></span></p>
     </div>
     </div>
     </td>
@@ -1318,7 +2841,7 @@
     <tr>
     <td class="pad" style="padding-bottom:15px;padding-left:35px;padding-right:10px;padding-top:55px;text-align:left;">
     <div align="left" class="alignment">
-    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://mayoristapp.mx/app/detalleCompra.php?id='. $idPedido .'" style="height:42px;width:171px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href="https://mayoristapp.mx/app/detalleCompra.php?id='. $idPedido .'" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:0px solid #E17370;font-weight:400;border-right:0px solid #E17370;border-bottom:0px solid #E17370;border-left:0px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:40px;padding-right:40px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">Ver Detalle </span></span></a>
+    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://vendy.click/app/detalleCompra.php?id='. $idPedido .'" style="height:42px;width:171px;v-text-anchor:middle;" arcsize="10%" stroke="false" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href="https://vendy.click/app/detalleCompra.php?id='. $idPedido .'" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:0px solid #E17370;font-weight:400;border-right:0px solid #E17370;border-bottom:0px solid #E17370;border-left:0px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:40px;padding-right:40px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">Ver Detalle </span></span></a>
     <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
     </div>
     </td>
@@ -1393,7 +2916,7 @@
     <tr>
     <td class="pad" style="padding-bottom:15px;padding-left:35px;padding-right:10px;padding-top:10px;text-align:left;">
     <div align="left" class="alignment">
-    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://mayoristapp.mx/app/detalleCompra.php?id=' . $idPedido . '" style="height:36px;width:189px;v-text-anchor:middle;" arcsize="12%" strokeweight="0.75pt" strokecolor="#E17370" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:12px"><![endif]--><a href="https://mayoristapp.mx/app/detalleCompra.php?id=' . $idPedido . '" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:1px solid #E17370;font-weight:400;border-right:1px solid #E17370;border-bottom:1px solid #E17370;border-left:1px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:12px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:30px;padding-right:30px;font-size:12px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 24px;">Cargar comprobante</span></span></a>
+    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://vendy.click/app/detalleCompra.php?id=' . $idPedido . '" style="height:36px;width:189px;v-text-anchor:middle;" arcsize="12%" strokeweight="0.75pt" strokecolor="#E17370" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:12px"><![endif]--><a href="https://vendy.click/app/detalleCompra.php?id=' . $idPedido . '" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:1px solid #E17370;font-weight:400;border-right:1px solid #E17370;border-bottom:1px solid #E17370;border-left:1px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:12px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:30px;padding-right:30px;font-size:12px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 24px;">Cargar comprobante</span></span></a>
     <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
     </div>
     </td>
@@ -1909,7 +3432,7 @@
     <td class="pad">
     <div style="font-family: sans-serif">
     <div class="" style="font-size: 12px; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-    <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 24px;"><span style="font-size:16px;">Gracias por usar <span style="color:#ffffff;"><a href="https://mayoristapp.mx" rel="noopener" style="text-decoration: none; color: #ffffff;" target="_blank"><strong>mayoristapp.mx</strong></a></span><span style="background-color:#ffffff;"><a href="https://mayoristapp.mx" rel="noopener" style="text-decoration: none; background-color: #ffffff; color: #ffffff;" target="_blank"></a></span></span></p>
+    <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 24px;"><span style="font-size:16px;">Gracias por usar <span style="color:#ffffff;"><a href="https://vendy.click" rel="noopener" style="text-decoration: none; color: #ffffff;" target="_blank"><strong>vendy.click</strong></a></span><span style="background-color:#ffffff;"><a href="https://vendy.click" rel="noopener" style="text-decoration: none; background-color: #ffffff; color: #ffffff;" target="_blank"></a></span></span></p>
     </div>
     </div>
     </td>
@@ -1986,7 +3509,7 @@
     <tr>
     <td class="pad" style="padding-bottom:10px;padding-left:35px;padding-right:10px;padding-top:10px;text-align:left;">
     <div align="left" class="alignment">
-    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://mayoristapp.mx/#registro" style="height:44px;width:188px;v-text-anchor:middle;" arcsize="10%" strokeweight="0.75pt" strokecolor="#E17370" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href="https://mayoristapp.mx/#registro" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:1px solid #E17370;font-weight:400;border-right:1px solid #E17370;border-bottom:1px solid #E17370;border-left:1px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">Crear mi tienda</span></span></a>
+    <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://vendy.click/#registro" style="height:44px;width:188px;v-text-anchor:middle;" arcsize="10%" strokeweight="0.75pt" strokecolor="#E17370" fillcolor="#e17370"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Tahoma, sans-serif; font-size:16px"><![endif]--><a href="https://vendy.click/#registro" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#e17370;border-radius:4px;width:auto;border-top:1px solid #E17370;font-weight:400;border-right:1px solid #E17370;border-bottom:1px solid #E17370;border-left:1px solid #E17370;padding-top:5px;padding-bottom:5px;font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank"><span style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:normal;"><span dir="ltr" style="word-break: break-word; line-height: 32px;">Crear mi tienda</span></span></a>
     <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
     </div>
     </td>
@@ -2009,8 +3532,8 @@
     <div align="center" class="alignment">
     <table border="0" cellpadding="0" cellspacing="0" class="social-table" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;" width="94px">
     <tr>
-    <td style="padding:0 15px 0 0px;"><a href="https://instagram.com/" target="_blank"><img alt="Instagram" height="32" src="https://mayoristapp.mx/app/assets/img/mail/plantillaOrdenConfirmada/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a></td>
-    <td style="padding:0 15px 0 0px;"><a href="https://www.whatsapp.com" target="_blank"><img alt="WhatsApp" height="32" src="https://mayoristapp.mx/app/assets/img/mail/plantillaOrdenConfirmada/whatsapp2x.png" style="display: block; height: auto; border: 0;" title="WhatsApp" width="32"/></a></td>
+    <td style="padding:0 15px 0 0px;"><a href="https://instagram.com/" target="_blank"><img alt="Instagram" height="32" src="https://vendy.click/app/assets/img/mail/plantillaOrdenConfirmada/instagram2x.png" style="display: block; height: auto; border: 0;" title="Instagram" width="32"/></a></td>
+    <td style="padding:0 15px 0 0px;"><a href="https://www.whatsapp.com" target="_blank"><img alt="WhatsApp" height="32" src="https://vendy.click/app/assets/img/mail/plantillaOrdenConfirmada/whatsapp2x.png" style="display: block; height: auto; border: 0;" title="WhatsApp" width="32"/></a></td>
     </tr>
     </table>
     </div>
@@ -2087,17 +3610,13 @@
                 $datos['telefono']  = $row['telefono'];
                 $datos['email']     = $row['email'];
                 $datos['username']  = $row['username'];
-
                 $i++;
             }
-
 
             return $datos;
         }
         else
         {
-
-
             return false;
         }
 
@@ -2110,8 +3629,12 @@
 
         $consultaDB = 0;
         $recolectarSucursal = 0;
-        $msg = "";
-
+        $msg = "Empty";
+        
+        
+        echo "<br>Dirección Envio";
+        var_dump($idDireccionEnvio);
+        
         switch ($idEnvio)
         {
 
@@ -2139,6 +3662,12 @@
         case 'E-5': // No Aplica
             $consultaDB = 0;
             $msg = "No requiere entrega.";
+            break;
+
+        case 'DOM': // No Aplica
+            $consultaDB = 1;            
+            $recolectarSucursal = 0;
+            $msg = "Recibirás tu paquete en:<br><br>";
             break;
 
         default:
@@ -2254,19 +3783,45 @@
 
     function getInventarioProducto($conn, $idTienda, $idProducto)
     {
-        $sql = "SELECT * FROM productos WHERE idTienda = '$idTienda' AND idProducto = '$idProducto' AND isActive = 1";
-        $result = mysqli_query($conn, $sql);
-        $stock = 0;
-        if (mysqli_num_rows($result) > 0)
+        // Utiliza sentencias preparadas para evitar SQL injection
+        $sql = "SELECT inventario FROM productos WHERE idTienda = ? AND idProducto = ? AND isActive = 1";
+        
+        // Preparar la sentencia
+        $stmt = mysqli_prepare($conn, $sql);
+        
+        // Verificar si la preparación de la sentencia fue exitosa
+        if ($stmt) 
         {
-            // output data of each row
-            while($row = mysqli_fetch_assoc($result))
+            // Asociar los parámetros y ejecutar la consulta
+            mysqli_stmt_bind_param($stmt, "ss", $idTienda, $idProducto);
+            mysqli_stmt_execute($stmt);
+            
+            // Obtener el resultado de la consulta
+            mysqli_stmt_store_result($stmt);
+            
+            // Verificar si se encontraron resultados
+            if (mysqli_stmt_num_rows($stmt) > 0) 
             {
-                $stock = $stock + $row['inventario'];
+                // Asociar el resultado a una variable
+                mysqli_stmt_bind_result($stmt, $inventario);
+                
+                // Inicializar la variable de inventario
+                $stock = 0;
+                
+                // Recorrer los resultados
+                while (mysqli_stmt_fetch($stmt)) 
+                {
+                    $stock += $inventario;
+                }
+                
+                // Cerrar la sentencia preparada
+                mysqli_stmt_close($stmt);
+                
+                return $stock;
             }
         }
-
-        return $stock;
+        
+        return 0; // Devolver 0 si no se encontraron resultados o hubo un error
     }
 
     function getDatosTienda($conn, $idTienda)
@@ -2296,10 +3851,11 @@
 
         // Obtengo inventario del producto de la base de datos
         $inventarioDB = getInventarioProducto($conn, $idTienda, $idProducto); // editar sql
+
         // Valido si regresó info o viene en false
         if ($inventarioDB == 0)
         {
-            $response = "stockInsuficiente";                
+            $response = "stockInsuficiente";
         }
         else
         {
@@ -2519,15 +4075,15 @@
             $mail->Host      = 'smtp.hostinger.com';
             // $mail->Port      = 587;
             $mail->SMTPAuth  = true;
-            $mail->Username  = 'contacto@conejondigital.com';
-            $mail->Password  = 'conej0n1128A1$';
+            $mail->Username  = 'contacto@vendy.click';
+            $mail->Password  = 'kaka4545A1$$$';
             //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
             $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
-            $mail->setFrom('contacto@conejondigital.com', 'Conejón Digital');
-            $mail->addReplyTo('contacto@conejondigital.com', 'Conejón Digital');
+            $mail->setFrom('contacto@vendy.click', 'vendy.click');
+            $mail->addReplyTo('contacto@vendy.click', 'vendy.click');
             $mail->addAddress($emailRecipiente, $nombreRecipiente);
 
             // $mail->addReplyTo('info@example.com', 'Information');
@@ -2550,9 +4106,8 @@
         }
         catch (Exception $e)
         {
-            
-            //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             return false;
+            //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
 
     }

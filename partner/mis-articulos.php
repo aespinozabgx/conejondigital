@@ -14,6 +14,7 @@
     $hasActivePayment = array();
     $hasActivePayment['existePagoActivo'] = true;
     
+    $idTienda = "conejondigital";
 
 ?>
 <!DOCTYPE html>

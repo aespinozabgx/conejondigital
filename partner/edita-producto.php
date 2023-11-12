@@ -1,9 +1,8 @@
 <?php
 
-    session_start();
-
-    require 'php/conexion_db.php'; //configuración conexión db
-    require 'php/funciones.php'; //configuración conexión db
+    session_start(); 
+    require '../app/php/conexion.php';
+    require 'php/funciones.php';
 
     if (isset($_SESSION['email']) && isset($_GET['id']))
     {
@@ -112,9 +111,9 @@
         <div id="layoutSidenav">
             <?php
                 // Menú (sidenav)
-                if (file_exists('src/sidenav.php'))
+                if (file_exists('src/sideMenu.php'))
                 {
-                    include 'src/sidenav.php';
+                    include 'src/sideMenu.php';
                 }
             ?>
             <div id="layoutSidenav_content">
@@ -255,7 +254,7 @@
                         <form action="procesa.php" id="formulario" method="post" enctype="multipart/form-data" >
                             <div class="row">
 
-                                <div class="col-xl-6 col-xxl-12 mb-4">
+                                <div class="col-xl-6 col-xxl-6 mb-4">
                                     <!-- Datos del producto -->
                                     <div class="card card-header-actions h-100 mb-4">
                                         <div class="card-header">
@@ -380,7 +379,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6 col-xxl-12 mb-4">
+                                <div class="col-xl-6 col-xxl-6 mb-4">
                                     <!-- Inicio Bloque 2 -->
 
                                     <div style="display:block;" class="mb-2" id="segundoBloque">

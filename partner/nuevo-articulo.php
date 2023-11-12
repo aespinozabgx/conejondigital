@@ -1,20 +1,25 @@
 <?php
-    session_start();
-    require 'php/conexion_db.php'; //configuración conexión db
-    require 'php/funciones.php'; //configuración conexión db
-
+    session_start();  
+    
+    require '../app/php/conexion.php';
+    require '../app/php/funciones.php';
+ 
+    $hasActivePayment = array();
+    $hasActivePayment['existePagoActivo'] = true;
+    $_SESSION['managedStore'] = "conejondigital";
 
     // Validar si está configurada la tienda, si no hay redirecciona a al cofiguración
     if (!isset($_SESSION['managedStore']) || empty($_SESSION['managedStore']))
     {
         exit(header('Location: setup_tienda.php'));
     }
+
     if (isset($_SESSION['email'], $_SESSION['managedStore']))
     {
         $email    = $_SESSION['email'];
         $idTienda = $_SESSION['managedStore'];
     }
-    $hasActivePayment = validarPagoActivo($conn, $idTienda);
+    //$hasActivePayment = validarPagoActivo($conn, $idTienda);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -68,8 +73,10 @@
             {
                 position: fixed;
                 bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%); 
+                /* left: 50%;
+                transform: translateX(-50%);  */
+                right: 25px;
+                
             }
 
 
@@ -89,9 +96,9 @@
         <div id="layoutSidenav">
             <?php
                 // Menú (sidenav)
-                if (file_exists('src/sidenav.php'))
+                if (file_exists('src/sideMenu.php'))
                 {
-                    include 'src/sidenav.php';
+                    include 'src/sideMenu.php';
                 }
             ?>
             <div id="layoutSidenav_content">
@@ -453,7 +460,7 @@
                             <!-- <button type="submit" onclick="return validarFormulario();" class="btn btn-primary circle flotante rounded-pill fs-400 fs-6 shadow-sm" name="btnAltaProducto">1Guardar</button> -->
                                         
                             <div class="mybutton">
-                                <button type="submit" onclick="return validarFormulario();" class="btn btn-primary circle rounded-pill fs-400 fs-6 shadow-sm" name="btnAltaProducto">Guardar</button>
+                                <button type="submit" onclick="return validarFormulario();" class="btn btn-primary circle rounded-pill fs-400 fs-6 shadow-sm" name="btnAltaProducto">Registrar producto</button>
                             </div>
 
                         </form>

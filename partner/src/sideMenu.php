@@ -50,6 +50,7 @@
                         ?>
                         
                         <a class="nav-link" href="mis-articulos.php">Articulos</a>
+                        <a class="nav-link" href="mis-categorias.php">Categorías</a>
                         
                         <?php                       
 

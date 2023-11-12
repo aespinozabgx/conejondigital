@@ -1,3 +1,28 @@
+<!-- modal eliminar categoria Inicio-->
+<div class="modal fade" id="modalEliminarCategoria" tabindex="-1" aria-labelledby="modalEliminarCategoriaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarCategoriaLabel">Eliminar categoría</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+            <form class="" action="procesa.php" method="post">
+                <div class="modal-body">
+                    ¿Deseas eliminar esta categoría?
+                    <input type="hidden" name="idCategoriaEliminar" id="idCategoriaEliminar" value="" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger" name="btnEliminarCategoria">Sí, eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- modal eliminar categoria Fin -->
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -49,55 +74,56 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <?php
-                                    foreach ($detallesProducto as $key => $val)
-                                    {
-                                        ?>
-                                        <tr class="border-bottom small">
-                                            <td>
-                                                <div class="fw-bold">
-                                                    <!-- <a href="../detalleProducto.php?idProducto=<?php echo $val['idProducto']; ?>&idVendedor=<?php //echo $val['idVendedor']; ?>" target="_blank"><?php //echo $val['nombre']; ?></a> -->
-                                                    <?php echo $val['nombre']; ?>
-                                                </div>
-                                                <div class="small text-muted d-none d-md-block">
-                                                    <?php
-                                                        echo mb_strimwidth($val['descripcion'], 0, 100, "...");
-                                                    ?>
-                                                </div>
-                                            </td>
-
-                                            <?php $unidadVenta = $val['unidadVenta'] === 'Kilogramos' ? 'Kgs.' : 'Pz(s).'; ?>
-                                            <td class="text-end fs-6 fw-300 small">
-                                                <?php echo $val['cantidad'] . " " . $unidadVenta; ?>
-                                            </td>
-
-                                            <td class="text-end fw-700 text-end">
-                                                <div class="d-flex justify-content-center">
-                                                    <?php
-                                                        if ($val['unidadVenta'] === 'Kilogramos') 
-                                                        {
-                                                        ?>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="" value="1" name="<?php echo $val['idProducto']; ?>">                                                            
+                                        if(isset($detallesProducto))
+                                        {                                    
+                                            foreach ($detallesProducto as $key => $val)
+                                            {
+                                                ?>
+                                                <tr class="border-bottom small">
+                                                    <td>
+                                                        <div class="fw-bold">
+                                                            <!-- <a href="../detalleProducto.php?idProducto=<?php echo $val['idProducto']; ?>&idVendedor=<?php //echo $val['idVendedor']; ?>" target="_blank"><?php //echo $val['nombre']; ?></a> -->
+                                                            <?php echo $val['nombre']; ?>
                                                         </div>
-                                                        <?php
-                                                        }
-                                                        else
-                                                        {
-                                                        ?>
-                                                            <input type="number" class="form-control border border-3 rounded-3 poppins-font shadow-none text-center" value="0" max="<?php echo $val['cantidad']; ?>" min="0" name="<?php echo $val['idProducto']; ?>" required>
-                                                        <?php
-                                                        }
-                                                        
-                                                    ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
+                                                        <div class="small text-muted d-none d-md-block">
+                                                            <?php
+                                                                echo mb_strimwidth($val['descripcion'], 0, 100, "...");
+                                                            ?>
+                                                        </div>
+                                                    </td>
 
+                                                    <?php $unidadVenta = $val['unidadVenta'] === 'Kilogramos' ? 'Kgs.' : 'Pz(s).'; ?>
+                                                    <td class="text-end fs-6 fw-300 small">
+                                                        <?php echo $val['cantidad'] . " " . $unidadVenta; ?>
+                                                    </td>
+
+                                                    <td class="text-end fw-700 text-end">
+                                                        <div class="d-flex justify-content-center">
+                                                            <?php
+                                                                if ($val['unidadVenta'] === 'Kilogramos') 
+                                                                {
+                                                                ?>
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" type="checkbox" id="" value="1" name="<?php echo $val['idProducto']; ?>">                                                            
+                                                                </div>
+                                                                <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                ?>
+                                                                    <input type="number" class="form-control border border-3 rounded-3 poppins-font shadow-none text-center" value="0" max="<?php echo $val['cantidad']; ?>" min="0" name="<?php echo $val['idProducto']; ?>" required>
+                                                                <?php
+                                                                }
+                                                                
+                                                            ?>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -205,6 +231,31 @@
 
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modalCategoriasPost" tabindex="-1" aria-labelledby="modalCategoriasPostLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header bg-white border-1 border-bottom">
+        <h5 class="modal-title text-primary fw-500" id="modalDatosPagoLabel"> Nueva Categoría </h5>
+        <button type="button" class="btn btn-icon btn-outline-indigo btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+      <div class="modal-body bg-white text-gray border-0 rounded-bottom">
+          <!-- Formulario de registro de categorías -->
+          <form id="" action="procesa.php" method="post">
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control sin-borde border-indigo text-dark text-center" placeholder="Electrónicos, Abarrotes, Etc" aria-label="Categoría" aria-describedby="Categoría" id="categoria" name="categoria" autocomplete="off" required>
+                <button class="btn btn-indigo border-1 sin-borde" type="submit" name="btnRegistrarCategoria">Registrar</button>
+            </div>
+
+          </form>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal Calificar Pedido -->

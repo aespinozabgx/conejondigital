@@ -1,9 +1,11 @@
 <?php
     session_start();
 
-    require 'php/conexion_db.php'; //configuración conexión db
-    require 'php/funciones.php'; //configuración conexión db
-
+   
+    require '../app/php/conexion.php';
+    require '../app/php/funciones.php';
+    $hasActivePayment = array();
+    $hasActivePayment['existePagoActivo'] = true;
     if (isset($_SESSION['email']))
     {
         $email = $_SESSION['email'];
@@ -11,7 +13,7 @@
 
     $idTienda = $_SESSION['managedStore'];
     $categorias = getCategoriasTienda($conn, $idTienda);
-    $hasActivePayment = validarPagoActivo($conn, $idTienda);
+    //$hasActivePayment = validarPagoActivo($conn, $idTienda);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -75,9 +77,9 @@
         <div id="layoutSidenav">
             <?php
               // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
+              if (file_exists('src/sideMenu.php'))
               {
-                include 'src/sidenav.php';
+                include 'src/sideMenu.php';
               }
             ?>
             <div id="layoutSidenav_content">
@@ -122,66 +124,68 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <table id="datatablesSimple" class="table table-hover ">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Productos activos</th>
-                                                    <th>Detalle</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Nombre</th>
-                                                    <th>Productos activos</th>
-                                                    <th>Detalle</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <?php
-                                                    if ($categorias != false)
-                                                    {
-                                                        foreach ($categorias as $key => $value)
+                                        <div class="table-responsive">
+                                            <table id="datatablesSimple" class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Productos activos</th>
+                                                        <th>Detalle</th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>Nombre</th>
+                                                        <th>Productos activos</th>
+                                                        <th>Detalle</th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    <?php
+                                                        if ($categorias != false)
                                                         {
-                                                            echo "<tr class='align-middle'>";
-                                                            ?>
-
-                                                            <td class="">
-                                                              <div class="fw-400 fs-4 text-start">
-                                                                <?php echo ucfirst($value['nombre']); ?>
-                                                              </div>
-                                                            </td>
-                                                            
-                                                            <td>
-                                                                <div class="text-center fs-4 <?php echo ($value['numProductos'] === 0) ? 'text-danger fw-600' : 'text-dark fw-500'; ?>">
-                                                                    <?php echo ($value['numProductos']); ?>
-                                                                </div>                                                                
-                                                            </td>
-
-                                                            <td>
-                                                                <button type="button" class="btn btn-success btn-icon btn-lg mb-1 me-1" onclick="javascript: enviarCategoria(this.id, this.name);" name="<?php echo $value['nombre']; ?>" id="<?php echo $value['idCategoria']; ?>" data-bs-toggle="modal" data-bs-target="#modalEditarCategoria">
-                                                                    <i class="fas fa-pencil-alt"></i>
-                                                                </button>
-
-                                                                <?php
-                                                                if ($value['numProductos'] <= 0) 
-                                                                {                                                                                                                                
-                                                                    ?>
-                                                                    <button type="button" class="btn btn-danger btn-icon btn-lg mb-1 me-1" onclick="javascript: eliminarCategoria(this.id);" id="<?php echo $value['idCategoria']; ?>" data-bs-toggle="modal" data-bs-target="#modalEliminarCategoria">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                    <?php
-                                                                }
+                                                            foreach ($categorias as $key => $value)
+                                                            {
+                                                                echo "<tr class='align-middle'>";
                                                                 ?>
-                                                            </td>
-                                                            <?php
-                                                            echo "</tr>";
-                                                        }
-                                                    }
-                                                ?>
 
-                                            </tbody>
-                                        </table>
+                                                                <td class="">
+                                                                <div class="fw-400 fs-4 text-start">
+                                                                    <?php echo ucfirst($value['nombre']); ?>
+                                                                </div>
+                                                                </td>
+                                                                
+                                                                <td>
+                                                                    <div class="text-center fs-4 <?php echo ($value['numProductos'] === 0) ? 'text-danger fw-600' : 'text-dark fw-500'; ?>">
+                                                                        <?php echo ($value['numProductos']); ?>
+                                                                    </div>                                                                
+                                                                </td>
+
+                                                                <td>
+                                                                    <button type="button" class="btn btn-success btn-icon btn-lg mb-1 me-1" onclick="javascript: enviarCategoria(this.id, this.name);" name="<?php echo $value['nombre']; ?>" id="<?php echo $value['idCategoria']; ?>" data-bs-toggle="modal" data-bs-target="#modalEditarCategoria">
+                                                                        <i class="fas fa-pencil-alt"></i>
+                                                                    </button>
+
+                                                                    <?php
+                                                                    if ($value['numProductos'] <= 0) 
+                                                                    {                                                                                                                                
+                                                                        ?>
+                                                                        <button type="button" class="btn btn-danger btn-icon btn-lg mb-1 me-1" onclick="javascript: eliminarCategoria(this.id);" id="<?php echo $value['idCategoria']; ?>" data-bs-toggle="modal" data-bs-target="#modalEliminarCategoria">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </td>
+                                                                <?php
+                                                                echo "</tr>";
+                                                            }
+                                                        }
+                                                    ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                               <!-- TABLA PRODUCTOS FIN -->

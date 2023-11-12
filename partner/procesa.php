@@ -6,11 +6,11 @@
 
     session_start();
 
-    require __DIR__.'/vendor/autoload.php';
+    require '../app/vendor/autoload.php';
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
-    require 'php/config.php';
+    //require 'php/config.php';
 
     //
     use Mpdf\QrCode\QrCode;
