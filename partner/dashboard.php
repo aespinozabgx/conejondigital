@@ -1,9 +1,10 @@
 <?php
     session_start();
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
-
+    $_SESSION['managedStore'] = "conejondigital";
+    
     if (isset($_SESSION['username']))
     {
         $username = $_SESSION['username'];
@@ -153,9 +154,9 @@
         <div id="layoutSidenav">
             <?php
               // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
+              if (file_exists('src/sideMenu.php'))
               {
-                include 'src/sidenav.php';
+                include 'src/sideMenu.php';
               }
             ?>
             <div id="layoutSidenav_content">
@@ -173,9 +174,9 @@
                                                 <?php echo !empty($_SESSION['nombreTienda']) ? ucwords(strtolower($_SESSION['nombreTienda'])) : 'Dashboard'; ?>
                                             </a>
 
-                                            <a class="btn rounded-pill btn-outline-white" target="_blank" href="https://vendy.click/<?php echo $idTienda; ?>">
+                                            <a class="btn rounded-pill btn-outline-white" target="_blank" href="https://conejondigital.com/<?php echo $idTienda; ?>">
                                                 <i data-feather="link-2" class=""></i>
-                                                <span class="d-none d-sm-inline ms-1">vendy.click/<?php echo $idTienda; ?></span>
+                                                <span class="d-none d-sm-inline ms-1">conejondigital.com/<?php echo $idTienda; ?></span>
                                             </a>
 
                                         </div>

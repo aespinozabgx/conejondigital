@@ -118,7 +118,7 @@
 
                     <div class="row">
 
-                        <div class="col-lg-3 col-xl-3 mb-4">
+                        <div class="col-lg-3 col-xl-6 mb-4">
                             <!-- Dashboard info widget 1-->                        
                             <div class="card border-start-lg gradient-red h-100">
                                 
@@ -173,7 +173,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-xl-3 mb-4">
+                        <div class="col-lg-3 col-xl-6 mb-4">
                             <!-- Dashboard info widget 1-->
                             <div class="card bg-pattern-pdv text-white h-100 lift">
                                 <div class="card-body">
@@ -213,7 +213,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-xl-3 mb-4">
+                        <div class="col-lg-3 col-xl-6 mb-4">
                             <!-- Dashboard info widget 1-->                        
                             <div class="card bg-success h-100">
                                 
@@ -246,7 +246,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-xl-3 mb-4">
+                        <div class="col-lg-3 col-xl-6 mb-4">
                             <!-- Dashboard info widget 1-->                        
                             <div class="card bg-blue h-100">
                                 

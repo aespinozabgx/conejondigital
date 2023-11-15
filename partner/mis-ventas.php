@@ -1,8 +1,9 @@
 <?php
 
-    session_start();
-    require 'php/conexion_db.php'; //configuración conexión db
-    require 'php/funciones.php'; //configuración conexión db
+    session_start(); 
+
+    require '../app/php/conexion.php';
+    require 'php/funciones.php';
 
     if (isset($_SESSION['email']))
     {
@@ -47,9 +48,9 @@
         <div id="layoutSidenav">
             <?php
               // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
+              if (file_exists('src/sideMenu.php'))
               {
-                include 'src/sidenav.php';
+                include 'src/sideMenu.php';
               }
             ?>
             <div id="layoutSidenav_content">

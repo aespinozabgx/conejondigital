@@ -2,7 +2,7 @@
 
     session_start();
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
 
     if (isset($_SESSION['managedStore']))
@@ -104,9 +104,9 @@
         <div id="layoutSidenav">
             <?php
                 // Menú (sidenav)
-                if (file_exists('src/sidenav-dark.php'))
+                if (file_exists('src/sideMenu.php'))
                 {
-                    include 'src/sidenav-dark.php';
+                    include 'src/sideMenu.php';
                 }
             ?>
             <div id="layoutSidenav_content">
@@ -186,7 +186,7 @@
                                                       <div class="card-body d-flex justify-content-center flex-column">
                                                           <div class="d-flex align-items-center justify-content-between">
 
-                                                              <img class="rounded-1" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>'" src="<?php echo $dominio; ?>/app/verifica/usr_docs/<?php echo $row["idTienda"]; ?>/productos/<?php echo $row["idProducto"]; ?>/<?php echo $row["url"]; ?>" alt="..." style="width: 10rem" />
+                                                              <img class="rounded-1" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>'" src="<?php echo $dominio; ?>/partner/verifica/usr_docs/<?php echo $row["idTienda"]; ?>/productos/<?php echo $row["idProducto"]; ?>/<?php echo $row["url"]; ?>" alt="..." style="width: 10rem" />
 
                                                               <div class="ms-2">
                                                                   <!-- <i class="feather-xl text-primary mb-3" data-feather="package"></i> -->

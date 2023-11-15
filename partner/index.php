@@ -1,5 +1,6 @@
 <?php
-    
+    exit(header('Location: dashboard.php'));
+
     session_start();
 
     require '../app/php/conexion.php';

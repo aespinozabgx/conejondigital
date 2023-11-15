@@ -1,7 +1,7 @@
 <?php
-    session_start();
+    session_start(); 
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
 
     if (isset($_SESSION['username']))
@@ -105,9 +105,9 @@
         <div id="layoutSidenav">
             <?php
                 // Menú (sidenav)
-                if (file_exists('src/sidenav.php'))
+                if (file_exists('src/sideMenu.php'))
                 {
-                  include 'src/sidenav.php';
+                  include 'src/sideMenu.php';
                 }
             ?>
             <div id="layoutSidenav_content">

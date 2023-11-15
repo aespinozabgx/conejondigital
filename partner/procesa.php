@@ -6,7 +6,7 @@
 
     session_start();
 
-    require '../app/vendor/autoload.php';
+    require './vendor/autoload.php';
 
     require '../app/php/conexion.php';
     require 'php/funciones.php';
@@ -15,7 +15,6 @@
     //
     use Mpdf\QrCode\QrCode;
     use Mpdf\QrCode\Output;
-
     use Picqer\Barcode\BarcodeGeneratorSVG;
     // use Mpdf\Mpdf;
 

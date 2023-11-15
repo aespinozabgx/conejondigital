@@ -1,3 +1,88 @@
+
+<!-- modal eliminar producto Inicio-->
+<div class="modal fade" id="modalEliminarProducto" tabindex="-1" aria-labelledby="modalEliminarProductoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarProductoLabel">Confirmación</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form class="" action="procesa.php" method="post">
+                <div class="modal-body">
+                    Estás a punto de eliminar este producto de tu inventario. ¿Deseas continuar?
+                    <?php
+                    if (isset($idProducto))
+                    {
+                        ?>
+                            <input type="hidden" id="idProductDelete" name="idProductDelete" value="<?php echo $idProducto; ?>" required>
+                            <input type="hidden" name="idTienda" value="<?php echo $managedStore; ?>">
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <?php
+                        if (isset($idProducto))
+                        {
+                            ?>
+                            <button type="submit" class="btn btn-danger" name="btnEliminarProducto">
+                                Sí, eliminar
+                            </button>
+                            <?php
+                        }
+                    ?>
+
+                </div>
+          </form>
+        </div>
+    </div>
+</div>
+<!-- modal eliminar producto Fin -->
+
+<!-- iniciar turno caja -->
+<div class="modal fade" id="modalIniciarTurnoCaja" tabindex="-1" aria-labelledby="modalIniciarTurnoCajaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form class="" action="procesa.php" method="post" onsubmit="return validarFechas()">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary fw-600"><i class="fas fa-unlock-alt"></i> Iniciar turno de caja</h5>
+                    <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark fa-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                  <div class="mb-2 text-dark">
+                      <div class="row mb-3">
+                          <label for="fechaInicio" class="text-center text-dark fw-500 mb-3">¿Con cuánto efectivo en caja inicias el turno?</label>
+                          <div class="">
+                              <input type="number" class="form-control border border-3 fs-6 text-center" id="efectivoCaja" min="0" step="0.5" name="efectivoInicialCaja" placeholder="0" required>
+                          </div>
+                      </div>
+                  </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light rounded-2" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary rounded-2" name="btnIniciarTurnoCaja">Iniciar <i class="ms-1" data-feather="arrow-right-circle"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- iniciar turno caja -->
+
+
 <!-- modal eliminar categoria Inicio-->
 <div class="modal fade" id="modalEliminarCategoria" tabindex="-1" aria-labelledby="modalEliminarCategoriaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

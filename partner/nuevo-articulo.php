@@ -2,10 +2,8 @@
     session_start();  
     
     require '../app/php/conexion.php';
-    require '../app/php/funciones.php';
- 
-    $hasActivePayment = array();
-    $hasActivePayment['existePagoActivo'] = true;
+    require 'php/funciones.php';
+  
     $_SESSION['managedStore'] = "conejondigital";
 
     // Validar si está configurada la tienda, si no hay redirecciona a al cofiguración
@@ -19,7 +17,8 @@
         $email    = $_SESSION['email'];
         $idTienda = $_SESSION['managedStore'];
     }
-    //$hasActivePayment = validarPagoActivo($conn, $idTienda);
+    
+    $hasActivePayment = validarPagoActivo($conn, $idTienda);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -134,7 +133,7 @@
                         <form action="procesa.php" id="formulario" method="post" enctype="multipart/form-data">
                             <div class="row">
 
-                                <div class="col-lg-6 col-xl-8 col-xxl-8 mb-4">
+                                <div class="col-lg-6 col-xl-6 col-xxl-6 mb-4">
                                     <!-- Datos del producto -->
                                     <div class="card card-header-actions mb-3">
                                         
@@ -244,7 +243,7 @@
                                                         <select class="form-select bg-success text-white mb-2 rounded-3 shadow-none border border-3 fs-6 fw-600" style="cursor:pointer;" id="selectUnidadVenta" name="unidadVenta" aria-label="Example select with button addon">
                                                             <option value="">Seleccionar</option>
                                                             <option value="Piezas">Pieza</option>
-                                                            <option value="Kilogramos">Kg/Lt</option>
+                                                            <!-- <option value="Kilogramos">Kg/Lt</option> -->
                                                         </select>
 
                                                     </div>
@@ -327,7 +326,7 @@
 
                                 </div>
 
-                                <div class="col-lg-6 col-xl-4 col-xxl-4 mb-2">
+                                <div class="col-lg-6 col-xl-6 col-xxl-6 mb-2">
 
                                     <div style="display:block;" class="mb-2">
                                         <div class="card card-header-actions h-100">
@@ -343,7 +342,7 @@
                                                         <div class="mb-0">
 
                                                             <!-- Select para mostrar las categorías existentes -->
-                                                            <label for="categorias-ex" class="fw-300 text-primary small" id="labelCatExistentes"></label><sup>*</sup>
+                                                            <label for="categorias-ex" class="fw-500 text-primary  mb-1" id="labelCatExistentes"></label><sup>*</sup>
                                                             
                                                             <label id="salidaCategorias"></label>
                                                             

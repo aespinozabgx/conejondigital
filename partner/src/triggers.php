@@ -11,6 +11,48 @@
 
       switch ($msg)
       {
+            case 'requiereAbrirTurnoCaja':
+                if (isset($hasActivePayment['existePagoActivo']) && $hasActivePayment['existePagoActivo'] == true)
+                {
+                    if (isset($_SESSION['idSucursalVenta'], $_SESSION['nombreSucursalVenta']))
+                    {
+                    ?>
+                    <script type="text/javascript">
+                        var cargaCompleta = new bootstrap.Modal(document.getElementById("modalIniciarTurnoCaja"), {});
+                        document.onreadystatechange = function ()
+                        {
+                            cargaCompleta.show();
+                        };
+                    </script>
+                    <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <script type="text/javascript">
+                            var cargaCompleta = new bootstrap.Modal(document.getElementById("modalSeleccionarSucursal"), {});
+                            document.onreadystatechange = function ()
+                            {
+                                cargaCompleta.show();
+                            };
+                        </script>
+                        <?php
+                    }
+                }
+                else
+                {
+                    ?>
+                    <script type="text/javascript">
+                        var modalSeccionDePago = new bootstrap.Modal(document.getElementById("modalSeccionDePago"), {});
+                        document.onreadystatechange = function ()
+                        {
+                            modalSeccionDePago.show();
+                        };
+                    </script>
+                    <?php
+                }
+            break;
+
             case 'exitoRegistroGafete':
             ?>
             <script type="text/javascript">
