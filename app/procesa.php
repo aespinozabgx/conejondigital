@@ -1341,9 +1341,9 @@
             $fechaActivacion = date("Y-m-d H:i:s");
             $datosUsuario = getDatosUsuario($conn, $idCliente);
 
-            echo "<pre>";
-            print_r($datosUsuario);
-            echo "<br>33";
+            // echo "<pre>";
+            // print_r($datosUsuario);
+            // echo "<br>33";
 
             // Validar si ya está activa la cuenta 
             if ($datosUsuario['isActive'] == 1)
@@ -1486,16 +1486,17 @@ if (isset($_POST['btnLogin28']))
                 $row = mysqli_fetch_assoc($query);
                 $usuario_db_pass = $row['password'];
                 
-                $verifico_password = ($inputPassword == $usuario_db_pass);
+                
                 
                 $isActive = $row['isActive'];
                 $isVerified = $row['isVerified'];
                 
                 $nombre = $row['nombre'];
-                
+                $verifico_password = ($inputPassword == $usuario_db_pass);
+
                 if ($isActive == 1) 
                 {
-                    if ($verifico_password) 
+                    if ($verifico_password)
                     {
                         session_start();
 
@@ -1507,6 +1508,7 @@ if (isset($_POST['btnLogin28']))
                         $_SESSION['materno']  = $row['materno'];
                         $_SESSION['telefono'] = $row['telefono'];
                         $_SESSION['creditos'] = $row['creditos'];
+                        $_SESSION['isPartner'] = $row['isPartner'];
 
                         $_SESSION['rol']      = $row['rol'];
 
