@@ -2,7 +2,7 @@
 
     session_start(); 
 
-    require '../app/php/conexion.php';
+    require 'php/conexion_db.php';
     require 'php/funciones.php';
 
     if (isset($_SESSION['username']))
