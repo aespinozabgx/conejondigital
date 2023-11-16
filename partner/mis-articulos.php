@@ -118,8 +118,8 @@
 
                     <div class="row">
 
-                        <div class="col-lg-3 col-xl-6 mb-4">
-                            <!-- Dashboard info widget 1-->                        
+                        <!-- Dashboard info widget 1-->
+                        <!-- <div class="col-lg-3 col-xl-6 mb-4">                            
                             <div class="card border-start-lg gradient-red h-100">
                                 
                                 <div class="card-body">
@@ -171,81 +171,8 @@
                                 </div>
 
                             </div>
-                        </div>
-
-                        <div class="col-lg-3 col-xl-6 mb-4">
-                            <!-- Dashboard info widget 1-->
-                            <div class="card bg-pattern-pdv text-white h-100 lift">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="me-3">                                                
-                                            <div class="text-white-75 small">Punto De Venta</div>
-                                            <div class="display-6 sombra-titulos-vendy fw-500">PDV</div>
-                                        </div>
-                                        <!-- <i class="feather-xl text-white-50" data-feather="calendar"></i> -->
-                                        <i class="fas fa-cash-register text-white-50 display-6 me-2 mt-2"></i>
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex align-items-center justify-content-between small">
-                                    <?php
-                                        if(!empty($hasActivePayment))
-                                        {
-                                            if (isset($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
-                                            {
-                                                ?> 
-                                                <a class="text-white stretched-link" href="pos.php">
-                                                    Ir ahora
-                                                </a>
-                                                <?php
-                                            }                                            
-                                        }
-                                        else
-                                        {
-                                            ?>
-                                            <a style="cursor: pointer;" class="text-white stretched-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">
-                                                Ir ahora
-                                            </a>
-                                            <?php
-                                        }
-                                    ?>
-                                    <div class="text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-xl-6 mb-4">
-                            <!-- Dashboard info widget 1-->                        
-                            <div class="card bg-success h-100">
-                                
-                                <div class="card-body">
-                                    
-                                    <div class="d-flex align-items-center">                                        
-                                        <div class="flex-grow-1">                                             
-
-                                            <div class="me-3">                                                
-                                                <div class="text-white-75 small">Que todo esté en</div>
-                                                <div class="fs-1 text-white sombra-titulos-vendy fw-500">Orden</div>
-                                            </div>                                             
-                                            
-                                        </div>
-
-                                        <div class="ms-2">
-                                            
-                                            <i class="text-white-75 feather-xl" data-feather="tag"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card-footer d-flex align-items-center justify-content-between small">                                                
-                                    <a class="text-white stretched-link" href="mis-categorias.php">
-                                        Gestionar Categorías
-                                    </a>
-                                    <div class="text-white"><i class="fas fa-angle-right"></i></div>                                    
-                                </div>
-
-                            </div>
-                        </div>
-
+                        </div> -->
+                    
                         <div class="col-lg-3 col-xl-6 mb-4">
                             <!-- Dashboard info widget 1-->                        
                             <div class="card bg-blue h-100">
@@ -277,21 +204,42 @@
 
                             </div>
                         </div>
+
+                        <div class="col-lg-3 col-xl-6 mb-4">                    
+                            <div class="card bg-success h-100">
+                                
+                                <div class="card-body">
+                                    
+                                    <div class="d-flex align-items-center">                                        
+                                        <div class="flex-grow-1">                                             
+
+                                            <div class="me-3">                                                
+                                                <div class="text-white-75 small">Que todo esté en</div>
+                                                <div class="fs-1 text-white sombra-titulos-vendy fw-500">Orden</div>
+                                            </div>                                             
+                                            
+                                        </div>
+
+                                        <div class="ms-2">
+                                            
+                                            <i class="text-white-75 feather-xl" data-feather="tag"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer d-flex align-items-center justify-content-between small">                                                
+                                    <a class="text-white stretched-link" href="mis-categorias.php">
+                                        Gestionar Categorías
+                                    </a>
+                                    <div class="text-white"><i class="fas fa-angle-right"></i></div>                                    
+                                </div>
+
+                            </div>
+                        </div>                        
                     
                     </div>                    
 
-                    <!-- <div class="flotante">
-                        <a href="carritoPos.php?tienda=<?php echo $idTienda; ?>" class="btn btn-outline-dark btn-icon fw-600 fs-5 rounded-pill shadow-sm" name="btnCrearPedido" value="PDV">
-                            <i data-feather="tool" class="feather-lg"></i>
-                        </a>
-                    </div> -->
-                          
-                    <!-- Filtros de busqueda -->
-                    <!-- <div class="mb-2 rounded-3 bg-transparent p-0 text-end">
-                        <button class="btn btn-outline-primary btn-icon fs-6">
-                            <i class="feather-lg" data-feather="sliders"></i>
-                        </button>
-                    </div> -->
+                    
                     
                     
                     <div class="card card-header-actions mx-auto rounded-3">                    

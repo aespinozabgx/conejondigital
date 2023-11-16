@@ -342,8 +342,8 @@
                                                                                             </div>
                                                                                             <div class="fs-5">
                                                                                                 <div>Banco: <b>BBVA</b></div>
-                                                                                                <div>Clabe: 0121 8001 5611 5556 69</div>
-                                                                                                <div>Tarjeta: 4152 3137 5235 2307</div>
+                                                                                                <div>Clabe: 0121 8001 5710 4482 66</div>
+                                                                                                <div>Tarjeta: 4152 3136 9799 1797</div>
                                                                                                 <div>Concepto: Nombre completo</div>
                                                                                             </div>                                                                                                                                                                   
 

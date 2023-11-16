@@ -6,7 +6,7 @@
 ?>
 
 <div id="layoutSidenav_nav">
-    <nav class="sidenav shadow-right sidenav-light">
+    <nav class="sidenav shadow-right sidenav-dark">
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 
@@ -30,15 +30,16 @@
                         // var_dump(empty($hasActivePayment));
                         // echo "<hr>";
                         // var_dump(($hasActivePayment));
-                        if (isset($hasActivePayment) && ($hasActivePayment !== false))
+
+                        if (isset($hasActivePayment) && $hasActivePayment === true) 
                         {
                             ?>
-                            <a class="nav-link" href="pos.php" />                                
+                            <a class="nav-link" href="pos.php">
                                 POS
                             </a>
                             <?php
-                        }
-                        else
+                        } 
+                        elseif ($hasActivePayment === false) 
                         {
                             ?>
                             <a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">
@@ -46,6 +47,10 @@
                                 POS <span class="badge bg-yellow ms-1 rounded-pill small"><i class="fa-solid fa-sm fa-star"></i></span>
                             </a>
                             <?php
+                        } 
+                        else 
+                        {
+                            echo ""; // Oculto
                         }
                         ?>
                         
@@ -54,49 +59,71 @@
                         
                         <?php                       
 
-                        if (($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                        if (isset($hasActivePayment) && ($hasActivePayment === true)) 
                         {
                             ?><a class="nav-link" href="mis-ventas.php">Ventas</a><?php
                         }
-                        else
+                        elseif($hasActivePayment['existePagoActivo'] === false)
                         {
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Ventas <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
                         }
-
-                        if (($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                        else
+                        {
+                            echo "";
+                        }
+                        
+                        if (isset($hasActivePayment) && ($hasActivePayment === true))
                         {
                             ?><a class="nav-link" href="reportes.php">Reportes </a><?php
                         }
-                        else
+                        elseif($hasActivePayment['existePagoActivo'] === false)
                         {
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Reportes <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
                         }
-
-                        if (($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                        else
+                        {
+                            echo "";
+                        }
+                        
+                        if (isset($hasActivePayment) && ($hasActivePayment === true))
                         {
                             ?><a class="nav-link" href="mi-reputacion.php">Reputación</a><?php
                         }
-                        else
+                        elseif($hasActivePayment['existePagoActivo'] === false)
                         {
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Reputación <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
                         }
+                        else
+                        {
+                            echo "";
+                        }
 
-                        if (($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                        
+                        if (isset($hasActivePayment) && ($hasActivePayment === true))
                         {
                             ?><a class="nav-link" href="configura-sucursales.php">Sucursales</a><?php
                         }
-                        else
+                        elseif($hasActivePayment['existePagoActivo'] === false)
                         {
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Sucursales <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
                         }
+                        else
+                        {
+                            echo "";
+                        }
 
-                        if (($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                        
+                        if (isset($hasActivePayment) && ($hasActivePayment === true))
                         {
                             ?><a class="nav-link" href="configura-tienda.php">Configuración</a><?php
                         }
-                        else
+                        elseif($hasActivePayment['existePagoActivo'] === false)
                         {
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Configuración <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
+                        }
+                        else
+                        {
+                            echo "";
                         }
 
                         ?>

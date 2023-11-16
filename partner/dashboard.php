@@ -1,9 +1,18 @@
 <?php
     session_start();
 
+    // Define la constante de ruta base
+    // define('BASE_PATH', dirname(__DIR__) . '/app');
+
+    // // Usa la constante para incluir archivos
+    // require BASE_PATH . '/php/conexion.php';
+    // require BASE_PATH . '/php/funciones.php';
+
+
     require '../app/php/conexion.php';
-    require 'php/funciones.php';
-    $_SESSION['managedStore'] = "conejondigital";
+    require 'php/funciones.php'; 
+
+    $_SESSION['managedStore'] = "";
     
     if (isset($_SESSION['username']))
     {
@@ -33,8 +42,6 @@
     {
         exit(header('Location: mis-compras.php?msg=axel'));
     }
-
-    
 
     // Obtener la fecha de hoy en español
     setlocale(LC_TIME, 'es_ES.UTF-8');
@@ -67,7 +74,6 @@
     $total_ingresos   = getIngresosTienda($conn, $idTienda, $fechaInicio, $fechaFin);
     $total_egresos    = getEgresosTienda($conn, $idTienda, $fechaInicio, $fechaFin);
 
-
     // Datos para gráfica por mes
     $ventaGananciaPorMesTienda = getVentaGananciaPorMesTienda($conn, $idTienda);
     // echo "<pre>";
@@ -89,10 +95,11 @@
     // var_dump($estatusCaja);
     // die;
 
-    $hasActivePayment = validarPagoActivo($conn, $idTienda);
+    $hasActivePayment = validarPagoActivo($conn, $idTienda); 
+
     // echo "<pre>";
     // var_dump($hasActivePayment);
-    // die;
+    // die; 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -110,8 +117,8 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>        
         <script src="js/qrcode.js"></script>
 
         <style type="text/css">
@@ -183,7 +190,7 @@
                                         <div class="page-header-subtitle">
                                             <div class="">
                                                 <span class="fw-500 text-white-75 small">
-                                                    Resumen de tu tienda <b>vendy</b>.
+                                                    Resumen de tu tienda.
                                                     <?php
                                                     //     setlocale(LC_TIME, "spanish");
                                                     //     setlocale(LC_TIME, 'es_ES.UTF-8');
@@ -390,7 +397,7 @@
 
                         <div class="row">
 
-                            <div class="col-lg-6 col-xl-3 mb-4">
+                            <div class="col-lg-6 col-xl-6 mb-4">
 
                                 <div class="card bg-success text-white h-100 gradient-red ">
                                     <div class="card-body ">
@@ -398,7 +405,7 @@
                                             <div class="me-3">
                                                 <div class="text-white-75 small">Comparte tu</div>
                                                 <div class="fs-2 fw-500">
-                                                    Tienda <b>vendy</b>
+                                                    Tienda
                                                 </div>
                                             </div>
                                             <i class="feather-xl text-white-50" data-feather="share"></i>
@@ -439,44 +446,7 @@
                             </div>
 
 
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-pattern-pdv text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">                                                
-                                                <div class="text-white-75 small">Punto De Venta</div>
-                                                <div class="display-6 sombra-titulos-vendy fw-500">PDV</div>
-                                            </div>
-                                            <!-- <i class="feather-xl text-white-50" data-feather="calendar"></i> -->
-                                            <i class="fas fa-cash-register text-white-50 display-6 me-2 mt-2"></i>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        
-                                        <?php                                        
-                                            //var_dump($hasActivePayment['existePagoActivo']);                                            
-                                            if (isset($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
-                                            {                                                                                                
-                                                ?> 
-                                                <a class="text-white stretched-link" href="pos.php">
-                                                    Ir ahora
-                                                </a>
-                                                <?php
-                                            }
-                                            else
-                                            {
-                                                
-                                                ?>                                                
-                                                <a style="cursor: pointer;" class="text-white stretched-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">
-                                                    Ir ahora
-                                                </a> 
-                                                <?php
-                                            }
-                                        ?>
-                                        <div class="text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                             
 
                             <!-- <div class="col-lg-6 col-xl-3 mb-4">
                                 <div class="card bg-danger text-white h-100">
@@ -513,7 +483,7 @@
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between small">
                                         <?php
-                                            if (isset($hasActivePayment['existePagoActivo']) && $hasActivePayment['existePagoActivo'] == true)
+                                            if (isset($hasActivePayment['existePagoActivo']) && ($hasActivePayment['existePagoActivo'] == true))
                                             {
                                                 ?>
                                                 <a class="text-white stretched-link" href="mis-ventas.php">Ver pedidos</a>
@@ -895,13 +865,13 @@
                                       ?>
                                   </div>
 
-                                  <!-- Footer ventas del día -->
-                                  <div class="card-footer bg-yellow d-flex fs-4 text-white">
-                                      <a class="col fw-600 text-center text-white" style="" href="mis-ventas.php">
-                                          Ver listado completo <i class="feather-lg" data-feather="arrow-right"></i>
-                                      </a>
-                                  </div>
-
+                                    <!-- Footer ventas del día -->
+                                    <div class="card-footer bg-yellow d-flex fs-4 text-white">
+                                        <a class="col fw-600 text-center text-white" style="" href="mis-ventas.php">
+                                            Ver listado completo <i class="feather-lg" data-feather="arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <div id="qrcode" class="d-none"></div>
                               </div>
                           </div>
                             <!-- Fin Ventas por metodo de pago -->
@@ -910,7 +880,7 @@
 
                 </main>
 
-                <script src="js/funciones.js?id=2828"></script>
+                <script src="js/funciones.js?id=2888"></script>
                 <?php
                     if (file_exists('src/modals.php'))
                     {
@@ -985,8 +955,8 @@
             };
 
             // Crear la gráfica de barras
-            var ctx = document.getElementById('myBarChart').getContext('2d');
-            var myBarChart = new Chart(ctx, config);
+            // var ctx = document.getElementById('myBarChart').getContext('2d');
+            // var myBarChart = new Chart(ctx, config);
 
 
             <?php
@@ -1140,7 +1110,7 @@
                     {
                         let dataUrl = document.querySelector('#qrcode').querySelector('img').src;
                         var tienda = '<?php echo $_SESSION['managedStore']; ?>';
-                        downloadURI(dataUrl, 'vendyQR_' + tienda + '.png');
+                        downloadURI(dataUrl, 'conejonDigital_' + tienda + '.png');
                     },1000
                 );
             }
@@ -1197,6 +1167,7 @@
                     actualizarLitePicker('<?php echo $fechaLitepicker; ?>');
                 }, 500);
 
+                
             </script>
             <?php
         }

@@ -58,7 +58,7 @@
         {
             console.log("Iguales");
             // Cuadre de caja perfecto
-            salidaCuadreCaja.innerHTML = "¡Excelente! El efectivo en caja coincide con lo calculado por <b class='fs-1 logo text-yellow'>vendy</b>";
+            salidaCuadreCaja.innerHTML = "¡Excelente! El efectivo en caja coincide con lo calculado por <b class='fs-1 logo text-yellow'>ConejónDigital</b>";
             checkDescuadreCaja.required = false;
             hideDescuadreCaja.style.display = "none";
             diferenciaCaja.value = 0;

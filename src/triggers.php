@@ -16,7 +16,7 @@
             echo "<script>
                     Swal.fire({
                         title: '¡Listo!',
-                        text: 'El expositor se ha registrado correctamente, mantente al tanto de tu correo electrónico y tu whatsapp.',
+                        text: 'El expositor se ha registrado correctamente, realizaremos la validación de tus datos y te enviaremos un email.',
                         icon: 'success',
                         showConfirmButton: true,
                         confirmButtonText: 'Entendido',
