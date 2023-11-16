@@ -6,7 +6,7 @@
 
     if (isset($_GET['error']))
     {
-    $error = $_GET['error'];
+        $error = $_GET['error'];
     }
 
     switch ($msg)
@@ -49,16 +49,32 @@
         break;
 
         case 'cargaCompletaBak2':
-        ?>
-        <script type="text/javascript">
-            var cargaCompleta = new bootstrap.Modal(document.getElementById("sss"), {});
-            document.onreadystatechange = function ()
-            {
-                cargaCompleta.show();
-            };
-        </script>
-        <?php
-        break;              
+            ?>
+            <script type="text/javascript">
+                var cargaCompleta = new bootstrap.Modal(document.getElementById("sss"), {});
+                document.onreadystatechange = function ()
+                {
+                    cargaCompleta.show();
+                };
+            </script>
+            <?php
+            break;
+
+        case 'openModalRegistroExpositor':
+            ?>
+            <script type="text/javascript">
+                
+                var myModal = new bootstrap.Modal(document.getElementById("modalRegistroExpositor"), {});
+                document.onreadystatechange = function () 
+                {
+                    myModal.show();
+                };
+
+                
+            </script>
+            <?php
+            break;
+        
     }
 }
 ?>

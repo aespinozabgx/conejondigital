@@ -16,7 +16,7 @@
         
         <title></title>
         
-        <link href="css/styles.css?id=28" rel="stylesheet" />
+        <link href="css/styles.css?id=2444" rel="stylesheet" />
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         
@@ -30,6 +30,10 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,900" rel="stylesheet">   
         <link rel="stylesheet" href="css/contador-style.css">
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
+
 
         <style>
             
@@ -133,9 +137,13 @@
                                 if (!isset($_SESSION['email'])) 
                                 {
                                     ?>
-                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-outline-pink" href="registro.php">
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-danger" href="registro.php">
                                         Registrarme                       
-                                    </a>  
+                                    </a>
+
+                                    <a class="btn fw-500 ms-lg-1 mb-2 me-1 btn-light shadow-sm" href="login.php">
+                                        Iniciar sesión                       
+                                    </a>
                                     <?php
                                 }
                                 else
@@ -174,7 +182,7 @@
                         <div class="page-header-ui-content pt-5">
                             <div class="container px-5">
                                 <div class="row gx-5 align-items-center">
-                                    <div class="col-lg-6 mb-3" data-aos="zoom-out-down">
+                                    <div class="col-lg-5 col-xl-5 mb-3" data-aos="zoom-out-down">
                                         <div class="f-bangers text-white display-1 mb-2" style="text-shadow: -4px 4px 1px rgba(236, 18, 18, 0.962);">¡Cheñolas <span class="f-bebas display-6">y</span> <br> cheñoles!</div>
                                         <div class="text-white mb-3 fs-1" style=" ">
                                             <mark>¡Ya viene el conejón navideño 2023!</mark>
@@ -193,13 +201,16 @@
                                         </div>
                                         
                                         <div class="d-flex flex-column flex-sm-row">
-                                            <a class="btn btn-lg f-poppins fa-beat btn-blue fw-500 fs-4 me-sm-3 mb-3 mb-sm-0" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s;" href="registro.php">
-                                                Registrarme
+                                                                                    
+                                            <a class="btn btn-lg btn-light f-poppins fw-300 mb-3 ms-sm-0 mb-sm-0" style="" href="#evento">
+                                                Detalles del evento
+                                                <i class="ms-2" data-feather="info"></i>
                                             </a>
-                                            <a class="btn btn-lg btn-white fw-500" href="#evento">
-                                                Más información
+                                            <a class="btn btn-lg btn-danger f-poppins fs-2 fa-beat fw-500 ms-sm-4 mb-3 mb-sm-0" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s;" href="registro.php">
+                                                ¡Quiero asistir!
                                                 <i class="ms-2" data-feather="arrow-right"></i>
                                             </a>
+
                                         </div>
                                     </div>                                    
                                 </div>
@@ -213,92 +224,90 @@
                     
                     
                     <section class="py-10 bg-blue" style="">
-                        <div class="container px-5" id="evento">
+                        <div class="container px-2" id="evento">
                             <div class="row gx-5 justify-content-center">
                                 <div class="">
                                     <div class="mb-10 text-center" data-aos="fade-up">
+                                        
                                         <img src="app/assets/img/banners/landing.jpg" class="img-fluid rounded-3 shadow-sm mb-5" alt="">
                                         <!-- <div class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">El CONEJÓN NAVIDEÑO 2023<br></div> -->
-                                        <span class="display-3 f-poppins fw-400 text-uppercase text-white mb-2">FALTAN</span>
+                                        <span class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">Comenzamos en... </span>
                                         
                                         <div id="countdown">
-                                            <ul class="f-poppins" style="color: #c7f50e;">
-                                              <li><span id="days"></span>Días</li>
-                                              <li><span id="hours"></span>Horas</li>
-                                              <li><span id="minutes"></span>Minutos</li>
-                                              <li><span id="seconds"></span>Segundos</li>
+                                            <ul class="" style="color: #c7f50e;">
+                                              <li class="f-bangers"><span id="days" class="display-4"></span>Días</li>
+                                              <li class="f-bangers"><span id="hours" class="display-4"></span>Horas</li>
+                                              <li class="f-bangers"><span id="minutes" class="display-4"></span>Minutos</li>
+                                              <li class="f-bangers"><span id="seconds" class="display-4"></span>Segundos</li>
                                             </ul>
                                         </div>
 
                                     </div>
-
-
-                                        
                                 </div>
                             </div>
 
-                            <div class="display-3 f-bangers text-white mb-3" data-aos="fade-up">
+                            <div class="display-3 px-3 f-poppins text-white mb-3" data-aos="fade-up">
                                 Encontrarás ...
                             </div>
 
-                            <div class="row gx-5 justify-content-center mb-3">
+                            <div class="row gx-5 px-3 justify-content-center mb-3">
                                 
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/arte-2.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Arte y Manualidades</h6></div>
                                     </a>
                                 </div>
 
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/salud-2.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Salud y cuidados</h6></div>
                                     </a>
                                 </div>
 
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/alimentacion.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Alimentación</h6></div>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/juegos.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Juguetes</h6></div>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5 mb-lg-0" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/habitad.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Habitat</h6></div>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5 mb-lg-0" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/accesorios.jpg" alt="..." />
                                         <div class="card-body bg-transparent text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Accesorios</h6></div>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3 mb-5 mb-md-0" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/adopcion.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Adopciones</h6></div>
                                     </a>
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-3" data-aos="fade-up">
-                                    <a class="card lift bg-white" href="#!">
+                                    <a class="card bg-white" href="#!">
                                         <img class="card-img-top" src="assets/img/evento/mas.jpg" alt="..." />
                                         <div class="card-body text-center py-3"><h6 class="card-title text-pink f-poppins mb-0">Muchos más</h6></div>
                                     </a>
                                 </div>
                             </div>
 
-                            <div class="text-center text-white f-bebas display-1 py-5" data-aos="fade-up">
+                            <div class="text-center text-white f-bangers display-1 py-5" data-aos="fade-up">
                                 
                                 ¡Entrada GRATIS!                                
-                                <a class="btn btn-yellow btn-lg f-poppins fa-beat fw-500 fs-4 ms-3 me-sm-3 mb-3 mt-2 mb-sm-0" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s;" href="registro.php">
+                                <a class="btn btn-orange btn-lg f-poppins fa-beat fw-500 fs-4 ms-3 me-sm-3 mb-3 mt-2 mb-sm-0" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s;" href="registro.php">
                                     Registrarme
                                 </a>
 
@@ -307,10 +316,10 @@
                             <div class="text-center">
                                 <div id="countdown">
                                     <ul class="f-poppins" style="color: #c7f50e;">
-                                      <li><span id="days"></span>Días</li>
-                                      <li><span id="hours"></span>Horas</li>
-                                      <li><span id="minutes"></span>Minutos</li>
-                                      <li><span id="seconds"></span>Segundos</li>
+                                      <li class="f-bangers"><span id="days"></span>Días</li>
+                                      <li class="f-bangers"><span id="hours"></span>Horas</li>
+                                      <li class="f-bangers"><span id="minutes"></span>Minutos</li>
+                                      <li class="f-bangers"><span id="seconds"></span>Segundos</li>
                                     </ul>
                                 </div>
                             </div>
@@ -324,8 +333,8 @@
                     
                     <section class="pt-5 pb-10 bg-white">
 
-                        <div class="container px-5" data-aos="fade-up">
-                            <div class="bg-green card mt-n15 shadow-sm mb-0 z-1 rounded-3" style="background-color: #FFDAC1;">
+                        <div class="container col-6"  data-aos="fade-up">
+                            <div class="bg-green card mt-n15 shadow-sm mb-0 z-1 rounded-3 fa-beat" style="--fa-beat-scale: 1.1; --fa-animation-duration: 2s; background-color: #FFDAC1;">
                                 <div class="card-body p-5 rounded-3">
                                     <div class="row gx-5 align-items-center">
                                         <div class="col-lg-6">
@@ -341,7 +350,7 @@
                                                     <!-- <input class="form-control form-control-solid fs-3 shadow-none" type="text" placeholder="tucorreo@mail.com" aria-label="Recipient's username" aria-describedby="button-addon2" required /> -->
                                                     <!-- <button class="btn btn-outline-white fs-4 w-100 shadow-none" style="background-color:;" id="button-addon2" type="button" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</button> -->
 
-                                                    <a class="btn btn-outline-white fs-4 w-100 shadow-none" style="" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registro Expositor</a>
+                                                    <a class="btn btn-white btn-lg fs-4 fw-500 w-100" style="" data-bs-toggle="modal" data-bs-target="#modalRegistroExpositor">Registrarme</a>
                                                 </div>                                            
                                                  
                                             </form>
@@ -471,19 +480,9 @@
             </div>
         </div>
 
-        <?php
-            if (file_exists('src/modals.php'))
-            {
-                require 'src/modals.php';
-            }
+         
 
-            if (file_exists('src/triggers.php'))
-            {
-                require 'src/triggers.php';
-            }
-        ?>  
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="js/contador-script.js?id=2828"></script>
         <script  src="js/scripts.js?id=2828"></script>
 		<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -493,7 +492,19 @@
 				duration: 1000
 			});
         </script>
-         
+        <?php
+            
+            if (file_exists('src/modals.php'))
+            {
+                require 'src/modals.php';
+            }
+
+            if (file_exists('src/triggers.php'))
+            {
+                require 'src/triggers.php';
+            }
+
+        ?>
 
     </body>
 </html>

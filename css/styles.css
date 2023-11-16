@@ -132,8 +132,8 @@
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@200;400&family=Righteous&display=swap');
 @import url('../fonts/Bangers-Regular.ttf?family=Bangers');
+@import url('../fonts/BebasNeue-Regular.ttf?family=Bebas');
 
 .f-bangers
 {
@@ -145,6 +145,10 @@
   font-family: 'Bebas Neue', sans-serif;
 }
 
+.f-bebas2
+{
+  font-family: 'Bebas', sans-serif;
+}
 
 .f-poppins
 {
