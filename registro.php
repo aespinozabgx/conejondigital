@@ -100,7 +100,9 @@
                                 </div>
 
                                 <div class="text-white text-center mt-5">
-                                    <a href="index.php" class="text-white">Información del evento</a>
+                                    <a href="index.php" class="text-white me-5">Información del evento</a>                                    
+                                    <a class="btn btn-outline-white rounded-3" href="https://api.whatsapp.com/send/?phone=%2B5215610346590&text=Hola%2C+requiero+ayuda+con+mi+Cuenta%5D_&type=phone_number&app_absent=0" target="_blank">
+                                    <i class="fa-solid fa-headset me-2"></i> Soporte</a>
                                 </div>
 
                             </div>
@@ -109,8 +111,9 @@
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
+                &nbsp;
                 <?php
-                    include 'app/src/footer.php';
+                    //include 'app/src/footer.php';
                 ?>
             </div>
         </div>

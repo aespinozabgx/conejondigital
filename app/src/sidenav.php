@@ -38,7 +38,11 @@
                     </div>
                     Configuración <span class="text-gray-600 fw-700"> </span>
                 </a>
+<<<<<<< HEAD
                 <a class="nav-link collapsed" href="https://api.whatsapp.com/send?phone=5215610346590&text=Hola,%20requiero%20soporte%20de%20mi%20cuenta%20conejondigital.com" target="_blank">
+=======
+                <a class="nav-link collapsed" href="https://api.whatsapp.com/send/?phone=%2B5215610346590&text=Hola%2C+requiero+ayuda+con+mi+Cuenta%5D_&type=phone_number&app_absent=0" target="_blank">
+>>>>>>> main
                     <div class="nav-link-icon">
                         <i class="fas fa-headset"></i>
                     </div>
