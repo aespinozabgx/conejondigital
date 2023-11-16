@@ -93,6 +93,22 @@
                     </div>
                 </h6>
                 <div class="dropdown-divider"></div>
+                
+                <?php
+                    //var_dump($_SESSION['isPartner']);
+                    if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == 1) 
+                    {
+                        ?>
+                        <a class="dropdown-item" href="../partner/">
+                            <div class="dropdown-item-icon">
+                                <i data-feather="shopping-bag"></i>
+                            </div>
+                            <span class="fs-6 fw-400 text-dark">Mi tienda</span>
+                        </a>
+                        <?php
+                    }
+                ?>
+
                 <a class="dropdown-item" href="cuenta-configuracion.php">
                     <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                     Cuenta
