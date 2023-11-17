@@ -12,8 +12,7 @@
     require '../app/php/conexion.php';
     require 'php/funciones.php'; 
 
-    $_SESSION['managedStore'] = "";
-    
+   
     if (isset($_SESSION['username']))
     {
         $username = $_SESSION['username'];

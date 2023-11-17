@@ -7,6 +7,46 @@
     date_default_timezone_set("America/Mexico_City");
     $fechahora = strtotime(date("Y-m-d h:i:s"));
   
+    function getSucursalesTienda($conn, $idTienda)
+    {
+        $sucursales = array();
+        $sql = "SELECT * FROM sucursalesTienda WHERE idTienda = '$idTienda' AND isActive = 1 ORDER BY isPrincipal DESC, nombreSucursal ASC";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) == 0)
+        {
+            return false;
+        }
+        else
+        {
+            while ($row = mysqli_fetch_assoc($result))
+            {
+                $sucursales[] = $row;
+            }
+            return $sucursales;
+        }
+    }
+    
+    function getTiendasOwner($conn, $idUsuario)
+    {
+        $sql  = "SELECT * FROM tiendas WHERE administradoPor = ? AND isActive = 1";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $idUsuario);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $count  = mysqli_num_rows($result);
+
+        if ($count === 0) 
+        {
+            return false;
+        } 
+        else 
+        {
+            $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $data;
+        }
+    }
+
     function cargarComprobante($conn, $idCliente, $idPedido)
     { 
        

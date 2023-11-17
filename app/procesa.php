@@ -1462,102 +1462,184 @@
         } 
     }
 
-if (isset($_POST['btnLogin28'])) 
-{
     
-    if (isset($_POST['form_email'], $_POST['form_password'])) 
+    if (isset($_POST['btnLogin28'])) 
     {
-        $redirect = $_POST['redirect'] ?? null;
-        $vendedor = $_POST['vendedor'] ?? null;
-        $error_message = null;
-        
-        $inputPassword = empty(trim($_POST['form_password'])) ? "#$&&(&/)##ASD3$!#$=$)?" : $_POST['form_password'];
-        
-        $form_email = trim($_POST['form_email']);
-        
-        if (!empty($form_email)) 
+    
+        if (isset($_POST['form_email'], $_POST['form_password'])) 
         {
-            $form_email = mysqli_real_escape_string($conn, htmlspecialchars($form_email));
-            
-            $query = mysqli_query($conn, "SELECT * FROM `usuarios` WHERE email = '$form_email'");
-            
-            if (mysqli_num_rows($query) > 0) 
-            {
-                $row = mysqli_fetch_assoc($query);
-                $usuario_db_pass = $row['password'];
-                
-                
-                
-                $isActive = $row['isActive'];
-                $isVerified = $row['isVerified'];
-                
-                $nombre = $row['nombre'];
-                $verifico_password = ($inputPassword == $usuario_db_pass);
-
-                if ($isActive == 1) 
-                {
-                    if ($verifico_password)
+    
+            $redirect = $_POST['redirect'] ?? null;
+            $vendedor = $_POST['vendedor'] ?? null;
+            $error_message = null;
+    
+            // Manejo de contraseña vacía
+            $inputPassword = isset($_POST['form_password']) ? trim($_POST['form_password']) : null;
+    
+            if (!empty($inputPassword)) {
+    
+                $form_email = mysqli_real_escape_string($conn, htmlspecialchars(trim($_POST['form_email'])));
+    
+                if (!empty($form_email)) {
+    
+                    // Utilizamos una sentencia preparada para evitar ataques de inyección SQL
+                    $stmt = mysqli_prepare($conn, "SELECT * FROM `usuarios` WHERE email = ?");
+                    
+                    // Vinculamos el parámetro
+                    mysqli_stmt_bind_param($stmt, "s", $form_email);
+                    
+                    // Ejecutamos la consulta
+                    mysqli_stmt_execute($stmt);
+                    
+                    // Obtenemos el resultado
+                    $query = mysqli_stmt_get_result($stmt);
+    
+                    if (mysqli_num_rows($query) > 0) 
                     {
-                        session_start();
-
-                        $_SESSION['email']    = $form_email;                        
-                        $_SESSION['isActive'] = $row['isActive'];                           
-                        $_SESSION['isDistribuidor'] = $row['isDistribuidor'];
-                        $_SESSION['nombre']   = $row['nombre'];
-                        $_SESSION['paterno']  = $row['paterno'];
-                        $_SESSION['materno']  = $row['materno'];
-                        $_SESSION['telefono'] = $row['telefono'];
-                        $_SESSION['creditos'] = $row['creditos'];
-                        $_SESSION['isPartner'] = $row['isPartner'];
-
-                        $_SESSION['rol']      = $row['rol'];
-
-                        $_SESSION['carrito'] = array(); 
-                        $_SESSION['carrito']['conteoTotalPlaquitas'] = 0;
-                        $_SESSION['carrito']['creditos']    = 0;
-                        $_SESSION['carrito']['subtotal']    = 0;
-                        $_SESSION['carrito']['descuentos']  = 0;
-                        $_SESSION['carrito']['precioEnvio'] = 0;
-                        $_SESSION['carrito']['total']       = 0;
-                        
-                        // var_dump($redirect);
-                        // die;
-
-                        if (!is_null($redirect) && !empty($redirect)) 
+    
+                        $row = mysqli_fetch_assoc($query);
+                        $usuario_db_pass = $row['password'];
+                        $isActive = $row['isActive'];
+    
+                        // Verificamos la contraseña utilizando password_verify
+                        //$verifico_password = password_verify($inputPassword, $usuario_db_pass);
+                        $verifico_password = ($inputPassword === $usuario_db_pass);
+    
+                        if ($isActive == 1) 
                         {
-                            header('Location: ' . $redirect . '?msg=redirected');
-                            exit;
-                        }
-                        else
-                        {
-                            header('Location: index.php?msg=Welcome');
-                            exit;
-                        }
-                        
+    
+                            if ($verifico_password) 
+                            {
+    
+                                //session_start();
+    
+                                // Asignamos valores a las variables de sesión
+                                $_SESSION['email'] = $row['email'];
+                                $_SESSION['isActive'] = $row['isActive'];
+                                $_SESSION['nombre'] = $row['nombre'];
+                                $_SESSION['paterno'] = $row['paterno'];
+                                $_SESSION['materno'] = $row['materno'];
+                                $_SESSION['telefono'] = $row['telefono'];                                
+                                $_SESSION['isPartner'] = $row['isPartner'];
+                                $_SESSION['rol'] = $row['rol'];                                
+                                //$_SESSION['isDistribuidor'] = $row['isDistribuidor'];
+                                //$_SESSION['creditos'] = $row['creditos'];
+                                
+                                
+                                $tiendasOwner = getTiendasOwner($conn, $row['email']);
+                                //echo $tiendasOwner[0]['idTienda'];
+                                // echo "<pre>";
+                                // print_r($tiendasOwner);
+                                // die;
+                                
+                                if ($tiendasOwner !== false)
+                                {
 
-                    } else {
-                        $error_message = "errorCredencialesInvalidas";
+                                    $sucursales = getSucursalesTienda($conn, $tiendasOwner[0]['idTienda']);
+                                    //Actualizo el id de sesión actual con uno generado más reciente
+                                    session_regenerate_id(true);
+
+
+                                    // $_SESSION['username']   = $row['username']; // Comentada para validar que se consulte la tabla tiendas desde getTiendasOwner();
+
+                                    if (count($tiendasOwner)>1)
+                                    {
+                                        // Elegir tienda
+                                        //echo "elegir tienda";
+                                    }
+
+                                    if (count($tiendasOwner) == 1)
+                                    {
+                                        // Guardar tienda en sesión
+                                        $_SESSION['username']     = $tiendasOwner[0]['idTienda'];
+                                        $_SESSION['managedStore'] = $tiendasOwner[0]['idTienda'];
+                                        $_SESSION['nombreTienda'] = $tiendasOwner[0]['nombreTienda'];
+
+                                        // Guardar en sesión la sucursal principal
+                                        if ($sucursales !== false) 
+                                        {
+                                            foreach ($sucursales as $key => $branch)
+                                            {
+                                                if ($branch['isPrincipal'] == 1)
+                                                {
+                                                    $_SESSION['idSucursalVenta'] = $branch['idSucursal'];
+                                                    $_SESSION['nombreSucursalVenta'] = $branch['nombreSucursal'];
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    // echo "<pre>";
+                                    // print_r($_SESSION);
+                                    // die;
+
+                                    // Busco en config.php si está algun bloqueo, "preregistro"
+                                    // $preventLogin es 1 paso antes del login, administrar desde config.php
+                                    if ($preventLogin == false)
+                                    {
+                                        // direcciono al panel de administración o pagina del logueo exitoso.
+                                        if (isset($redirect) && !empty($redirect))
+                                        {
+                                            header('Location: ../' . $redirect . '?tienda=' . $vendedor);
+                                            exit;
+                                        }
+                                        else
+                                        {
+                                            header('Location: index.php?msg=bienvenido');
+                                            exit;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // var_dump($preventLogin);
+                                        header('Location: ' . $preventLogin);
+                                        exit();
+                                    }
+                                }
+                                else
+                                {
+                                    // var_dump($preventLogin);
+                                    header('Location: setup_tienda.php');
+                                    exit();
+                                }
+                                
+                            }
+                            else 
+                            {
+                                $error_message = "errorCredencialesInvalidas";
+                            }
+                        } 
+                        else 
+                        {
+                            $error_message = "errorCuentaInactiva";
+                        }
+                    } 
+                    else 
+                    {
+                        $error_message = "errorCredencialesInvalidasNulo";
                     }
+    
+                    // Cerramos la sentencia preparada
+                    mysqli_stmt_close($stmt);
                 } else {
-                    $error_message = "errorCuentaInactiva";
+                    $error_message = "errorDatosFaltantes";
                 }
+    
+                // Redireccionamos con el mensaje de error
+                header('Location: ../login.php?msg=' . $error_message . "&email=" . $form_email);
+                exit();
             } else {
-                $error_message = "errorCredencialesInvalidasNulo";
+                // Manejar el caso de contraseña vacía, por ejemplo, mostrar un mensaje de error al usuario.
+                $error_message = "errorContraseñaVacia";
+                header('Location: ../login.php?msg=' . $error_message . "&email=" . $form_email);
+                exit();
             }
         } else {
-            $error_message = "errorDatosFaltantes";
+            $error_message = "errorDatosFaltantes33";
+            header('Location: ../login.php?msg=' . $error_message . "&email=" . $form_email);
+            exit();
         }
+    }
         
-        header('Location: ../login.php?msg=' . $error_message . "&email=" . $form_email);
-        exit();
-
-    }
-    else
-    {
-        echo "ax";
-    }
-
-}
-
 
 ?>
