@@ -52,7 +52,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>PDV</title>
-        <link href="css/styles.css?id=3328" rel="stylesheet" />
+        <link href="css/styles.css?id=28" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
@@ -271,7 +271,7 @@
                                                                             if($row["inventario"]>0)
                                                                             {
                                                                                 ?>
-                                                                                <button type="submit" class="btn btn-primary shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="app/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
+                                                                                <button type="submit" class="btn btn-primary shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
                                                                                     <i class="me-1" data-feather="shopping-bag"></i>
                                                                                     Agregar
                                                                                 </button>
@@ -280,7 +280,7 @@
                                                                             else 
                                                                             {
                                                                                 ?>
-                                                                                <button type="submit" class="btn btn-danger shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="app/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
+                                                                                <button type="submit" class="btn btn-danger shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
                                                                                     <i class="me-1" data-feather="shopping-bag"></i>
                                                                                     Agotado
                                                                                 </button>

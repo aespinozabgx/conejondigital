@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
 
     if (isset($_SESSION['managedStore']))
@@ -61,9 +61,9 @@
             <div id="layoutSidenav_nav">
                 <?php
                   // Menú (sidenav)
-                  if (file_exists('src/sidenav-dark.php'))
+                  if (file_exists('src/sideMenu.php'))
                   {
-                      include 'src/sidenav-dark.php';
+                      include 'src/sideMenu.php';
                   }
                 ?>
             </div>

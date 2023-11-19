@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
 
     $whatsappMsg = "https://api.whatsapp.com/send?phone=5215610346590&text=Hola, requiero info adicional de mi perfil verificado mayoristapp.mx";
@@ -99,9 +99,9 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <?php
-                  if (file_exists('src/sidenav-dark.php'))
+                  if (file_exists('src/sideMenu.php'))
                   {
-                      require 'src/sidenav-dark.php';
+                      require 'src/sideMenu.php';
                   }
                 ?>
             </div>
@@ -261,7 +261,7 @@
 
                                                                               ?>
                                                                                 <div class="d-flex justify-content-center">
-                                                                                    <img src="<?php echo $dominio; ?>/app/verifica/usr_docs/<?php echo $datosProducto['idTienda']; ?>/productos/<?php echo $datosProducto['idProducto']; ?>/<?php echo $datosProducto['url'][$i]; ?>" class="d-block altura" alt="...">
+                                                                                    <img src="<?php echo $dominio; ?>/partner/verifica/usr_docs/<?php echo $datosProducto['idTienda']; ?>/productos/<?php echo $datosProducto['idProducto']; ?>/<?php echo $datosProducto['url'][$i]; ?>" class="d-block altura" alt="...">
                                                                                 </div>
                                                                               <?php
                                                                                   echo '</div>';
@@ -438,7 +438,7 @@
                                                             if ($datosProducto['inventario'] > 0)
                                                             {
                                                                 ?>
-                                                                <button type="submit" class="btn btn-primary mt-2 w-100" name="btnAgregarCarrito" value="app/detalle-producto-pos.php">
+                                                                <button type="submit" class="btn btn-primary mt-2 w-100" name="btnAgregarCarrito" value="partner/detalle-producto-pos.php">
                                                                     <i class="fa-solid fa-basket-shopping me-1"></i> Agregar
                                                                 </button>
                                                                 <?php
@@ -446,7 +446,7 @@
                                                             else
                                                             {
                                                                 ?>
-                                                                <button type="submit" class="btn btn-danger mt-2 w-100" name="btnAgregarCarrito" value="app/detalle-producto-pos.php" disabled>
+                                                                <button type="submit" class="btn btn-danger mt-2 w-100" name="btnAgregarCarrito" value="partner/detalle-producto-pos.php" disabled>
                                                                     <i class="fa-solid fa-warning me-1"></i> Agotado
                                                                 </button>
                                                                 <?php

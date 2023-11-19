@@ -1,3 +1,101 @@
+<!-- modal ver datos bancarios configuracion tienda Inicio-->
+<div class="modal fade" id="modalEliminarPago" tabindex="-1" aria-labelledby="modalEliminarPagoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEliminarPagoLabel">Confirmación</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form class="" action="procesa.php" method="post">
+                <div class="modal-body">
+                    Estás a punto de eliminar el método de pago "<span id="paymentNameToDelete" class="fw-600"></span>". ¿Deseas continuar?
+                    <input type="hidden" id="idToDeletePago" name="idToDelete" required>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-danger" name="btnEliminarPago">
+                        Sí, eliminar
+                    </button>
+
+                </div>
+          </form>
+        </div>
+    </div>
+</div>
+<!-- modal ver datos bancarios configuracion tienda Fin -->
+
+<!-- modal ver datos bancarios configuracion tienda Inicio-->
+<div class="modal fade" id="datosBancariosTienda" tabindex="-1" aria-labelledby="datosBancariosTiendaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="datosBancariosTiendaLabel">Datos bancarios</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form class="" action="procesa.php" method="post">
+                <div class="modal-body">
+
+                    <div id="qrcode" class="d-flex justify-content-center p-3"></div>
+
+                    <label class="fw-600" for="">Banco: </label>
+                    <input type="text" class="form-control text-primary text-center fw-600 fs-4 mb-2" id="bancoModal" name="banco" readonly required autocomplete="off">
+
+                    <label class="fw-600" for="">Número de tarjeta: </label>
+                    <input type="text" class="form-control text-primary text-center fw-600 fs-4 mb-2" id="numeroTarjetaModal" name="numeroTarjeta" readonly required autocomplete="off">
+
+                    <label class="fw-600" for="">Clabe interbancaria: </label>
+                    <input type="text" class="form-control text-primary text-center fw-600 fs-4 mb-2" id="clabeModal" name="clabe" readonly required autocomplete="off">
+
+                    <input type="hidden" id="idDB" name="idDB">
+
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    <?php
+                    $filename =  basename($_SERVER["SCRIPT_FILENAME"]);
+                    if ($filename != "pago-pos.php")
+                    {
+                    ?>
+                        <button type="button" class="btn btn-success" id="jsEditar" onclick="javascript: habilitarEdicion();">
+                            Permitir edición <i class="fas fa-edit ms-1"></i>
+                        </button>
+                    <?php
+                    }
+                    ?>
+                    <button type="submit" class="btn btn-indigo" id="jsGuardar" name="btnActualizarDatosBancarios" style="display: none;">
+                        Guardar
+                    </button>
+                </div>
+                <script type="text/javascript">
+                    function habilitarEdicion()
+                    {
+
+                        document.getElementById('jsGuardar').style.display = "block";
+                        document.getElementById('jsEditar').style.display  = "none";
+
+                        document.getElementById('bancoModal').removeAttribute('readonly');
+                        document.getElementById('numeroTarjetaModal').removeAttribute('readonly');
+                        document.getElementById('clabeModal').removeAttribute('readonly');
+
+                    }
+                </script>
+          </form>
+        </div>
+    </div>
+</div>
+<!-- modal ver datos bancarios configuracion tienda Fin -->
+
 <div class="modal fade" id="modalFes" tabindex="-1" aria-labelledby="modalFesLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

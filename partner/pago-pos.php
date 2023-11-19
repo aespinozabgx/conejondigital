@@ -2,7 +2,7 @@
 
     session_start();
 
-    require 'php/conexion_db.php';
+    require '../app/php/conexion.php';
     require 'php/funciones.php';
 
     if (isset($_SESSION['managedStore']))
@@ -61,7 +61,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-        <script src="js/qrcode.js?id=33"></script>
+        <!-- <script src="js/qrcode.js?id=33"></script> -->
         <script src="js/ajax.js?id=2833"></script>
 
         <style type="text/css">
@@ -99,9 +99,9 @@
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <?php
-                  if (file_exists('src/sidenav-dark.php'))
+                  if (file_exists('src/sideMenu.php'))
                   {
-                      require 'src/sidenav-dark.php';
+                      require 'src/sideMenu.php';
                   }
                 ?>
             </div>

@@ -17,7 +17,7 @@
     if ($isConexionLocal)
     {
         $dominio = "http://localhost/apps/conejondigital/";
-        //$dominio = "http://192.168.0.4/apps/conejondigital";
+        $dominio = "http://192.168.0.4/apps/conejondigital";
         $urlActivacion = $dominio;
     }
     else

@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require 'php/conexion_db.php'; //configuración conexión db
+    require '../app/php/conexion.php'; //configuración conexión db
     require 'php/funciones.php'; //configuración conexión db
 
     if (isset($_SESSION['email'], $_SESSION['managedStore']))
@@ -46,9 +46,9 @@
         <div id="layoutSidenav">
             <?php
               // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
+              if (file_exists('src/sideMenu.php'))
               {
-                include 'src/sidenav.php';
+                include 'src/sideMenu.php';
               }
             ?>
             <div id="layoutSidenav_content">
@@ -70,13 +70,9 @@
                     <!-- Main page content-->
                     <div class="container-xl px-4 mt-4">
                         <!-- Account page navigation-->
-                        <nav class="nav nav-borders">
-                            <a class="nav-link" href="configura-tienda.php">General</a>
-                            <a class="nav-link" href="configura-pagos.php">Pagos</a>
-                            <a class="nav-link active ms-0" href="configura-envios.php">Envíos</a>
-                            <!-- <a class="nav-link" href="account-security.html">Security</a>
-                            <a class="nav-link" href="account-notifications.html">Notifications</a> -->
-                        </nav>
+                        <?php
+                            include 'src/menuConfiguracion.php';
+                        ?>
                         <hr class="mt-0 mb-4" />
 
                         <button type="submit" class="btn btn-primary circle fw-600 flotante rounded-pill shadow-sm" data-bs-toggle="modal" data-bs-target="#modalNuevoEnvio" name="btnAddCart">
