@@ -1031,6 +1031,25 @@
         }
     }
 
+    function getTiendasRegistradas($conn)
+    {
+        $sql  = "SELECT * FROM tiendas";
+        $stmt = mysqli_prepare($conn, $sql); 
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $count  = mysqli_num_rows($result);
+
+        if ($count === 0) 
+        {
+            return false;
+        } 
+        else 
+        {
+            $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            return $data;
+        }
+    }
+
     function getTiendasOwner($conn, $idUsuario)
     {
         $sql  = "SELECT * FROM tiendas WHERE administradoPor = ? AND isActive = 1";

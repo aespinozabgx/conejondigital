@@ -35,7 +35,7 @@
     }
 
     // echo "<pre>";
-    // print_r($registrosNoComprados);
+    // var_dump($registrosNoComprados);
     // die;                                             
     
 ?>
@@ -130,7 +130,7 @@
                                 <?php
 
                                     // Validar si el carrito está vacio
-                                    if (isset($_SESSION['carrito']))
+                                    if (!empty($registrosNoComprados))
                                     {
                                           ?>
                                           <div class="table-responsive mb-4">
@@ -169,7 +169,7 @@
                                       ?>
                                         <h1 class="text-center mb-3 fw-600">Tu carrito está vacío</h1>
                                         <div class="text-center">
-                                          <a class="btn btn-green btn-sm rounded-pill shadow" href="perfil.php?tienda=<?php echo $idTienda; ?>">
+                                          <a class="btn btn-green btn-lg rounded-pill shadow" href="disenaGafete.php">
                                               <i class="fas fa-store me-1"></i> Regresar a la tienda
                                           </a>
                                         </div>
@@ -252,7 +252,7 @@
                                             
                                             <?php
                                         }
-                                        elseif ($requiereEnvio == 0 && isset($_SESSION['carrito']))
+                                        elseif ($requiereEnvio == 0 && (!empty($registrosNoComprados)))
                                         {
                                             ?>
                                             <!-- Cantidad de productos en el carrito -->
@@ -286,57 +286,64 @@
                                             <!-- Fin Direcciones -->
                                         </div>
                                     </div>
+                                    
+                                    <?php
+                                    if (!empty($registrosNoComprados)) 
+                                    {
+                                        ?>
+                                        <div class="px-3">
+                                            <div for="floatingSelect" class="fw-600 fs-4 mb-3 text-primary"><i class="fas fa-credit-card me-2"></i> Método de pago</div>
+                                            <div class="row mt-2">
 
-                                    <div class="px-3">
-                                        <div for="floatingSelect" class="fw-600 fs-4 mb-3 text-primary"><i class="fas fa-credit-card me-2"></i> Método de pago</div>
-                                        <div class="row mt-2">
-
-                                            <div class="col-xl-6 mb-4">
-                                                <!-- Dashboard example card 1-->
-                                                <a class="card lift shadow-none h-100 border-3 code-block" href="#!">
-                                                    <label for="transferenciaBancaria" style="cursor: pointer;">
-                                                        <div class="card-body d-flex justify-content-center flex-column">                                                        
-                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                <div class="me-3">
-                                                                    
-                                                                    <i class="feather-xl text-primary mb-3" data-feather="credit-card"></i>
-                                                                    <h5>Transferencia bancaria</h5>
-                                                                    <div class="text-muted small ">                                                                         
-                                                                        <input class="form-check-input" type="radio" name="metodoPago" value="transferenciaBancaria" id="transferenciaBancaria" required>
+                                                <div class="col-xl-6 mb-4">
+                                                    <!-- Dashboard example card 1-->
+                                                    <a class="card lift shadow-none h-100 border-3 code-block" href="#!">
+                                                        <label for="transferenciaBancaria" style="cursor: pointer;">
+                                                            <div class="card-body d-flex justify-content-center flex-column">                                                        
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="me-3">
+                                                                        
+                                                                        <i class="feather-xl text-primary mb-3" data-feather="credit-card"></i>
+                                                                        <h5>Transferencia bancaria</h5>
+                                                                        <div class="text-muted small ">                                                                         
+                                                                            <input class="form-check-input" type="radio" name="metodoPago" value="transferenciaBancaria" id="transferenciaBancaria" required>
+                                                                        </div>
+                                                                        
                                                                     </div>
-                                                                    
-                                                                </div>
-                                                                <img src="assets/img/transferencia.jpg" class="rounded-3" alt="..." style="width: 8rem" />
-                                                            </div>                                                        
-                                                        </div>
-                                                    </label>
-                                                </a>
-                                            </div>                                             
+                                                                    <img src="assets/img/transferencia.jpg" class="rounded-3" alt="..." style="width: 8rem" />
+                                                                </div>                                                        
+                                                            </div>
+                                                        </label>
+                                                    </a>
+                                                </div>                                             
 
-                                            <div class="col-xl-6 mb-4">
-                                                <!-- Dashboard example card 1-->
-                                                <a class="card lift shadow-none h-100 border-3 code-block" href="#!">
-                                                    <label for="spinOxxo" style="cursor: pointer;">
-                                                        <div class="card-body d-flex justify-content-center flex-column">                                                        
-                                                            <div class="d-flex align-items-center justify-content-between">
-                                                                <div class="me-3">
-                                                                                                                                        
-                                                                    <i class="fas fa-money-bill-wave fa-xl text-primary mb-3"></i>
-                                                                    <h5>Efectivo en OXXO</h5>
-                                                                    <div class="text-muted small">                                                                         
-                                                                        <input class="form-check-input" type="radio" name="metodoPago" value="spinOxxo" id="spinOxxo">
+                                                <div class="col-xl-6 mb-4">
+                                                    <!-- Dashboard example card 1-->
+                                                    <a class="card lift shadow-none h-100 border-3 code-block" href="#!">
+                                                        <label for="spinOxxo" style="cursor: pointer;">
+                                                            <div class="card-body d-flex justify-content-center flex-column">                                                        
+                                                                <div class="d-flex align-items-center justify-content-between">
+                                                                    <div class="me-3">
+                                                                                                                                            
+                                                                        <i class="fas fa-money-bill-wave fa-xl text-primary mb-3"></i>
+                                                                        <h5>Efectivo en OXXO</h5>
+                                                                        <div class="text-muted small">                                                                         
+                                                                            <input class="form-check-input" type="radio" name="metodoPago" value="spinOxxo" id="spinOxxo">
+                                                                        </div>
+                                                                        
                                                                     </div>
-                                                                    
-                                                                </div>
-                                                                <img src="assets/img/oxxo.png" class="rounded-3" alt="..." style="width: 8rem" />
-                                                            </div>                                                        
-                                                        </div>
-                                                    </label>
-                                                </a>
+                                                                    <img src="assets/img/oxxo.png" class="rounded-3" alt="..." style="width: 8rem" />
+                                                                </div>                                                        
+                                                            </div>
+                                                        </label>
+                                                    </a>
+                                                </div>
+                                                
                                             </div>
-                                            
                                         </div>
-                                    </div>
+                                        <?php
+                                    }
+                                    ?>
 
                                     <div class="row"></div>
 
@@ -349,7 +356,7 @@
 
                                                 <!-- Invoice item 1-->
                                                 <?php
-                                                if (isset($_SESSION['carrito']))
+                                                if ((!empty($registrosNoComprados)))
                                                 {
                                                     $salida = "";
                                                     $acumPrecioPagar = 0;
@@ -364,7 +371,7 @@
                                                         <td class="text-end pb-0">
                                                             <div class="fs-3 mb-0 fw-700" id="salidaSubtotal">
                                                                 <?php
-                                                                    echo "$&nbsp;" . number_format(($totalProductos*90), 2);
+                                                                    echo "$&nbsp;" . number_format(($totalProductos*100), 2);
                                                                 ?>
                                                             </div>
                                                         </td>
@@ -403,7 +410,7 @@
                                                             <!-- El id #precioTotal muestra por defecto la variable de sesion 'total', se actualiza por AJAX tomando el valor de la variable local $total -->
                                                             <div class="h5 mb-0 fw-700 fs-1 text-green" id="precioTotal">
                                                                 <span class="fw-500 fs-1 text-green">
-                                                                    <?php echo "$&nbsp;" . number_format(($totalProductos*90), 2); ?>
+                                                                    <?php echo "$&nbsp;" . number_format(($totalProductos*100), 2); ?>
                                                                 </span>
                                                             </div>
                                                         </td>
@@ -419,7 +426,7 @@
                                     <div class="mt-5 text-end ">
 
                                         <?php
-                                        if (isset($_SESSION['carrito']))
+                                        if (!empty($registrosNoComprados))
                                         {
 
                                             //echo '<p class="fw-300 small me-1 m-4">Recibirás los métodos de pago en tu correo electrónico y también podrás consultarlos en el detalle del pedido.</p>';
@@ -430,7 +437,7 @@
                                             </button>
                                             <?php
                                             
-                                        }
+                                        } 
                                         ?>
                                     </div>
 

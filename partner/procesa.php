@@ -2896,10 +2896,17 @@
                 break;
             }
         }
+ 
 
-        $requiereEnvio = (isset($_POST['requiereEnvio'])) ? 0 : 1;
-        $isActiveOnlineStore = $_POST['isActiveOnlineStore'];
-        $isActive = 1;
+         // Validar y asignar valor para requiereEnvio
+         $requiereEnvio = isset($_POST['requiereEnvio']) ? 0 : 1;
+
+         // Validar y asignar valor para isActiveOnlineStore
+         $isActiveOnlineStore = isset($_POST['isActiveOnlineStore']) ? $_POST['isActiveOnlineStore'] : 0;
+ 
+         // Asignar valor para isActive
+         $isActive = 1;
+
 
         // Inicializa la bandera de carga de imagen en 1 (OK)
         $uploadOk = 1;

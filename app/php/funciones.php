@@ -25,8 +25,8 @@
             }
             return $sucursales;
         }
-    }
-    
+    }    
+
     function getTiendasOwner($conn, $idUsuario)
     {
         $sql  = "SELECT * FROM tiendas WHERE administradoPor = ? AND isActive = 1";

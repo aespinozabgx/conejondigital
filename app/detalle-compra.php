@@ -340,11 +340,11 @@
                                                                                                 <i class="fas fa-wallet me-2"></i>
                                                                                                 Transferencia Bancaria
                                                                                             </div>
-                                                                                            <div class="fs-5">
+                                                                                            <div class="fs-5 text-nowrap">
                                                                                                 <div>Banco: <b>BBVA</b></div>
-                                                                                                <div>Clabe: 0121 8001 5710 4482 66</div>
-                                                                                                <div>Tarjeta: 4152 3136 9799 1797</div>
-                                                                                                <div>Concepto: Nombre completo</div>
+                                                                                                <div class="text-nowrap">Clabe: 0121 8001 5710 4482 66</div>
+                                                                                                <div class="text-nowrap">Tarjeta: 4152 3136 9799 1797</div>
+                                                                                                <div class="text-nowrap">Concepto: Tu Nombre completo</div>
                                                                                             </div>                                                                                                                                                                   
 
                                                                                             <?php
@@ -773,8 +773,8 @@
                             <div class="d-flex justify-content-between align-items-center text-white">
                                 <div class="me-3">
                                     <div>Banco: BBVA</div>
-                                    <div>Clabe: 0121 8001 5611 5556 69</div>
-                                    <div>Tarjeta: 4152 3137 5235 2307</div>
+                                    <div class="text-nowrap">Clabe: 0121 8001 5710 4482 66</div>
+                                    <div class="text-nowrap">Tarjeta: 4152 3137 9799 1797</div>
                                 </div>
                                 <div class="display-6 text-white-50">
                                     <img class="rounded-2 shadow" src="assets/img/logo-bbva.png" style="height: 88px;" alt="">
@@ -810,36 +810,7 @@
                              
                         </div>
                     </div>
-                </div>
-
-                <div class="col-12 mb-4 mt-2">
-                    <a href="<?php echo $urlPaypal; ?>" target="_blank" class="">
-                    <div class="card bg-blue h-100">
-                        <div class="card-header text-white">
-                            Pago con Paypal o Tarjeta de crédito/débito
-                        </div>
-
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                
-                                <div class="display-6 dark">
-                                    <img class="" src="assets/img/paypal.png" style="height: 88px;" alt="">
-                                </div>
-                                <div class="ms-3 text-white fs-5">
-                                    <div class="btn btn-white">
-                                        Pagar ahora <i class="fas fa-external-link-alt ms-2"></i>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="card-footer dark" style="cursor:pointer;">
-                             
-                        </div>
-                    </div>
-                    </a>                    
-                </div>
+                </div>                 
                   
             </div>
 

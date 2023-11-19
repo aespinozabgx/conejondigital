@@ -4,7 +4,7 @@
     session_start();
 
     require '../app/php/conexion.php';
-    require '../app/php/funciones.php';
+    require 'php/funciones.php';
 
     if (isset($_SESSION['username']))
     {

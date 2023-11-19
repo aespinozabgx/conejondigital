@@ -1462,6 +1462,21 @@
         } 
     }
 
+    if (isset($_POST['btnSUCambiarTienda'])) 
+    {
+        // echo "btnSUCambiarTienda";
+        // var_dump($_POST);
+        if (isset($_POST['tiendaSelect']) && is_string($_POST['tiendaSelect'])) 
+        {
+            // Limpiar y asignar a la sesión
+            $_SESSION['managedStore'] = htmlspecialchars($_POST['tiendaSelect']);
+            exit(header('Location: ../partner/dashboard.php?msg=changedStore'));
+        } 
+        else 
+        {
+            echo "Ocurrió un error";
+        }
+    }
     
     if (isset($_POST['btnLogin28'])) 
     {
@@ -1528,9 +1543,9 @@
                                 
                                 $tiendasOwner = getTiendasOwner($conn, $row['email']);
                                 //echo $tiendasOwner[0]['idTienda'];
+                                // echo $row['email'];
                                 // echo "<pre>";
-                                // print_r($tiendasOwner);
-                                // die;
+                                // var_dump($tiendasOwner);
                                 
                                 if ($tiendasOwner !== false)
                                 {

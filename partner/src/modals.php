@@ -139,7 +139,7 @@
                     <input style="display: none;" class="" id="enlaceTienda" type="text" value="<?php echo $dominio . $_SESSION['managedStore']; ?>">
 
                     <a href="<?php echo $dominio . $_SESSION['managedStore']; ?>" target="_blank" class="fs-4 fw-300 text-decoration-underline text-center">
-                        <?php echo "vendy.click/" . $_SESSION['managedStore']; ?>
+                        <?php echo "conejondigital.com/" . $_SESSION['managedStore']; ?>
                         <i class="ms-1 mt-1 feather-sm" data-feather="external-link"></i>
                     </a>
 
@@ -306,7 +306,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <input id="text" type="text" value="https://vendy.click/www" style="width:80%; display:none;" />
+                
+            <input id="text" type="text" value="https://vendy.click/" style="width:80%; display:none;" />
                 
                 <h2 class="f-poppins sombra-titulos-vendy text-green text-center display-6 fw-500"><?php echo ucwords(strtolower($_SESSION['nombre'])); ?></h2>
                 <div id="qrcode-contenedor" style=""></div>
@@ -507,6 +508,34 @@
     </div>
 </div>
 
+<!-- Modal Categorias -->
+<div class="modal fade" id="modalEditarCategoria" tabindex="-1" aria-labelledby="modalEditarCategoriaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header bg-white border-1 border-bottom">
+        <h5 class="modal-title text-gray" id="modalDatosPagoLabel"> Editar Categoría </h5>
+        <button type="button" class="btn btn-icon btn-outline-indigo btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+      <div class="modal-body bg-white text-gray border-0 rounded-bottom">
+
+        <form id="formulario-categorias" action="procesa.php" method="post">
+
+            <div class="input-group mb-2">
+                <input type="text" class="form-control text-center text-dark" placeholder="Categoría" aria-label="Categoría" aria-describedby="Categoría" id="categoriaNombre" name="categoria" required>
+                <input type="hidden" class="form-control" id="idCategoria" name="idCategoria" required>
+                <button class="btn btn-secondary sin-borde" type="submit" name="btnActualizarCategoria">Actualizar</button>
+            </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal Categorias Fin -->
+
 <div class="modal fade" id="modalCategoriasPost" tabindex="-1" aria-labelledby="modalCategoriasPostLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content border-0">
@@ -521,7 +550,7 @@
           <form id="" action="procesa.php" method="post">
 
             <div class="input-group mb-3">
-                <input type="text" class="form-control sin-borde border-indigo text-dark text-center" placeholder="Electrónicos, Abarrotes, Etc" aria-label="Categoría" aria-describedby="Categoría" id="categoria" name="categoria" autocomplete="off" required>
+                <input type="text" class="form-control sin-borde border-indigo text-dark text-center" placeholder="Electrónicos, Abarrotes, Etc" aria-label="Categoría" aria-describedby="Categoría" id="categoriaNombreNueva" name="categoria" autocomplete="off" required>
                 <button class="btn btn-indigo border-1 sin-borde" type="submit" name="btnRegistrarCategoria">Registrar</button>
             </div>
 
@@ -702,7 +731,9 @@
 
 
                 <div class="row align-items-center justify-content-between m-3 mb-4">
-                    <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/stats.svg" /></div>
+                    <div class="col d-none d-lg-block mt-xxl-n4">
+                        <img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/stats.svg" alt="img28" />
+                    </div>
                     <div class="col">
                         <div class="text-primary fs-2 mb-3">
                             Adquiere tu licencia

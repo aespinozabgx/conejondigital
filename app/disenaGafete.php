@@ -275,24 +275,24 @@
                                                     <div class="text-primary display-6 mb-3 f-poppins fw-500">
                                                         <i class="fas fa-palette me-2"></i> Selecciona tu diseño favorito
                                                     </div>
-                                                    <div class="row mb-3">
-                                                    
+                                                    <div class="row mb-3">                                                    
+
                                                         <div class="col mb-3" id="disenos">                                                                                                                    
                                                                 <label class="design-option rounded rounded-3 mb-2">
                                                                     <input type="radio" required name="disenoGafete" value="1.jpg">
-                                                                    <img src="assets/img/gafete/disenos/1.jpg?id=0" alt="1.jpg">
+                                                                    <img src="assets/img/gafete/disenos/1.jpg" alt="1.jpg">
                                                                 </label>   
                                                         </div>
                                                         <div class="col mb-3" id="disenos">                                                                                              
                                                                 <label class="design-option rounded rounded-3 mb-2">
                                                                     <input type="radio" name="disenoGafete" value="2.jpg">
-                                                                    <img src="assets/img/gafete/disenos/2.jpg?id=0" alt="2.jpg">
+                                                                    <img src="assets/img/gafete/disenos/2.jpg" alt="2.jpg">
                                                                 </label>
                                                         </div>
                                                         <div class="col mb-3" id="disenos">
                                                                 <label class="design-option rounded rounded-3 mb-2">
                                                                     <input type="radio" name="disenoGafete" value="3.jpg">
-                                                                    <img src="assets/img/gafete/disenos/3.jpg?id=0" alt="3.jpg">
+                                                                    <img src="assets/img/gafete/disenos/3.jpg" alt="3.jpg">
                                                                 </label>
                                                         </div>
                                                         <div class="col mb-3" id="disenos">
@@ -302,6 +302,21 @@
                                                                 </label>
                                                         </div>
                                                         
+                                                        <div class="col mb-3" id="disenos">
+                                                            <label class="design-option rounded rounded-3 mb-2">
+                                                                <input type="radio" required name="disenoGafete" value="5.jpg">
+                                                                <img src="assets/img/gafete/disenos/5.jpg" alt="5.jpg">
+                                                            </label>
+                                                        </div>
+
+                                                        <div class="col mb-3" id="disenos">
+                                                            <label class="design-option rounded rounded-3 mb-2">
+                                                                <input type="radio" required name="disenoGafete" value="6.jpg">
+                                                                <img src="assets/img/gafete/disenos/6.jpg" alt="6.jpg">
+                                                            </label>
+                                                        </div>
+
+
                                                     </div>
                                                     
                                                     <div class="text-primary display-6 mb-3 f-poppins fw-500">
@@ -379,7 +394,7 @@
                                                                                                         class="rounded-img" alt="<?php echo $producto['diseno']; ?>">
                                                                                                 </td>
                                                                                                 <td class="align-middle">
-                                                                                                    $ 90.00 mxn
+                                                                                                    $ 100.00 mxn
                                                                                                 </td>
                                                                                                 <td class="text-center align-middle">
                                                                                                     <form action="procesa.php" method="POST">
@@ -409,7 +424,7 @@
                                                             <div class="modal-footer d-flex justify-content-between">
                                                                 <div class="col fs-3 fw-500 text-start">
                                                                     <?php
-                                                                        $subtotal = sizeof($registrosNoComprados) * 90;
+                                                                        $subtotal = sizeof($registrosNoComprados) * 100;
                                                                         $formattedSubtotal = '$ ' . number_format($subtotal, 2);
                                                                         echo $formattedSubtotal;
                                                                     ?>

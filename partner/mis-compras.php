@@ -2,7 +2,7 @@
 
     session_start();
 
-    require 'php/conexion_db.php'; //configuración conexión db
+    require "../app/php/conexion.php";
     require 'php/funciones.php'; //configuración conexión db
 
     if (isset($_SESSION['email']))
@@ -27,7 +27,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="es">
-    <head>
+    <head> 
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> -->

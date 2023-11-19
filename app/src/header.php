@@ -96,14 +96,14 @@
                 
                 <?php
                     //var_dump($_SESSION['isPartner']);
-                    if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == 1) 
+                    if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == 1 && isset($_SESSION['managedStore']))
                     {
                         ?>
                         <a class="dropdown-item" href="../partner/">
                             <div class="dropdown-item-icon">
                                 <i data-feather="shopping-bag"></i>
                             </div>
-                            <span class="fs-6 fw-400 text-dark">Mi tienda</span>
+                            <span class="fs-6 fw-400 text-dark">Mi tienda <?php echo $_SESSION['managedStore']; ?></span>
                         </a>
                         <?php
                     }

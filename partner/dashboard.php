@@ -180,10 +180,41 @@
                                                 <?php echo !empty($_SESSION['nombreTienda']) ? ucwords(strtolower($_SESSION['nombreTienda'])) : 'Dashboard'; ?>
                                             </a>
 
-                                            <a class="btn rounded-pill btn-outline-white" target="_blank" href="https://conejondigital.com/<?php echo $idTienda; ?>">
-                                                <i data-feather="link-2" class=""></i>
-                                                <span class="d-none d-sm-inline ms-1">conejondigital.com/<?php echo $idTienda; ?></span>
-                                            </a>
+                                            <?php
+                                            
+                                                if (isset($_SESSION['rol']) && $_SESSION['rol'] == "su") 
+                                                { 
+                                                    $tiendasRegistradas = getTiendasRegistradas($conn);
+                                                    
+                                                    if ($tiendasRegistradas !== false) 
+                                                    {
+                                                        ?>
+                                                        <form action="../app/procesa.php" method="post" class="mt-3">
+                                                            <div class="form-group d-flex align-items-center">
+                                                                <label for="tiendaSelect" class="me-2">Tienda: </label>
+                                                                <select class="form-select me-1" name="tiendaSelect" id="tiendaSelect" required>
+                                                                    <option value="">Seleccionar</option>
+                                                                    <?php foreach ($tiendasRegistradas as $tienda) : ?>
+                                                                        <option value="<?= htmlspecialchars($tienda['idTienda']) ?>"><?= htmlspecialchars($tienda['nombreTienda']) ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
+                                                                <button class="btn btn-outline-primary border-white border-2 text-white" name="btnSUCambiarTienda" type="submit">Enviar</button>
+                                                            </div>
+                                                        </form>
+                                                        <?php
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                    <a class="btn rounded-pill btn-outline-white" target="_blank" href="https://conejondigital.com/<?php echo $idTienda; ?>">
+                                                        <i data-feather="link-2" class=""></i>
+                                                        <span class="d-none d-sm-inline ms-1">conejondigital.com/<?php echo $idTienda; ?></span>
+                                                    </a>
+                                                    <?php
+                                                }
+                                            ?>
+                                            
 
                                         </div>
                                         <div class="page-header-subtitle">

@@ -124,8 +124,8 @@
 
                                 <nav class="mt-3 mb-4 rounded" aria-label="breadcrumb">
                                   <a href="mis-articulos.php" class="text-decoration-none">
-                                      <button type="button" class="btn btn-light text-dark fw-500 btn-sm rounded-pill shadow-sm" name="button">
-                                          <i class="fas fa-arrow-circle-left text-gray-700 me-2 text-decoration-none"></i>
+                                      <button type="button" class="btn btn-outline-white fw-500 fs-6 rounded-pill shadow-sm" name="button">
+                                          <i class="fas fa-arrow-circle-left me-2 text-decoration-none"></i>
                                           Regresar a Artículos
                                       </button>
                                   </a>
@@ -135,7 +135,7 @@
                                     <div class="col-auto mt-2">
                                         <h1 class="text-white fw-200">
                                             <i class="fas fa-pencil-alt me-1"></i>
-                                            Editando <i class="fw-500">"<?php echo ucwords($producto['nombre']); ?>"</i>
+                                            <i class="fw-500">"<?php echo ucwords($producto['nombre']); ?>"</i>
                                         </h1>
                                         <div class="page-header-subtitle"> <small>Modifica los campos necesarios para actualizar el artículo.</small> </div>
                                     </div>
