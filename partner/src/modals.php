@@ -1,3 +1,278 @@
+
+<!-- modal seleccionar sucursal Inicio-->
+<div class="modal fade" id="modalSeleccionarSucursal" tabindex="-1" aria-labelledby="modalSeleccionarSucursalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="procesa.php" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary fw-600">Selecciona la sucursal</h5>
+                    <!-- <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark fa-xl"></i>
+                    </button> -->
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2 m-2 text-dark">
+                        <?php
+
+                        if (isset($conn) && isset($idTienda))
+                        {
+                            $sucursales = getSucursalesTienda($conn, $idTienda);
+
+                            // Verificar si se encontraron sucursales
+                            if ($sucursales)
+                            {
+                                // Iterar sobre las sucursales y mostrar cada una en un radio button
+                                foreach ($sucursales as $sucursal)
+                                {
+                                    if (isset($_SESSION['idSucursalVenta']) && ($_SESSION['idSucursalVenta'] == $sucursal['idSucursal']))
+                                    {
+                                        echo '<div class="mb-2">';
+                                        echo '<label style="cursor: pointer;" class="fw-400 fs-4 text-dark poppins-font"><input type="radio" name="sucursal" value="' . $sucursal['idSucursal'] . '" checked required> ' . $sucursal['nombreSucursal'] . '</label><br>';
+                                        echo '</div>';
+                                    }
+                                    else
+                                    {
+                                        echo '<div class="mb-2">';
+                                        echo '<label style="cursor: pointer;" class="fw-400 fs-4 text-dark poppins-font"><input type="radio" name="sucursal" value="' . $sucursal['idSucursal'] . '" required> ' . $sucursal['nombreSucursal'] . '</label><br>';
+                                        echo '</div>';
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                echo 'No se encontraron sucursales para esta tienda.';
+                            }
+                        }
+                        ?>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" name="idTienda" value="<?php echo isset($idTienda) ? $idTienda : ''; ?>">
+                    <button type="button" class="btn btn-light fw-400" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <?php
+                    if ($sucursales)
+                    {
+                      ?>
+                      <button type="submit" class="btn btn-success" name="btnSeleccionarSucursal">
+                          <i class="me-1" data-feather='save'></i> Seleccionar
+                      </button>
+                      <?php
+                    }
+                    else
+                    {
+                    ?>
+                      <a href="#" class="btn btn-primary rounded-3" data-bs-toggle="modal" data-bs-target="#modalNuevaSucursal">
+                        Registrar sucursal
+                      </a>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- modal seleccionar sucursal Fin -->
+
+<form action="procesa.php" method="post" id="formNuevaSucursal" autocomplete="off">
+    <!-- modal nueva direccion cliente Inicio -->
+    <div class="modal fade" id="modalNuevaSucursal" tabindex="-1" aria-labelledby="modalNuevaSucursalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary fw-600">
+                        <i class="far fa-building me-1"></i> Registro de sucursal
+                    </h5>
+                    <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark fa-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2 text-dark">
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="nombre_sucursal">Nombre de la Sucursal:*</label>
+                                <input type="text" class="form-control fs-6 fw-500 text-center" id="nombre_sucursal" name="nombre_sucursal" placeholder="Nombre sucursal" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <label class="text-primary fw-400 small" for="cp_sucursal">Código postal:*</label>
+                                <input type="number" class="form-control" id="cp_sucursal" min="0" maxlength="5" name="cp_sucursal" placeholder="xxxxx" autocomplete="off" oninput="if (this.value.length > 5) { this.value = this.value.slice(0, 5); }">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="estado_sucursal">Estado:*</label>
+                                <select class="form-select" id="estado_sucursal" name="estado_sucursal">
+                                    <option value="" selected>Seleccionar</option>
+                                    <option value="AGUASCALIENTES">AGUASCALIENTES</option>
+                                    <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
+                                    <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
+                                    <option value="CHIHUAHUA">CHIHUAHUA</option>
+                                    <option value="CHIAPAS">CHIAPAS</option>
+                                    <option value="CAMPECHE">CAMPECHE</option>
+                                    <option value="CIUDAD DE MEXICO">CIUDAD DE MEXICO</option>
+                                    <option value="COAHUILA">COAHUILA</option>
+                                    <option value="COLIMA">COLIMA</option>
+                                    <option value="DURANGO">DURANGO</option>
+                                    <option value="GUERRERO">GUERRERO</option>
+                                    <option value="GUANAJUATO">GUANAJUATO</option>
+                                    <option value="HIDALGO">HIDALGO</option>
+                                    <option value="JALISCO">JALISCO</option>
+                                    <option value="MICHOACAN">MICHOACAN</option>
+                                    <option value="ESTADO DE MEXICO">ESTADO DE MEXICO</option>
+                                    <option value="MORELOS">MORELOS</option>
+                                    <option value="NAYARIT">NAYARIT</option>
+                                    <option value="NUEVO LEON">NUEVO LEON</option>
+                                    <option value="OAXACA">OAXACA</option>
+                                    <option value="PUEBLA">PUEBLA</option>
+                                    <option value="QUINTANA ROO">QUINTANA ROO</option>
+                                    <option value="QUERETARO">QUERETARO</option>
+                                    <option value="SINALOA">SINALOA</option>
+                                    <option value="SAN LUIS POTOSI">SAN LUIS POTOSI</option>
+                                    <option value="SONORA">SONORA</option>
+                                    <option value="TABASCO">TABASCO</option>
+                                    <option value="TLAXCALA">TLAXCALA</option>
+                                    <option value="TAMAULIPAS">TAMAULIPAS</option>
+                                    <option value="VERACRUZ">VERACRUZ</option>
+                                    <option value="YUCATAN">YUCATAN</option>
+                                    <option value="ZACATECAS">ZACATECAS</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="calle_sucursal">Municipio/Alcaldía:*</label>
+                                <input type="text" class="form-control" id="calle_sucursal" name="mun_alc_sucursal" placeholder="Municipio/Alcaldía" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="colonia_sucursal">Colonia:*</label>
+                                <input type="text" class="form-control" id="colonia_sucursal" name="colonia_sucursal" placeholder="Colonia" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="calle_sucursal">Calle:*</label>
+                                <input type="text" class="form-control" id="calle_sucursal" name="calle_sucursal" placeholder="Calle" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="exterior_sucursal">Número Exterior:*</label>
+                                <input type="text" class="form-control" id="exterior_sucursal" name="exterior_sucursal" placeholder="Núm. Exterior" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="interior_sucursal">Interior/Depto:</label>
+                                <input type="text" class="form-control" id="interior_sucursal" name="interior_sucursal" placeholder="Interior/Depto" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            * Campos requeridos
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col">
+                        <span class="border border-1 p-2 fw-300 small rounded-pill border-gray">1/2</span>
+                    </div>
+                    <div class="col text-end">
+                        <button type="button" class="btn btn-light border border-2 rounded-3 mb-2 fw-500 fs-6" data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                        <button type="button" class="btn btn-primary rounded-3 mb-2 fw-500 fs-6" onclick="validarCamposRegistroSucursal()">
+                            Siguiente <i class="ms-1" data-feather='arrow-right'></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- modal nueva direccion cliente fin -->
+
+    <!-- modal nueva direccion cliente Inicio -->
+    <div class="modal fade" id="modalNuevaSucursal2" tabindex="-1" aria-labelledby="modalNuevaSucursal2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary fw-600">
+                        <i class="far fa-building me-1"></i> Registro de sucursal
+                    </h5>
+                    <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark fa-xl"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-2 text-dark">
+
+                        <div class="row mb-2">
+                            <div class="col">
+                              <label class="text-primary fw-400 small" for="telefono_sucursal">Teléfono:*</label>
+                              <input type="text" class="form-control" id="telefono_sucursal" name="telefono_sucursal" placeholder="10 Dígitos" oninput="if (this.value.length > 10) { this.value = this.value.slice(0, 10); }" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="mb-1 mt-2 text-primary fw-500">
+                                ¿Entre qué calles se encuentra?
+                            </div>
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="entre_calles_sucursal">Calle 1:</label>
+                                <input type="text" class="form-control" id="entre_calles_sucursal" name="entre_calles_sucursal" autocomplete="off">
+                            </div>
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="entre_calles2_sucursal">Calle 2:</label>
+                                <input type="text" class="form-control" id="entre_calles2_sucursal" name="entre_calles2_sucursal" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col">
+                                <label class="text-primary fw-400 small" for="indicaciones_sucursal">Indicaciones Adicionales:</label>
+                                <textarea id="indicaciones_sucursal" class="form-control" name="indicaciones_sucursal"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="form-check checkbox-lg">
+                                <label class="text-primary fw-400" for="is_principal_sucursal">¿Es la sucursal principal?</label>
+                                <input type="checkbox" class="" id="is_principal_sucursal" name="is_principal_sucursal" value="1">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col">
+                        <span class="border border-1 p-2 fw-300 small rounded-pill border-gray">2/2</span>
+                    </div>
+                    <div class="col text-end">
+                        <input type="hidden" name="btnNuevaSucursal">
+                        <button type="button" class="btn btn-light rounded-3 border border-2 rounded-3 mb-2 fw-500 fs-6 w-100" data-bs-toggle="modal" data-bs-target="#modalNuevaSucursal">
+                            <i class="me-1" data-feather='arrow-left'></i> Regresar
+                        </button>
+                        <button type="button" class="btn btn-indigo rounded-3 fw-500 fs-6 w-100" onclick="return validarTelefono()">
+                            Guardar <i class="ms-1" data-feather='save'></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- modal nueva direccion cliente fin -->
+</form>
+
 <!-- modal ver datos bancarios configuracion tienda Inicio-->
 <div class="modal fade" id="modalEliminarPago" tabindex="-1" aria-labelledby="modalEliminarPagoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

@@ -2,7 +2,7 @@
 
     session_start();
 
-    require 'php/conexion_db.php'; //configuración conexión db
+    require '../app/php/conexion.php'; //configuración conexión db
     require 'php/funciones.php'; //configuración conexión db
 
     if (isset($_SESSION['email'], $_SESSION['managedStore']))
@@ -104,9 +104,9 @@
         <div id="layoutSidenav">
             <?php
               // Menú (sidenav)
-              if (file_exists('src/sidenav.php'))
+              if (file_exists('src/sideMenu.php'))
               {
-                include 'src/sidenav.php';
+                include 'src/sideMenu.php';
               }
             ?>
             <div id="layoutSidenav_content">

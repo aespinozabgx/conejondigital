@@ -1,5 +1,7 @@
 <?php
+
     session_start();
+
     require '../app/php/conexion.php'; //configuración conexión db
     require 'php/funciones.php'; //configuración conexión db
 
@@ -9,13 +11,14 @@
         $idTienda = $_SESSION['managedStore'];
     }
 
-    $enviosTienda  = getEnviosTiendaConfig($conn, $idTienda);
-    $hasActivePickup = validarPickupTienda($conn, $idTienda);
+    //$enviosTienda      = getEnviosTiendaConfig($conn, $idTienda);
+    //$hasActivePickup   = validarPickupTienda($conn, $idTienda);
     $hasActivePayment  = validarPagoActivo($conn, $idTienda);
-    $mediosContacto = getMediosContactoVendedor($conn, $idTienda);
+    $mediosContacto    = getMediosContactoVendedor($conn, $idTienda);
     $listMediosContactoDisponibles = getListadoMediosContactoDisponible($conn, $idTienda);
+    
     // echo "<pre>";
-    // print_r($mediosContacto);
+    // var_dump($mediosContacto);
     // die;
 ?>
 <!DOCTYPE html>
@@ -255,124 +258,58 @@
                                                 ?>
 
                                                 <div class="mb-3">
-                                                    <h1 class="font-poppins fw-300">Contacto</h1>
+                                                    <div class="font-poppins fw-300 text-dark display-6 sombra-titulos-vendy mb-3">
+                                                        Directo
+                                                    </div>
                                                     <!-- Contacto -->
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr class="small fw-200 text-dark">
-                                                                    <td>Cuenta</td>
-                                                                    <td>Dato</td>
-                                                                    <td>Acciones</td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <i data-feather="phone" class="feather-lg text-orange"></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo isset($tel_icon['data']) ? $tel_icon['data'] : " - "; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalTelefonoTienda">
-                                                                            <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>
-                                                                        <i class="fa-xl far fa-envelope text-cyan"></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo isset($email_icon['data']) ? $email_icon['data'] : " - "; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalEmailTienda">
-                                                                            <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </tbody>
-                                                        </table>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="col-lg-6 col-sm-12">
+                                                            <button type="button" class="w-100 btn btn-lg border-blue border-2 rounded-pill mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalTelefonoTienda">
+                                                                <i data-feather="phone" class="feather-lg text-blue"></i>
+                                                                <?php echo isset($tel_icon['data']) ? '&nbsp;&nbsp;' . $tel_icon['data'] . '&nbsp;&nbsp;' : ""; ?>
+                                                            </button>
+                                                            
+                                                            <button type="button" class="w-100 btn btn-lg border-blue border-2 rounded-pill mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalEmailTienda">
+                                                                <i class="fa-xl far fa-envelope text-blue"></i>
+                                                                <?php echo isset($email_icon['data']) ? '&nbsp;&nbsp;' . substr($email_icon['data'], 0, 12) . '&nbsp;&nbsp;' : ""; ?>                                                                
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                     <!-- Contacto -->
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <h1 class="font-poppins fw-300">Social</h2>
+                                                    
+                                                    <div class="font-poppins fw-300 text-dark display-6 sombra-titulos-vendy mb-3">
+                                                        Social
+                                                    </div>
                                                     <!-- social icons -->
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover">
-                                                        <thead>
-                                                            <tr class="small fw-200 text-dark">
-                                                            <td>Cuenta</td>
-                                                            <td>Dato</td>
-                                                            <td>Acciones</td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="col-lg-6 col-sm-12">
+                                                            
+                                                            <button type="button" class="w-100 btn btn-lg btn-blue rounded-pill mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalFacebookTienda">
+                                                                <i class="fa-xl fab fa-facebook"></i>
+                                                                <?php echo isset($fb_icon['data']) ? "&nbsp;&nbsp;" . substr($fb_icon['data'], 0, 15) : ""; ?>
+                                                            </button>
+                                                        
+                                                            <button type="button" class="w-100 btn btn-lg rounded-pill btn-green mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalFacebookTienda">
+                                                                <i class="fa-xl fab fa-whatsapp"></i>
+                                                                <?php echo isset($wa_icon['data']) ? "&nbsp;&nbsp;" . substr($wa_icon['data'], -10) . '&nbsp;&nbsp;' : ""; ?>
+                                                            </button>
+                                                            
+                                                            
+                                                            <button type="button" class="w-100 btn btn-lg btn-pink rounded-pill mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalInstagramTienda">
+                                                                <i class="fa-xl fab fa-instagram"></i>
+                                                                <?php echo isset($ig_icon['data']) ? "&nbsp;&nbsp;" . substr($ig_icon['data'], 0, 15) . '&nbsp;&nbsp;' : ""; ?>                                                                            
+                                                            </button>
+                                                        
+                                                            <button type="button" class="w-100 btn btn-lg btn-danger rounded-pill mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalYoutubeTienda">
+                                                                <i class="fa-xl fab fa-youtube"></i>
+                                                                <?php echo isset($yt_icon['data']) ? "&nbsp;&nbsp;" .substr($yt_icon['data'], 0, 15) . '&nbsp;&nbsp;' : ""; ?>                                                                            
+                                                            </button>
 
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-facebook text-blue"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($fb_icon['data']) ? $fb_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalFacebookTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-whatsapp text-green"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($wa_icon['data']) ? $wa_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalWhatsappTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                            <td>
-                                                                <i class="fa-xl fab fa-instagram text-pink"></i>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo isset($ig_icon['data']) ? $ig_icon['data'] : " - "; ?>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalInstagramTienda">
-                                                                    <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                </button>
-                                                            </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-youtube text-danger"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($yt_icon['data']) ? $yt_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalYoutubeTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-
-                                                        </tbody>
-                                                        </table>
-                                                    </div>                                                
+                                                        </div>
+                                                    </div>
                                                     <!-- social icons -->
                                                 </div>
                                         </div>

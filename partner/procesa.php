@@ -412,11 +412,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=emailActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=emailActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=emailErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=emailErrorActualizar"));
             }
         }
         else
@@ -428,11 +428,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=emailInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=emailInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=emailErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=emailErrorInsertar"));
             }
         }
     }
@@ -454,11 +454,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=instagramActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=instagramErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramErrorActualizar"));
             }
         }
         else
@@ -470,11 +470,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=instagramInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=instagramErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramErrorInsertar"));
             }
         }
     }
@@ -496,11 +496,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=instagramActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=instagramErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramErrorActualizar"));
             }
         }
         else
@@ -512,11 +512,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=instagramInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=instagramErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=instagramErrorInsertar"));
             }
         }
     }
@@ -538,11 +538,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=facebookActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=facebookActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=facebookErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=facebookErrorActualizar"));
             }
         }
         else
@@ -554,11 +554,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=facebookInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=facebookInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=facebookErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=facebookErrorInsertar"));
             }
         }
     }
@@ -567,7 +567,7 @@
     {
         if (strlen($_POST['whatsappTienda']) != 10)
         {
-            exit(header('Location: configura-tienda.php?msg=whatsappErrorLongitud'));
+            exit(header('Location: configura-contactoTienda.php?msg=whatsappErrorLongitud'));
         }
         $whatsapp = $_POST['whatsappTienda'];
         $idTienda = $_SESSION['managedStore'];
@@ -584,11 +584,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=whatsappActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=whatsappActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=whatsappErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=whatsappErrorActualizar"));
             }
         }
         else
@@ -600,11 +600,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=whatsappInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=whatsappInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=whatsappErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=whatsappErrorInsertar"));
             }
         }
 
@@ -679,11 +679,11 @@
             // Verificar si se realizó la actualización correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=telefonoActualizado"));
+                exit(header("Location: configura-contactoTienda.php?msg=telefonoActualizado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=telefonoErrorActualizar"));
+                exit(header("Location: configura-contactoTienda.php?msg=telefonoErrorActualizar"));
             }
         }
         else
@@ -695,11 +695,11 @@
             // Verificar si se realizó la inserción correctamente
             if (mysqli_affected_rows($conn) > 0)
             {
-                exit(header("Location: configura-tienda.php?msg=telefonoInsertado"));
+                exit(header("Location: configura-contactoTienda.php?msg=telefonoInsertado"));
             }
             else
             {
-                exit(header("Location: configura-tienda.php?msg=telefonoErrorInsertar"));
+                exit(header("Location: configura-contactoTienda.php?msg=telefonoErrorInsertar"));
             }
         }
     }
