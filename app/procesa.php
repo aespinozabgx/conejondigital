@@ -1614,7 +1614,7 @@
                                 else
                                 {
                                     // var_dump($preventLogin);
-                                    header('Location: setup_tienda.php');
+                                    header('Location: ../partner/setup_tienda.php');
                                     exit();
                                 }
                                 

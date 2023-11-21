@@ -1,6 +1,6 @@
 
 <!-- modal seleccionar sucursal Inicio-->
-<div class="modal fade" id="modalSeleccionarSucursal" tabindex="-1" aria-labelledby="modalSeleccionarSucursalLabel" aria-hidden="true">
+<div class="modal fade" id="modalSeleccionarSucursal" tabindex="-1" aria-labelledby="modalSeleccionarSucursalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form action="procesa.php" method="post">
@@ -77,6 +77,7 @@
 </div>
 <!-- modal seleccionar sucursal Fin -->
 
+
 <form action="procesa.php" method="post" id="formNuevaSucursal" autocomplete="off">
     <!-- modal nueva direccion cliente Inicio -->
     <div class="modal fade" id="modalNuevaSucursal" tabindex="-1" aria-labelledby="modalNuevaSucursalLabel" aria-hidden="true">
@@ -84,7 +85,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title text-primary fw-600">
-                        <i class="far fa-building me-1"></i> Registro de sucursal
+                        <i class="far fa-building me-1"></i> Registro de sucursal 
                     </h5>
                     <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fa-solid fa-xmark fa-xl"></i>

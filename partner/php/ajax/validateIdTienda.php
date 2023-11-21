@@ -2,7 +2,7 @@
 
     session_start();
 
-    require '../conexion_db.php';
+    require '../../../app/php/conexion.php';
     require '../funciones.php';
 
     $idTienda = mysqli_real_escape_string($conn, $_POST['idTienda']);

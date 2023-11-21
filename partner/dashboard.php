@@ -601,7 +601,7 @@
                             <div class="col-xl-6 mb-4">
                                 <div class="card card-header-actions">
 
-                                    <div class="card-header">
+                                    <div class="card-header" id="moduloCaja">
                                         <span id="caja" class="fs-1 fw-400 ">
                                             <i class="fas fa-cash-register me-2"></i>Caja
                                         </span>

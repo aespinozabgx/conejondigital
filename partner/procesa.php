@@ -614,38 +614,47 @@
     if (isset($_POST['btnIniciarTurnoCaja']))
     {
         //echo "btnIniciarTurnoCaja<br><br>";
-        // echo "<pre>";
-        // var_dump($_POST);
+        echo "<pre>";
+        print_r($_POST);
 
-        if (!isset($_SESSION['managedStore']) || !isset($_SESSION['email']) || !isset($_POST['efectivoInicialCaja']))
+
+        // Check for required session and post variables
+        if (empty($_SESSION['managedStore']) ||
+            empty($_SESSION['email']) ||
+            !isset($_POST['efectivoInicialCaja']) ||
+            !is_numeric($_POST['efectivoInicialCaja']) || // Validate numeric input
+            $_POST['efectivoInicialCaja'] < 0)            // Validate against a specific condition 
         {
             exit(header('Location: dashboard.php?msg=errorAperturaTurno'));
         }
 
+        // var_dump(empty($_SESSION['managedStore']));
+        // var_dump(empty($_SESSION['email']));
+        // var_dump(!isset($_POST['efectivoInicialCaja']));
+        // var_dump(!is_numeric($_POST['efectivoInicialCaja']));
+        // die;
+
+        // Assign values after ensuring they exist and are valid
         $idTienda  = $_SESSION['managedStore'];
         $idUsuario = $_SESSION['email'];
         $fechaAperturaCaja   = date("Y-m-d H:i:s");
-        $efectivoInicialCaja = 0;
-
-        if (isset($_POST['efectivoInicialCaja']) && ($_POST['efectivoInicialCaja'] >= 0))
-        {
-            $efectivoInicialCaja = $_POST['efectivoInicialCaja'];
-        }
+        $efectivoInicialCaja = $_POST['efectivoInicialCaja'];
 
         $isTurnoCajaActivo = isTurnoCajaActivo($conn, $idTienda, $idUsuario);
 
-        if ($isTurnoCajaActivo['estatus'] === true)
+        // Check if a cash register is already active
+        if ($isTurnoCajaActivo['estatus'] === true) 
         {
-            die("Ya hay turno iniciado: ". $isTurnoCajaActivo['estatus']);
-        }
-
+            die("Ya hay un turno iniciado: " . $isTurnoCajaActivo['estatus']);
+        } 
+ 
         // Ejecutar la consulta
         $sql = "INSERT INTO `bitacoraCaja` (idTienda, idUsuario, fechaApertura, efectivoInicial) VALUES ('$idTienda', '$idUsuario', '$fechaAperturaCaja', '$efectivoInicialCaja')";
 
         if ($conn->query($sql) === TRUE)
         {
             //echo "El registro se ha creado correctamente";
-            exit(header('Location: dashboard.php?msg=aperturaTurnoCajaExitoso&montoAbonado=' . $efectivoInicial));
+            exit(header('Location: dashboard.php?msg=aperturaTurnoCajaExitoso&montoAbonado=' . $efectivoInicialCaja . '#moduloCaja'));
         }
         else
         {

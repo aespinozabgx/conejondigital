@@ -76,6 +76,57 @@
             </script>
             <?php
             break;
+            
+
+            case 'aperturaTurnoCajaExitoso':
+                $montoAbonado = number_format($_GET['montoAbonado'], 2);
+                echo "<script>
+                        Swal.fire({
+                            title: '¡Listo!',
+                            text: 'Turno aperturado con $ $montoAbonado en caja',
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Entendido',
+                            timer: 5000  // Tiempo en milisegundos antes de cerrar automáticamente
+                        });
+                     </script>";
+                break;
+
+            case 'errorAperturaTurno':                
+                echo "<script>
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Ocurrió un error al aperturar el turno, intenta nuevamente',
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Entendido'                            
+                        });
+                        </script>";
+                break;
+            
+            case 'turnoCajaCerradoCajaAjustada':
+                echo "<script>
+                        Swal.fire({
+                            title: 'Listo',
+                            text: 'Turno cerrado correctamente. Se realizó el ajuste de caja correctamente',
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Entendido'                            
+                        });
+                        </script>";
+                break;
+            
+            case 'turnoCajaCerradoCorrectamente':
+                echo "<script>
+                        Swal.fire({
+                            title: 'Listo',
+                            text: 'Turno cerrado correctamente',
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Entendido'                            
+                        });
+                        </script>";
+                break;
 
             case 'cargaCompleta':
                 echo "<script>

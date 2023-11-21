@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require 'php/conexion_db.php'; //configuración conexión db
+    require '../app/php/conexion.php'; //configuración conexión db
     require 'php/funciones.php'; //configuración conexión db
 
     if (isset($_SESSION['email'], $_SESSION['nombre']))
@@ -113,7 +113,9 @@
                                     <hr class="my-0" />
                                     <div class="card-body p-5">
                                         <div class="text-center text-gray-600 mb-4 fw-500 fs-2">
-                                            Vamos a configurar tu cuenta <span class="logo text-yellow fw-600 display-6 text-nowrap"><i class="fas fa-store fa-sm"></i> vendy</span>
+                                            Vamos a configurar tu tienda 
+                                            <span class="logo text-yellow fw-600 display-6 text-nowrap">Conejón Digital</span>
+                                            <!-- <i class="fas fa-store fa-sm"></i> --> 
                                         </div>
                                         <div class="mb-3 text-center">
                                             <button type="button" data-bs-toggle="modal" data-bs-target="#modalSetupTiendaWizard" class="btn btn-primary w-100 fs-2 fw-500 fa-beat mb-2" style="--fa-animation-duration: 3s; --fa-beat-scale: 1.1;" name="button">
@@ -140,20 +142,20 @@
                                                             <div class="modal-body">
 
                                                                 <div class="mb-4 px-3 text-center">
-                                                                    <label class="fs-6 mb-1 small text-primary text-center mb-2 fw-300">Nombre de tu negocio:</label>
-                                                                    <input type="text" id="inputNombreTienda" style="border-bottom: 3px solid red;" class="text-center rounded-0 fs-4 input-nombre-tienda shadow-none" name="nombreTienda" placeholder='Abarrotes Vendy' autocomplete="off" required>
+                                                                    <label class="fs-6 mb-1 small text-primary text-center mb-2 fw-300">Nombre de tu tienda:</label>
+                                                                    <input type="text" id="inputNombreTienda" style="border-bottom: 3px solid red;" class="text-center rounded-0 fs-4 input-nombre-tienda shadow-none" name="nombreTienda" placeholder='Mi Tienda' autocomplete="off" required>
                                                                 </div>                                                                
                                                                 
                                                                 <div class="mb-3 px-0 text-center">
                                                                     <div class="container">
                                                                         <div class="row justify-content-center m-0">
                                                                             <div class="col-12 col-md-12 col-lg-8 col-xl-8 col-xxl-8">
-                                                                                <label class="fs-6 mb-1 small text-primary text-center mb-0 fw-300">Enlace a tu tienda:</label>
+                                                                                <label class="fs-6 mb-1 small text-primary text-center mb-0 fw-300">Enlace personaliado:</label>
                                                                                 <div class="input-box rounded-pill border-2 m-1" style="overflow: hidden;">
                                                                                     <span class="prefix text-gray-600 fw-500 ps-4 pe-0 fs-2">                                                                                    
-                                                                                        vendy.click/
+                                                                                        conejondigital.com/
                                                                                     </span>
-                                                                                    <input type="text" id="idTienda" class="form-control text-green form-control-lg shadow-none bg-white fs-1 is-invalid" name="idTienda" placeholder="tiendavendy" style="white-space: nowrap;" autocomplete="off" />
+                                                                                    <input type="text" id="idTienda" class="form-control text-green form-control-lg shadow-none bg-white fs-1 is-invalid" name="idTienda" placeholder="mitienda" style="white-space: nowrap;" autocomplete="off" />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -345,6 +347,20 @@
             function validarFormulario()
             {
                 const nombreTienda = document.getElementById('inputNombreTienda');
+
+                console.log(nombreTienda.value.length);
+                if ( nombreTienda.value.length == 0)
+                {
+                    console.log('=> '+nombreTienda.value.length);
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ingresa el nombre de tu tienda'
+                    });
+                    return false;
+                }
+
                 if (nombreTienda.value !== "" && nombreTienda.value.length > 4)
                 {
                     nombreTienda.classList.remove('is-invalid');
@@ -354,7 +370,7 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
-                        text: 'El nombre de tu tienda debe tener al menos 5 letras.'
+                        text: 'El nombre de tu tienda debe tener al menos 5 letras.' + nombreTienda.value.length
                     });
                     nombreTienda.classList.add('is-invalid');
                     return false;

@@ -153,8 +153,7 @@
     </nav>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() 
-    {
+    document.addEventListener('DOMContentLoaded', function () {
         // Obtén el nombre real del archivo PHP actual
         let currentFileName = window.location.pathname.split('/').pop();
 
@@ -164,39 +163,37 @@
         // Obtén todos los enlaces del menú
         let menuLinks = menu.querySelectorAll('.nav-link');
 
+        // Definición del array de configuraciones
+        const configuraciones = ["configura-tienda.php", "configura-contactoTienda.php", "configura-pagos.php", "configura-envios.php"];
+
         // Recorre todos los enlaces del menú y elimina la clase "active" de todos ellos
-        menuLinks.forEach(function(link) 
-        {
+        menuLinks.forEach(function (link) {
             link.classList.remove('active');
         });
 
         // Recorre los enlaces del menú y agrega la clase "active" al enlace cuyo href coincide con el nombre del archivo PHP actual (sin la barra diagonal inicial)
-        menuLinks.forEach(function(link) 
+        menuLinks.forEach(function (link) 
         {
             let href = link.getAttribute('href');
-            if (href && href.endsWith(currentFileName)) 
-            {
+ 
+            if (href === currentFileName) {
                 link.classList.add('active');
 
                 // Expandir el elemento padre del enlace si es un elemento colapsable
                 let parentCollapse = link.closest('.collapse');
-                if (parentCollapse) 
-                {
+                if (parentCollapse) {
                     parentCollapse.classList.add('show');
-                }
-
-                // Verifica si el archivo actual es "index.php" y elimina la clase "text-white-75" del enlace y su elemento <i> correspondiente
-                if (currentFileName === 'index.php') 
-                {
-                    link.classList.remove('text-white-75');
-                    let iconElement = link.querySelector('i');
-                    if (iconElement) 
-                    {
-                        iconElement.classList.remove('text-white-75');
-                    }
                 }
             }
         });
+
+        // Verifica si el archivo actual está en la lista de configuraciones
+        if (configuraciones.includes(currentFileName)) {
+            
+            // Agregar la clase "active" al enlace del menú de configuración
+            let configMenuLink = menu.querySelector('.nav-link[data-bs-toggle="collapse"][data-bs-target="#collapsePerfil"]');
+            configMenuLink.classList.add('active');
+        }
     });
 </script>
 

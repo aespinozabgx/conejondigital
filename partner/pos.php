@@ -19,12 +19,17 @@
         $idUsuario = $_SESSION['email'];
     }
 
-    if (isset($_SESSION['sucursalTienda']))
+    // var_dump(empty($_SESSION['sucursalTienda']));
+    // die;
+
+    if (empty($_SESSION['sucursalTienda']))
     {
-        echo $sucursalTienda = $_SESSION['sucursalTienda'];
-        if ($sucursalTienda === false)
+        //die("Selecciona la sucursal");
+        $sucursales = getSucursalesTienda($conn, $idTienda);
+        if ($sucursales === false) 
         {
-            die("Selecciona la sucursal");
+            //die("Abrir modal elegir sucursal");
+            exit(header('Location: dashboard.php?msg=requiereAbrirTurnoCaja'));
         }
     }
 
@@ -591,47 +596,50 @@
             }
         </script>
         <?php
-          if (file_exists('src/triggers.php'))
-          {
-              include 'src/triggers.php';
-          }
 
-          if (isset($_GET['error']))
-          {
-              if (!isset($_SESSION['idSucursalVenta'], $_SESSION['nombreSucursalVenta']))
-              {
-                  $error = $_GET['error'];
-                  if ($error == "elegirSucursal")
-                  {
-                  ?>
-                  <script>
-                      $(document).ready(function() {
-                          $('#modalSeleccionarSucursal').modal('show');
-                      });
-                  </script>
-                  <?php
-                  }
-              }
-          }
+            if (file_exists('src/triggers.php'))
+            {
+                include 'src/triggers.php';
+            }
 
-          if (!isset($_SESSION['idSucursalVenta'], $_SESSION['nombreSucursalVenta']))
-          {
-          ?>
-          <script>
-              $(document).ready(function() {
-                  $('#modalSeleccionarSucursal').modal('show');
-              });
-          </script>
-          <?php
-          }
-          else
-          {
-          ?>
-          <script type="text/javascript">
-              document.getElementById('sucursalHeader').innerHTML = '<?php echo $_SESSION['nombreSucursalVenta'] . "<i data-feather=\'map-pin\' class=\'ms-2\'></i>"; ?>';
-          </script>
-          <?php
-          }
+            if (isset($_GET['error']))
+            {
+                if (!isset($_SESSION['idSucursalVenta'], $_SESSION['nombreSucursalVenta']))
+                {
+                    $error = $_GET['error'];
+                    if ($error == "elegirSucursal")
+                    {
+                        ?>
+                        <script>
+                            $(document).ready(function() 
+                            {
+                                $('#modalSeleccionarSucursal').modal('show');
+                            });
+                        </script>
+                        <?php
+                    }
+                }
+            }
+
+            if (!isset($_SESSION['idSucursalVenta'], $_SESSION['nombreSucursalVenta']))
+            {
+                ?>
+                <script>
+                    $(document).ready(function() 
+                    {
+                        //$('#modalSeleccionarSucursal').modal('show');
+                    });
+                </script>
+                <?php
+            }
+            else
+            {
+                ?>
+                <script type="text/javascript">
+                    document.getElementById('sucursalHeader').innerHTML = '<?php echo $_SESSION['nombreSucursalVenta'] . "<i data-feather=\'map-pin\' class=\'ms-2\'></i>"; ?>';
+                </script>
+                <?php
+            }
         ?>
 
     </body>
