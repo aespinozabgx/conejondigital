@@ -61,8 +61,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-        <!-- <script src="js/qrcode.js?id=33"></script> -->
-        <script src="js/ajax.js?id=2833"></script>
+        <script src="js/qrcode.js"></script>
+        <script src="js/ajax.js?id=2828"></script>
 
         <style type="text/css">
 
@@ -113,19 +113,21 @@
                         <div class="card invoice">
                             <div class="card-header p-4 p-md-5 border-bottom-0 bg-primary text-white-50">
                                 <div class="row justify-content-between align-items-center">
+                                    
                                     <!-- <h1 class="text-white fs-100"><i data-feather="shopping-cart"></i></h1> -->
                                     <div class="col-12 col-lg-auto mb-2 mb-lg-0 text-center text-lg-start">
 
                                         <!-- Invoice branding-->
-                                        <div class="display-6 text-white">
-                                            <i data-feather="credit-card" class="feather-xl"></i>
-                                            Cobro PDV
+                                        <div class="display-4 text-white mb-2">
+                                            <!-- <i data-feather="credit-card" class="feather-xl"></i> -->
+                                            <span class="sombra2-titulos-vendy">Pago</span>
+                                            <button class="btn bg-yellow text-white fs-4 rounded-pill">PDV</button>
                                         </div>
-                                        <!-- <img class="invoice-brand-img rounded-circle mb-4" src="assets/img/demo/demo-logo.svg" alt="" /> -->
-                                        <div class="fs-4 text-white-50 mb-0">
-                                            <small>Selecciona la forma de pago preferida por el cliente</small>
-                                        </div>
+                                        
+                                        
+
                                     </div>
+
                                     <div class="col-12 col-lg-auto text-center text-lg-end">
                                         <div class="h2 mt-2">
                                             <!-- <form action="procesa.php" method="post">
@@ -140,348 +142,352 @@
                                     </div>
 
                                 </div>
+
+                                <!-- <img class="invoice-brand-img rounded-circle mb-4" src="assets/img/demo/demo-logo.svg" alt="" /> -->
+                                <div class="fs-4 fw-300 text-white-75 mb-0">
+                                    Total de productos: 
+                                    <span class="fw-500">
+                                        <?php 
+                                            echo contarCarrito($idTienda); 
+                                        ?>
+                                    </span>
+                                </div>
+
                             </div>
 
                             <div class="card-body p-4 p-md-5">
+
+                                
+
                                 <?php
-                                // Mostrar totales
-                                // Validar si el carrito está vacio
-                                if (isset($_SESSION[$idTienda]))
-                                {
-                                    ?>
-                                    <div class="table-responsive mb-0">
-                                    <?php
-                                        if (isset($_SESSION[$idTienda]))
-                                        {
-                                            $salida              = "";
-                                            $acumPrecioPagar     = 0;
-                                            $acumPrecioDescuento = 0;
-                                            $acumSinDescuento    = 0;
-                                            $acumConDescuento    = 0;
-                                            $requiereEnvio       = 0;
-                                            $contadorCarrito     = 0;
-
-                                            // echo "<pre>";
-                                            // print_r($_SESSION[$idTienda]);
-
-                                            // Iterar carrito para ver si requiere envio
-                                            foreach ($_SESSION[$idTienda] as $arr => $value)
+                                    // Mostrar totales
+                                    // Validar si el carrito está vacio
+                                    if (isset($_SESSION[$idTienda]))
+                                    {
+                                        ?>
+                                        <div class="fs-4 text-dark mb-2">
+                                            Selecciona la forma de pago elegida por el cliente:
+                                        </div>
+                                        
+                                        <div class="table-responsive mb-0">
+                                        <?php
+                                            if (isset($_SESSION[$idTienda]))
                                             {
-                                                $idProducto = $_SESSION[$idTienda][$arr]['idProducto'];
-                                                $idUsuario  = $_SESSION[$idTienda][$arr]['idTienda'];
-                                                $datosProducto = buscarProducto($conn, $idProducto, $idUsuario);
-                                                $precio       = $datosProducto['precio'];
-                                                $precioOferta = $datosProducto['precioOferta'];
-                                                $cantidadProd = $_SESSION[$idTienda][$arr]['stock'];
+                                                $salida              = "";
+                                                $acumPrecioPagar     = 0;
+                                                $acumPrecioDescuento = 0;
+                                                $acumSinDescuento    = 0;
+                                                $acumConDescuento    = 0;
+                                                $requiereEnvio       = 0;
+                                                $contadorCarrito     = 0;
 
-                                                // Contar productos del carrito, considerando cualquier cantidad de granel como 1 producto
-                                                if ($_SESSION[$idTienda][$arr]['unidadVenta'] == "Kilogramos")
-                                                {
-                                                    $contadorCarrito += 1;
-                                                }
-                                                else
-                                                {
-                                                    $contadorCarrito += $_SESSION[$idTienda][$arr]['stock'];
-                                                }
-
-                                                // Obtener otros totales
-                                                if ($precioOferta > 0 && $precioOferta < $precio)
-                                                {
-                                                    $acumSinDescuento = $acumSinDescuento + ($cantidadProd * $precio);
-                                                    $acumConDescuento = $acumConDescuento + ($cantidadProd * $precioOferta);
-                                                }
-                                                else
-                                                {
-                                                    $acumSinDescuento = $acumSinDescuento + ($cantidadProd * $precio);
-                                                    $acumConDescuento = $acumConDescuento + ($cantidadProd * $precio);
-                                                }
-                                            }
-                                        }
-                                    ?>
-                                    </div>
-
-                                    <form action="procesa.php" method="post">
-
-                                        <div class="">
-
-                                            <!-- Cantidad de productos en el carrito -->
-                                            <div class="d-flex flex-wrap mb-3">
-                                                <div class="flex-fill">
-                                                      <span class="fw-300 text-dark fs-2">
-                                                          Total de productos: <span class="fw-500"><?php echo contarCarrito($idTienda); ?></span>
-                                                      </span>
-                                                </div>
-                                                <div class="flex-fill text-end pt-1">
-                                                    <!-- Contenido de la segunda columna -->
-                                                    <a href="configura-pagos.php" class="btn btn-icon btn-outline-primary btn-sm"><i class="fas fa-cog fw-600"></i></a>
-                                                </div>
-                                            </div>
-                                            <!-- <hr class="border border-2"> -->
-
-                                            <div class="row">
-                                                <?php
-                                                $metodosDePagoTienda = getMetodosDePagoTienda($conn, $idTienda);
                                                 // echo "<pre>";
-                                                // var_dump($metodosDePagoTienda);
-                                                // die;
-                                                if ($metodosDePagoTienda)
+                                                // print_r($_SESSION[$idTienda]);
+
+                                                // Iterar carrito para ver si requiere envio
+                                                foreach ($_SESSION[$idTienda] as $arr => $value)
                                                 {
-                                                    foreach ($metodosDePagoTienda as $key => $pago)
+                                                    $idProducto = $_SESSION[$idTienda][$arr]['idProducto'];
+                                                    $idUsuario  = $_SESSION[$idTienda][$arr]['idTienda'];
+                                                    $datosProducto = buscarProducto($conn, $idProducto, $idUsuario);
+                                                    $precio       = $datosProducto['precio'];
+                                                    $precioOferta = $datosProducto['precioOferta'];
+                                                    $cantidadProd = $_SESSION[$idTienda][$arr]['stock'];
+
+                                                    // Contar productos del carrito, considerando cualquier cantidad de granel como 1 producto
+                                                    if ($_SESSION[$idTienda][$arr]['unidadVenta'] == "Kilogramos")
                                                     {
-                                                    ?>
-                                                        <div class="col-lg-6 col-xl-6 mb-4 mt-2">
-                                                            <div class="card bg-success text-white h-100 lift">
+                                                        $contadorCarrito += 1;
+                                                    }
+                                                    else
+                                                    {
+                                                        $contadorCarrito += $_SESSION[$idTienda][$arr]['stock'];
+                                                    }
 
-                                                                <div class="modal-header-sm">
-                                                                    <span class="small fw-200" id="datosBancariosTiendaLabel">
-                                                                          <?php echo ucwords($pago['nombreMP']); ?>
-                                                                    </span>
-                                                                    <div class="dropdown no-caret">
-                                                                        <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="dropdownMenuButton">
-                                                                            <?php
-                                                                                $mp  = mb_strtoupper($pago['banco']);
-                                                                                $mp .= "," . $pago['clabe'];
-                                                                                $mp .= "," . $pago['numeroTarjeta'];
-                                                                                $mp .= "," . $pago['id'];
-
-                                                                                $terminacion = substr($pago['numeroTarjeta'], -4);
-
-                                                                                if (!isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "TRANSFER"))
-                                                                                {
-                                                                                    ?>
-                                                                                    <a class="dropdown-item" href="javascript: void(0);" onclick="javascript: enviaModal('<?php echo $mp; ?>')" class="text-success small" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
-                                                                                        <div class="dropdown-item-icon"><i class="text-gray-500" data-feather="edit-3"></i></div>
-                                                                                        Editar
-                                                                                    </a>
-                                                                                    <?php
-                                                                                }
-                                                                            ?>
-
-                                                                            <a class="dropdown-item" href="#!" onclick="javascript: sendToDeleteModal('<?php echo $pago['id'] . "," . $pago['nombreMP']; ?>')" class="text-success small" data-bs-toggle="modal" data-bs-target="#modalEliminarPago">
-                                                                                <div class="dropdown-item-icon"><i class="text-gray-500" data-feather="minus-circle"></i></div>
-                                                                                Eliminar
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="card-body">
-                                                                    <div class="d-flex justify-content-between align-items-center">
-                                                                        <div class="me-3">
-                                                                            <div class="fw-600 fs-4 text-white">
-                                                                                <?php echo ucwords($pago['nombre']); ?>
-                                                                            </div>
-
-                                                                            <?php
-                                                                            // Calcular cambio Efectivo
-                                                                            if ($pago['idMetodoDePago'] == "CASH")
-                                                                            {
-                                                                            ?>
-                                                                                <div class="small text-white fw-200" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalCalcularCambioEfectivo">
-                                                                                    Calcular cambio <i class="fas fa-hand-holding-usd"></i>
-                                                                                </div>
-                                                                            <?php
-                                                                            }
-
-                                                                            // Mostrar datos de tarjeta/cuenta
-                                                                            if (!empty($terminacion))
-                                                                            {
-                                                                            ?>
-                                                                                <span class="text-white-75 small fw-600"><?php echo "**** " . $terminacion; ?></span>
-                                                                                <span class="text-white small" style="cursor: pointer;" onclick="javascript: enviaModal('<?php echo $mp; ?>'); makeCode('<?php echo $pago['clabe']; ?>');" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
-                                                                                    <i class="far fa-eye"></i>
-                                                                                </span>
-                                                                            <?php
-                                                                            }
-
-                                                                            if ($pago['idMetodoDePago'] == "MP" || $pago['idMetodoDePago'] == "PP")
-                                                                            {
-                                                                            ?>
-                                                                                <span class="text-white small fw-200" style="cursor: pointer;" onclick="javascript: makeCodeUrlPago('<?php echo $pago['urlPago']; ?>', '<?php echo $pago['nombre']; ?>');" data-bs-toggle="modal" data-bs-target="#modalQRCodeUrlPago">
-                                                                                    Ver datos <i class="far fa-eye"></i>
-                                                                                </span>
-                                                                            <?php
-                                                                            }
-                                                                            ?>
-                                                                        </div>
-                                                                        <div class="display-6 text-white-50">
-                                                                            <?php echo $pago['icono']; ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="card-footer text-white" style="cursor:pointer;">
-                                                                <?php
-                                                                switch (true)
-                                                                {
-                                                                    case (isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "PP" || $pago['idMetodoDePago'] == "MP")):
-                                                                    // Paypal y MercadoPago
-                                                                        ?>
-                                                                        <div class="text-center" onclick="javascript: makeCodeUrlPago('<?php echo $pago['urlPago']; ?>', '<?php echo $pago['nombre']; ?>');" data-bs-toggle="modal" data-bs-target="#modalQRCodeUrlPago">
-                                                                            <div class="form-check">
-                                                                                <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="ppmp<?php echo $pago['id']; ?>" style="cursor:pointer;">
-                                                                                    Seleccionar
-                                                                                </label>
-                                                                                <input class="form-check-input" type="radio" name="idMetodoDePago" id="ppmp<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" style="cursor:pointer;" onclick="toggleBotones();" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <?php
-                                                                        break;
-
-                                                                    case (!isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "TRANSFER")):
-                                                                    // Transferencia electrónica
-                                                                        ?>
-                                                                        <div class="text-center" onclick="javascript: enviaModal('<?php echo $mp; ?>'); makeCode('<?php echo $pago['clabe']; ?>');" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
-                                                                            <div class="form-check">
-                                                                                <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="transfer<?php echo $pago['id']; ?>" style="cursor:pointer;">
-                                                                                  Seleccionar
-                                                                                </label>
-                                                                                <input class="form-check-input" type="radio" name="idMetodoDePago" id="transfer<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" onclick="toggleBotones();" style="cursor:pointer;" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <?php
-                                                                        break;
-
-                                                                    case ($pago['idMetodoDePago'] == "CASH"):
-                                                                    // Efectivo
-                                                                        ?>
-                                                                        <div class="text-center" data-bs-toggle="modal" data-bs-target="#modalCalcularCambioEfectivo">
-                                                                            <div class="form-check">
-                                                                                <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="cash<?php echo $pago['id']; ?>" style="cursor:pointer;">
-                                                                                  Seleccionar
-                                                                                </label>
-                                                                                <input class="form-check-input" type="radio" name="idMetodoDePago" id="cash<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" style="cursor:pointer;" onclick="toggleBotones();" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <?php
-                                                                        break;
-
-                                                                    case ($pago['idMetodoDePago'] == "CC"):
-                                                                    // Efectivo
-                                                                        ?>
-                                                                        <div class="text-center">
-                                                                            <div class="form-check">
-                                                                                <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="cc<?php echo $pago['id']; ?>" style="cursor:pointer;">
-                                                                                  Seleccionar
-                                                                                </label>
-                                                                                <input class="form-check-input" type="radio" name="idMetodoDePago" id="cc<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" onclick="toggleBotones();" style="cursor:pointer;" required>
-                                                                            </div>
-                                                                        </div>
-                                                                        <?php
-                                                                        break;
-
-                                                                    default:
-                                                                    // Default
-                                                                        echo "&nbsp;";
-                                                                        break;
-                                                                }
-                                                                ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php
+                                                    // Obtener otros totales
+                                                    if ($precioOferta > 0 && $precioOferta < $precio)
+                                                    {
+                                                        $acumSinDescuento = $acumSinDescuento + ($cantidadProd * $precio);
+                                                        $acumConDescuento = $acumConDescuento + ($cantidadProd * $precioOferta);
+                                                    }
+                                                    else
+                                                    {
+                                                        $acumSinDescuento = $acumSinDescuento + ($cantidadProd * $precio);
+                                                        $acumConDescuento = $acumConDescuento + ($cantidadProd * $precio);
                                                     }
                                                 }
-                                                else
+                                            }
+                                        ?>
+                                        </div>
+
+                                        <form action="procesa.php" method="post">
+
+                                            <div class="">
+
+                                                <div class="row">
+                                                    <?php
+                                                    $metodosDePagoTienda = getMetodosDePagoTienda($conn, $idTienda);
+                                                    // echo "<pre>";
+                                                    // var_dump($metodosDePagoTienda);
+                                                    // die;
+                                                    if ($metodosDePagoTienda)
+                                                    {
+                                                        foreach ($metodosDePagoTienda as $key => $pago)
+                                                        {
+                                                        ?>
+                                                            <div class="col-lg-6 col-xl-6 mb-4 mt-2">
+                                                                <div class="card bg-success text-white h-100">
+
+                                                                    <div class="modal-header-sm">
+                                                                        <span class="small fw-200" id="datosBancariosTiendaLabel">
+                                                                            <?php echo ucwords($pago['nombreMP']); ?>
+                                                                        </span>
+                                                                        <div class="dropdown no-caret">
+                                                                            <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="dropdownMenuButton">
+                                                                                <?php
+                                                                                    $mp  = mb_strtoupper($pago['banco']);
+                                                                                    $mp .= "," . $pago['clabe'];
+                                                                                    $mp .= "," . $pago['numeroTarjeta'];
+                                                                                    $mp .= "," . $pago['id'];
+
+                                                                                    $terminacion = substr($pago['numeroTarjeta'], -4);
+
+                                                                                    if (!isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "TRANSFER"))
+                                                                                    {
+                                                                                        ?>
+                                                                                        <a class="dropdown-item" href="javascript: void(0);" onclick="javascript: enviaModal('<?php echo $mp; ?>')" class="text-success small" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
+                                                                                            <div class="dropdown-item-icon"><i class="text-gray-500" data-feather="edit-3"></i></div>
+                                                                                            Editar
+                                                                                        </a>
+                                                                                        <?php
+                                                                                    }
+                                                                                ?>
+
+                                                                                <a class="dropdown-item" href="#!" onclick="javascript: sendToDeleteModal('<?php echo $pago['id'] . "," . $pago['nombreMP']; ?>')" class="text-success small" data-bs-toggle="modal" data-bs-target="#modalEliminarPago">
+                                                                                    <div class="dropdown-item-icon"><i class="text-gray-500" data-feather="minus-circle"></i></div>
+                                                                                    Eliminar
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="card-body">
+                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                            <div class="me-3">
+                                                                                <div class="fw-600 fs-4 text-white">
+                                                                                    <?php echo ucwords($pago['nombre']); ?>
+                                                                                </div>
+
+                                                                                <?php
+                                                                                // Calcular cambio Efectivo
+                                                                                if ($pago['idMetodoDePago'] == "CASH")
+                                                                                {
+                                                                                ?>
+                                                                                    <div class="small text-white fw-200" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#modalCalcularCambioEfectivo">
+                                                                                        Calcular cambio <i class="fas fa-hand-holding-usd"></i>
+                                                                                    </div>
+                                                                                <?php
+                                                                                }
+
+                                                                                // Mostrar datos de tarjeta/cuenta
+                                                                                if (!empty($terminacion))
+                                                                                {
+                                                                                ?>
+                                                                                    <span class="text-white-75 fw-600"><?php echo "**** " . $terminacion; ?></span>
+                                                                                    <span class="text-white" style="cursor: pointer;" onclick="javascript: enviaModal('<?php echo $mp; ?>'); makeCode('<?php echo $pago['clabe']; ?>');" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
+                                                                                        <i class="far fa-eye"></i>
+                                                                                    </span>
+                                                                                <?php
+                                                                                }
+
+                                                                                if ($pago['idMetodoDePago'] == "MP" || $pago['idMetodoDePago'] == "PP")
+                                                                                {
+                                                                                ?>
+                                                                                    <span class="text-white fw-200" style="cursor: pointer;" onclick="javascript: makeCodeUrlPago('<?php echo $pago['urlPago']; ?>', '<?php echo $pago['nombre']; ?>');" data-bs-toggle="modal" data-bs-target="#modalQRCodeUrlPago">
+                                                                                        Ver datos <i class="far fa-eye"></i>
+                                                                                    </span>
+                                                                                <?php
+                                                                                }
+                                                                                ?>
+                                                                            </div>
+                                                                            <div class="display-6 text-white-50">
+                                                                                <?php echo $pago['icono']; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="card-footer text-white" style="cursor:pointer;">
+                                                                    <?php
+                                                                    switch (true)
+                                                                    {
+                                                                        case (isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "PP" || $pago['idMetodoDePago'] == "MP")):
+                                                                        // Paypal y MercadoPago
+                                                                            ?>
+                                                                            <div class="text-center" onclick="javascript: makeCodeUrlPago('<?php echo $pago['urlPago']; ?>', '<?php echo $pago['nombre']; ?>');" data-bs-toggle="modal" data-bs-target="#modalQRCodeUrlPago">
+                                                                                <div class="form-check">
+                                                                                    <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="ppmp<?php echo $pago['id']; ?>" style="cursor:pointer;">
+                                                                                        Seleccionar
+                                                                                    </label>
+                                                                                    <input class="form-check-input" type="radio" name="idMetodoDePago" id="ppmp<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" style="cursor:pointer;" onclick="toggleBotones();" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?php
+                                                                            break;
+
+                                                                        case (!isset($pago['urlPago']) && ($pago['idMetodoDePago'] == "TRANSFER")):
+                                                                        // Transferencia electrónica
+                                                                            ?>
+                                                                            <div class="text-center" onclick="javascript: enviaModal('<?php echo $mp; ?>'); makeCode('<?php echo $pago['clabe']; ?>');" data-bs-toggle="modal" data-bs-target="#datosBancariosTienda">
+                                                                                <div class="form-check">
+                                                                                    <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="transfer<?php echo $pago['id']; ?>" style="cursor:pointer;">
+                                                                                    Seleccionar
+                                                                                    </label>
+                                                                                    <input class="form-check-input" type="radio" name="idMetodoDePago" id="transfer<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" onclick="toggleBotones();" style="cursor:pointer;" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?php
+                                                                            break;
+
+                                                                        case ($pago['idMetodoDePago'] == "CASH"):
+                                                                        // Efectivo
+                                                                            ?>
+                                                                            <div class="text-center" data-bs-toggle="modal" data-bs-target="#modalCalcularCambioEfectivo">
+                                                                                <div class="form-check">
+                                                                                    <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="cash<?php echo $pago['id']; ?>" style="cursor:pointer;">
+                                                                                    Seleccionar
+                                                                                    </label>
+                                                                                    <input class="form-check-input" type="radio" name="idMetodoDePago" id="cash<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" style="cursor:pointer;" onclick="toggleBotones();" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?php
+                                                                            break;
+
+                                                                        case ($pago['idMetodoDePago'] == "CC"):
+                                                                        // Efectivo
+                                                                            ?>
+                                                                            <div class="text-center">
+                                                                                <div class="form-check">
+                                                                                    <label class="form-check-label border-bottom border-1 border-white poppins text-white fs-6 fw-300" for="cc<?php echo $pago['id']; ?>" style="cursor:pointer;">
+                                                                                    Seleccionar
+                                                                                    </label>
+                                                                                    <input class="form-check-input" type="radio" name="idMetodoDePago" id="cc<?php echo $pago['id']; ?>" value="<?php echo $pago['idMetodoDePago']; ?>" onclick="toggleBotones();" style="cursor:pointer;" required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <?php
+                                                                            break;
+
+                                                                        default:
+                                                                        // Default
+                                                                            echo "&nbsp;";
+                                                                            break;
+                                                                    }
+                                                                    ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                    ?>
+                                                        <span class="m-2">
+                                                            No hay métodos de pago registrados.
+                                                            <a href="configura-pagos.php" class="fw-500">Configurar ahora</a>
+                                                        </span>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </div>
+
+                                            </div>
+                                            <!-- Modal Confirmar Pago -->
+                                            <div class="modal fade" id="modalFinalizarPedidoPDV" tabindex="-1" aria-labelledby="modalFinalizarPedidoPDVLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title text-gray-600 fw-600">
+                                                                <i data-feather="user-plus" class="me-1 feather-lg"></i>
+                                                                Asignar cliente
+                                                            </h5>
+                                                            <button type="button" class="btn btn-icon border border-1 border-gray-600 btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                                                <i class="fa-solid fa-xmark fa-xl"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p class="fw-300">Se enviará el resumen del pedido al cliente, incluso si aún no tiene una cuenta <span class="fw-600">conejón digital</span>.</p>
+                                                            <div class="mb-3 text-dark">
+                                                                <label for="" class="text-primary fw-600 mb-1">Correo del cliente:</label>
+                                                                <input type="email" class="form-control text-center" name="idCliente" id="idCliente" placeholder="correo@ejemplo.com" value="" style="display: ;">
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <label class="form-check-label me-2 fw-200" style="cursor: pointer;" for="inputAsignarCliente">No asignar cliente</label>
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input" style="cursor: pointer;" type="checkbox" id="inputAsignarCliente" onchange="toggleClienteInput()">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" name="button" class="btn btn-light rounded-2 fw-500" data-bs-dismiss="modal">
+                                                                Cerrar
+                                                            </button>
+                                                            <button type="submit" class="btn btn-success fw-500 fs-6 rounded-2" onclick="return validaFormulario_pagoPos();" name="btnCrearPedido" value="PDV">
+                                                                Finalizar
+                                                                <i data-feather="check-circle" class="fa-fade me-1 ms-1 feather-lg"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Modal Confirmar Pago -->
+
+                                            <input type="hidden" name="idTienda" placeholder="idTienda" value="<?php echo $idTienda; ?>">
+
+                                            <div class="d-none d-lg-flex fixed-bottom justify-content-end mb-4 me-4">
+                                                <button type="button" class="btn btn-danger fw-500 fs-5 rounded-pill shadow-sm" style="display: none;" id="btnConfirmar_uno" data-bs-toggle="modal" data-bs-target="#modalFinalizarPedidoPDV">
+                                                    <span class="btn btn-white btn-sm shadow-sm rounded-pill me-1">
+                                                        $ <?php echo number_format($_SESSION['total'], 2); ?>
+                                                    </span>
+                                                    Confirmar cobro
+                                                </button>
+                                            </div>
+
+                                            <div class="d-lg-none fixed-bottom d-flex justify-content-center text-center mb-4">
+                                                <button type="button" class="btn btn-danger fw-500 fs-5 rounded-pill shadow-sm" style="display: none;" id="btnConfirmar_dos" data-bs-toggle="modal" data-bs-target="#modalFinalizarPedidoPDV">
+                                                    <span class="btn btn-white btn-sm shadow-sm rounded-pill me-1">
+                                                        $ <?php echo number_format($_SESSION['total'], 2); ?>
+                                                    </span>
+                                                    Confirmar cobro
+                                                </button>
+                                            </div>
+
+                                            <!-- <hr class="mb-4"> -->
+                                            <div class="text-end">
+
+                                                <?php
+                                                // Botón Finalizar Pedido
+                                                if (isset($_SESSION[$idTienda]) && 1==1)
                                                 {
                                                 ?>
-                                                    <span class="m-2">
-                                                        No hay métodos de pago registrados.
-                                                        <a href="configura-pagos.php" class="fw-500">Configurar ahora</a>
-                                                    </span>
                                                 <?php
                                                 }
                                                 ?>
                                             </div>
 
+                                        </form>
+                                    <?php
+                                    }
+                                    else
+                                    {
+                                    ?>
+                                        <h1 class="text-center mb-3 fw-600">Tu carrito está vacío</h1>
+                                        <div class="text-center">
+                                            <a class="btn btn-green btn-sm rounded-pill shadow" href="pos.php?tienda=<?php echo $idTienda; ?>">
+                                                <i class="fas fa-store me-1"></i> Regresar al PDV
+                                            </a>
                                         </div>
-                                        <!-- Modal Confirmar Pago -->
-                                        <div class="modal fade" id="modalFinalizarPedidoPDV" tabindex="-1" aria-labelledby="modalFinalizarPedidoPDVLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title text-gray-600 fw-600">
-                                                            <i data-feather="user-plus" class="me-1 feather-lg"></i>
-                                                            Asignar cliente
-                                                        </h5>
-                                                        <button type="button" class="btn btn-icon border border-1 border-gray-600 btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                                                            <i class="fa-solid fa-xmark fa-xl"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p class="fw-300">Se enviará el resumen del pedido al cliente, incluso si aún no tiene una cuenta <span class="fw-600">vendy</span>.</p>
-                                                        <div class="mb-3 text-dark">
-                                                            <label for="" class="text-primary fw-600 mb-1">Correo del cliente:</label>
-                                                            <input type="email" class="form-control text-center" name="idCliente" id="idCliente" placeholder="correo@ejemplo.com" value="" style="display: ;">
-                                                        </div>
-                                                        <div class="d-flex justify-content-end">
-                                                            <label class="form-check-label me-2 fw-200" style="cursor: pointer;" for="inputAsignarCliente">No asignar cliente</label>
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input" style="cursor: pointer;" type="checkbox" id="inputAsignarCliente" onchange="toggleClienteInput()">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" name="button" class="btn btn-light rounded-2 fw-500" data-bs-dismiss="modal">
-                                                            Cerrar
-                                                        </button>
-                                                        <button type="submit" class="btn btn-success fw-500 fs-6 rounded-2" onclick="return validaFormulario_pagoPos();" name="btnCrearPedido" value="PDV">
-                                                            Finalizar
-                                                            <i data-feather="check-circle" class="fa-fade me-1 ms-1 feather-lg"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Modal Confirmar Pago -->
-
-                                        <input type="hidden" name="idTienda" placeholder="idTienda" value="<?php echo $idTienda; ?>">
-
-                                        <div class="d-none d-lg-flex fixed-bottom justify-content-end mb-4 me-4">
-                                            <button type="button" class="btn btn-danger fw-500 fs-5 rounded-pill shadow-sm" style="display: none;" id="btnConfirmar_uno" data-bs-toggle="modal" data-bs-target="#modalFinalizarPedidoPDV">
-                                                <span class="btn btn-white btn-sm shadow-sm rounded-pill me-1">
-                                                    $ <?php echo number_format($_SESSION['total'], 2); ?>
-                                                </span>
-                                                Confirmar cobro
-                                            </button>
-                                        </div>
-
-                                        <div class="d-lg-none fixed-bottom d-flex justify-content-center text-center mb-4">
-                                            <button type="button" class="btn btn-danger fw-500 fs-5 rounded-pill shadow-sm" style="display: none;" id="btnConfirmar_dos" data-bs-toggle="modal" data-bs-target="#modalFinalizarPedidoPDV">
-                                                <span class="btn btn-white btn-sm shadow-sm rounded-pill me-1">
-                                                    $ <?php echo number_format($_SESSION['total'], 2); ?>
-                                                </span>
-                                                Confirmar cobro
-                                            </button>
-                                        </div>
-
-                                        <!-- <hr class="mb-4"> -->
-                                        <div class="text-end">
-
-                                            <?php
-                                            // Botón Finalizar Pedido
-                                            if (isset($_SESSION[$idTienda]) && 1==1)
-                                            {
-                                            ?>
-                                            <?php
-                                            }
-                                            ?>
-                                        </div>
-
-                                    </form>
-                                <?php
-                                }
-                                else
-                                {
-                                ?>
-                                    <h1 class="text-center mb-3 fw-600">Tu carrito está vacío</h1>
-                                    <div class="text-center">
-                                        <a class="btn btn-green btn-sm rounded-pill shadow" href="pos.php?tienda=<?php echo $idTienda; ?>">
-                                            <i class="fas fa-store me-1"></i> Regresar al PDV
-                                        </a>
-                                    </div>
-                                <?php
-                                }
+                                    <?php
+                                    }
                                 ?>
                             </div>
 
@@ -661,33 +667,36 @@
                 document.getElementById("idDB").value  = valores[3];
             }
 
-            const totalCompra      = document.getElementById("totalCompra");
+            // Check if the element with id "efectivoRecibido" exists
             const efectivoRecibido = document.getElementById("efectivoRecibido");
-            const cambioEfectivo   = document.getElementById("cambioEfectivo");
 
-            efectivoRecibido.addEventListener("input", function(event)
-            {
-                document.getElementById('cambioEfectivo').value = 0.00;
-                document.getElementById('labelCambioEfectivoATexto').innerHTML = "";
-                // Permitir sólo 2 decimales
-                const value = event.target.value;
-                const regex = /^\d+(\.\d{0,2})?$/;
-
-                if (!regex.test(value) && value != "")
-                {
-                    event.target.value = value.slice(0, -1);
-                }
-
-                calcularCambio();
-                // Verificar si el campo efectivoRecibido ha sido borrado
-                if (value === "")
-                {
+            if (efectivoRecibido) {
+                efectivoRecibido.addEventListener("input", function(event) {
+                    // Rest of your code inside the event listener
                     document.getElementById('cambioEfectivo').value = 0.00;
-                    document.getElementById('labelSolicitudEfectivo').innerHTML = "";
-                    document.getElementById('labelEfectivoRecibidoATexto').innerHTML = "";
                     document.getElementById('labelCambioEfectivoATexto').innerHTML = "";
-                }
-            });
+                    // Permitir sólo 2 decimales
+                    const value = event.target.value;
+                    const regex = /^\d+(\.\d{0,2})?$/;
+
+                    if (!regex.test(value) && value != "") {
+                        event.target.value = value.slice(0, -1);
+                    }
+
+                    calcularCambio();
+                    // Verificar si el campo efectivoRecibido ha sido borrado
+                    if (value === "") {
+                        document.getElementById('cambioEfectivo').value = 0.00;
+                        document.getElementById('labelSolicitudEfectivo').innerHTML = "";
+                        document.getElementById('labelEfectivoRecibidoATexto').innerHTML = "";
+                        document.getElementById('labelCambioEfectivoATexto').innerHTML = "";
+                    }
+                });
+            } 
+            // else {
+            //     console.log("Element with id 'efectivoRecibido' not found.");
+            // }
+
 
             function calcularCambio()
             {

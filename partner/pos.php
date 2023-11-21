@@ -182,127 +182,97 @@
                                     {
                                         echo '<p class="mb-4 fw-300 fs-5">Productos sugeridos</p>';
                                         // output data of each row
-                                        foreach ($productos as $key => $row)
+                                        
+                                        foreach ($productos as $key => $row) 
                                         {
-                                        ?>
-                                            <div class="col-xl-6 col-lg-6 col-md-6 mb-4" style="cursor: pointer;">
-                                                  <!-- Dashboard example card 1-->
-                                                  <a class="card h-100 text-decoration-none lift" style="pointer: cursor;">
-                                                      <div class="card-body d-flex justify-content-center flex-column">
-                                                          <div class="d-flex align-items-center justify-content-between">
-
-                                                              <img class="rounded-1" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>'" src="<?php echo $dominio; ?>/partner/verifica/usr_docs/<?php echo $row["idTienda"]; ?>/productos/<?php echo $row["idProducto"]; ?>/<?php echo $row["url"]; ?>" alt="..." style="width: 10rem" />
-
-                                                              <div class="ms-2">
-                                                                  <!-- <i class="feather-xl text-primary mb-3" data-feather="package"></i> -->
-                                                                  <h5 class="fw-500 fs-2"><?php echo $row["nombre"]; ?></h5>
-                                                                  <div class="text-green fs-3 fw-400 text-nowrap">
-                                                                      <?php
-                                                                          if ($row["precioOferta"] < $row["precio"] && ($row["precioOferta"] > 0))
-                                                                          {
-                                                                              echo "$ " . number_format($row["precioOferta"], 2);
-                                                                              ?>
-                                                                              <span class="text-danger">
-                                                                                  <s>
-                                                                                      <?php echo "$ " . number_format($row["precio"], 2); ?>
-                                                                                  </s>
-                                                                              </span>
-                                                                              <?php
-                                                                          }
-                                                                          else
-                                                                          {
-                                                                            echo "$ " . number_format($row['precio'], ($row['precio'] == round($row['precio'], 0)) ? 0 : 2) . " <span class='small'>mxn</span>";
-
-                                                                          }
-                                                                      ?>
-                                                                  </div>
-
-                                                                  <!-- <a href="carrito.php" class="btn btn-outline-success btn-sm mt-2 ">Detalle</a> -->
-                                                                  <form action="procesa.php" class="" method="post">
-                                                                      <?php
-                                                                      if ($row['unidadVenta'] == "Kilogramos")
-                                                                      {
-                                                                      ?>
-                                                                          <div class="input-group mb-1 mt-2 w-100 disable-dbl-tap-zoom">
-
-                                                                              <input type="number" class="form-control" name="stock" value="10" id="<?php echo $row['id']; ?>" min="10" max="<?php echo ($row["inventario"]*1000); ?>" step="10" onchange="validarStock(this)" required>
-
-                                                                              <button class="btn btn-outline-success" type="button" onclick="decrementValueGranel(<?php echo $row['id']; ?>)">
-                                                                                  <i class="fas fa-minus"></i>
-                                                                              </button>
-
-                                                                              <button class="btn btn-outline-success" type="button" onclick="incrementValueGranel(<?php echo $row['id']; ?>)">
-                                                                                  <i class="fas fa-plus"></i>
-                                                                              </button>
-
-                                                                          </div>
-                                                                          <div class="small mb-2 text-center" id="salidaGramos"></div>
-                                                                      <?php
-                                                                      }
-                                                                      else
-                                                                      {
-                                                                      ?>
-                                                                          <!-- <input type="number" class="form-control" name="stock" value="1" step="1" min="1" required> -->
-                                                                          <div class="input-group mb-1 mt-2 w-100 disable-dbl-tap-zoom">
-
-                                                                              <button class="btn btn-outline-success btn-sm" type="button" onclick="decrementValue(<?php echo $row['id']; ?>)">
-                                                                                  <i class="fas fa-minus"></i>
-                                                                              </button>
-
-                                                                              <input type="number" class="form-control text-center" name="stock" value="1" id="<?php echo $row['id']; ?>" min="1" max="<?php echo $row["inventario"]; ?>" step="1" pattern="[0-9]*" required>
-
-                                                                              <button class="btn btn-outline-success btn-sm" type="button" onclick="incrementValue(<?php echo $row['id']; ?>)">
-                                                                                  <i class="fas fa-plus"></i>
-                                                                              </button>
-
-                                                                          </div>
-                                                                      <?php
-                                                                      }
-                                                                      ?>
-
-                                                                      <div class="mb-2">
-                                                                          <span class="fw-300" style="font-size:12px;"><?php echo $row["inventario"] . " " . ((strpos($row["unidadVenta"], "Kilogramos") !== false) ? "Kgs." : "Pzs.") . " Disponibles"; ?></span>
-                                                                      </div>
-
-                                                                      <input type="hidden" name="idProducto" value="<?php echo $row['idProducto']; ?>">
-                                                                      <input type="hidden" name="idTienda"   value="<?php echo $idTienda; ?>">
-
-                                                                      <div class="">
-                                                                          <button type="button" name="button" class="btn btn-outline-primary mb-1 w-100" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>';">
-                                                                              Detalle
-                                                                          </button>
-
-                                                                          <?php
-                                                                            if($row["inventario"]>0)
-                                                                            {
-                                                                                ?>
-                                                                                <button type="submit" class="btn btn-primary shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
-                                                                                    <i class="me-1" data-feather="shopping-bag"></i>
-                                                                                    Agregar
-                                                                                </button>
-                                                                                <?php
-                                                                            } 
-                                                                            else 
-                                                                            {
-                                                                                ?>
-                                                                                <button type="submit" class="btn btn-danger shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
-                                                                                    <i class="me-1" data-feather="shopping-bag"></i>
-                                                                                    Agotado
-                                                                                </button>
-                                                                                <?php
-                                                                            }
-                                                                          ?>
-                                                                          
-                                                                      </div>
-
-                                                                  </form>
-
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </a>
-                                              </div>
-                                        <?php
+                                            ?>
+                                            <div class="col-xl-4 col-lg-6 col-md-6 mb-4" style="cursor: pointer;">
+                                                <!-- Dashboard example card 1-->
+                                                <a class="card h-100 text-decoration-none bg-pattern-white-75 border-light border-3" style="pointer: cursor;">
+                                                    <div class="card-body d-flex flex-column">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <img class="rounded-1" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>'" src="<?php echo $dominio; ?>/partner/verifica/usr_docs/<?php echo $row["idTienda"]; ?>/productos/<?php echo $row["idProducto"]; ?>/<?php echo $row["url"]; ?>" alt="..." style="width: 100%; max-height: 10rem; object-fit: cover;" />
+                                                            <div class="ms-2 flex-grow-1">
+                                                                <h5 class="fw-500 fs-2"><?php echo $row["nombre"]; ?></h5>
+                                                                <div class="text-green fs-3 fw-400 text-nowrap">
+                                                                    <?php
+                                                                    if ($row["precioOferta"] < $row["precio"] && ($row["precioOferta"] > 0)) {
+                                                                        echo "$ " . number_format($row["precioOferta"], 2);
+                                                                        ?>
+                                                                        <span class="text-danger">
+                                                                            <s>
+                                                                                <?php echo "$ " . number_format($row["precio"], 2); ?>
+                                                                            </s>
+                                                                        </span>
+                                                                        <?php
+                                                                    } else {
+                                                                        echo "$ " . number_format($row['precio'], ($row['precio'] == round($row['precio'], 0)) ? 0 : 2) . " <span class='small'>mxn</span>";
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <form action="procesa.php" class="" method="post">
+                                                                    <?php
+                                                                    if ($row['unidadVenta'] == "Kilogramos") {
+                                                                        ?>
+                                                                        <div class="input-group mb-1 mt-2 w-100 disable-dbl-tap-zoom">
+                                                                            <input type="number" class="form-control" name="stock" value="10" id="<?php echo $row['id']; ?>" min="10" max="<?php echo ($row["inventario"]*1000); ?>" step="10" onchange="validarStock(this)" required>
+                                                                            <button class="btn btn-outline-success" type="button" onclick="decrementValueGranel(<?php echo $row['id']; ?>)">
+                                                                                <i class="fas fa-minus"></i>
+                                                                            </button>
+                                                                            <button class="btn btn-outline-success" type="button" onclick="incrementValueGranel(<?php echo $row['id']; ?>)">
+                                                                                <i class="fas fa-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="small mb-2 text-center" id="salidaGramos"></div>
+                                                                        <?php
+                                                                    } else {
+                                                                        ?>
+                                                                        <div class="input-group mb-1 mt-2 w-100 disable-dbl-tap-zoom">
+                                                                            <button class="btn btn-outline-success btn-sm" type="button" onclick="decrementValue(<?php echo $row['id']; ?>)">
+                                                                                <i class="fas fa-minus"></i>
+                                                                            </button>
+                                                                            <input type="number" class="form-control text-center" name="stock" value="1" id="<?php echo $row['id']; ?>" min="1" max="<?php echo $row["inventario"]; ?>" step="1" pattern="[0-9]*" required>
+                                                                            <button class="btn btn-outline-success btn-sm" type="button" onclick="incrementValue(<?php echo $row['id']; ?>)">
+                                                                                <i class="fas fa-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                    <div class="mb-2">
+                                                                        <span class="fw-300" style="font-size:12px;"><?php echo $row["inventario"] . " " . ((strpos($row["unidadVenta"], "Kilogramos") !== false) ? "Kgs." : "Pzs.") . " Disponibles"; ?></span>
+                                                                    </div>
+                                                                    <input type="hidden" name="idProducto" value="<?php echo $row['idProducto']; ?>">
+                                                                    <input type="hidden" name="idTienda"   value="<?php echo $idTienda; ?>">
+                                                                    <div class="">
+                                                                        <button type="button" name="button" class="btn btn-outline-primary mb-1 w-100" onclick="location.href='detalle-producto-pos.php?idProducto=<?php echo $row['idProducto']; ?>&tienda=<?php echo $row['idTienda']; ?>';">
+                                                                            Detalle
+                                                                        </button>
+                                                                        <?php
+                                                                        if($row["inventario"] > 0) {
+                                                                            ?>
+                                                                            <button type="submit" class="btn btn-primary shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
+                                                                                <i class="me-1" data-feather="shopping-bag"></i>
+                                                                                Agregar
+                                                                            </button>
+                                                                            <?php
+                                                                        } else {
+                                                                            ?>
+                                                                            <button type="submit" class="btn btn-danger shadow-none w-100 mb-1 fs-6" name="btnAgregarCarrito" value="partner/pos.php" <?php echo ($row['inventario'] > 0) ? "" : "disabled"; ?>>
+                                                                                <i class="me-1" data-feather="shopping-bag"></i>
+                                                                                Agotado
+                                                                            </button>
+                                                                            <?php
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <?php
                                         }
                                     }
                                 ?>
@@ -325,7 +295,7 @@
                             </a>
                         </div>
 
-                        <div class="d-lg-none fixed-bottom d-flex justify-content-center text-center mb-3 d-md-flex">
+                        <div class="d-lg-none fixed-bottom d-flex justify-content-center text-center mb-3 d-md-flex d-sm-flex">
                             <a href="carritoPos.php?tienda=<?php echo $idTienda; ?>" class="btn btn-success fw-600 fs-5 rounded-pill shadow-sm" name="btnCrearPedido" value="PDV">
                                 <div class="btn btn-white btn-sm rounded-pill me-2 shadow-sm">
                                     <i data-feather="shopping-cart" class="me-1"></i>

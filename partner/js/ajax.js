@@ -664,60 +664,82 @@
 
       // Mostrar la notificación
       Swal.fire(opciones);
+    } 
+
+    // Check if the form with id "formulario-categorias" exists
+    var form = document.getElementById('formulario-categorias');
+
+    if (form) 
+    {
+        // Assign the function registrarCategoria to the submit event of the form
+        form.addEventListener('submit', registrarCategoria);
+    } 
+    // else 
+    // {
+    //     console.error("Form with id 'formulario-categorias' not found.");
+    // }
+
+
+    // Check if the element with id "categoria" exists
+    var categoriaInput = document.querySelector('#categoria');
+
+    if (categoriaInput) 
+    {
+        // Assign the event listener only if the element exists
+        categoriaInput.addEventListener('keyup', function() {
+            this.value = this.value.toLowerCase();
+        });
+
+        // Verificar si el carácter ingresado es una letra, un número o un espacio
+        if (!/[a-zA-Z0-9 ]/.test(event.key)) {
+            // Evitar que el carácter sea añadido al valor del input
+            event.preventDefault();
+        }
+
+        // Verificar si el input tiene más de 33 caracteres
+        if (this.value.length >= 33) {
+            // Evitar que se añadan más caracteres al input
+            event.preventDefault();
+        }
     }
 
-    // Asignar la función registrarCategoria al evento submit del formulario
-    var form = document.getElementById('formulario-categorias');
-    form.addEventListener('submit', registrarCategoria);
-
-    document.querySelector('#categoria').addEventListener('keyup', function() {
-      this.value = this.value.toLowerCase();
-    });
-
-    document.querySelector('#categoria').addEventListener('keypress', function(event) {
-      // Verificar si el carácter ingresado es una letra, un número o un espacio
-      if (!/[a-zA-Z0-9 ]/.test(event.key)) {
-        // Evitar que el carácter sea añadido al valor del input
-        event.preventDefault();
-      }
-
-      // Verificar si el input tiene más de 33 caracteres
-      if (this.value.length >= 33) {
-        // Evitar que se añadan más caracteres al input
-        event.preventDefault();
-      }
-    });
-
+    // Check if the element with id "requiereEnvio" exists
     const checkbox = document.getElementById('requiereEnvio');
     const text = document.getElementById('requiereEnvioText');
 
-    checkbox.addEventListener('change', function()
-    {
-        if (this.checked)
-        {
-            text.innerHTML = '&nbsp;&nbsp;Sí, se trata de un producto digital.';
-        }
-        else
-        {
-            text.innerHTML = '&nbsp;&nbsp;No, no es un producto digital.';
-        }
-    });
+    if (checkbox) {
+        // Assign the event listener only if the element exists
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                text.innerHTML = '&nbsp;&nbsp;Sí, se trata de un producto digital.';
+            } else {
+                text.innerHTML = '&nbsp;&nbsp;No, no es un producto digital.';
+            }
+        });
+    } 
+    // else {
+    //     console.error("Element with id 'requiereEnvio' not found.");
+    // }
+
 
     // Venta en línea
     const checkboxOnlineStore = document.getElementById('isActiveOnlineStore');
     const onlineStoreText = document.getElementById('isActiveOnlineStoreLabel');
 
-    checkboxOnlineStore.addEventListener('change', function()
-    {
-        if (this.checked)
-        {
-            onlineStoreText.innerHTML = '&nbsp;&nbsp; Sí.';
-        }
-        else
-        {
-            onlineStoreText.innerHTML = '&nbsp;&nbsp; No.';
-        }
-    });
+    if (checkboxOnlineStore) {
+        // Assign the event listener only if the element exists
+        checkboxOnlineStore.addEventListener('change', function() {
+            if (this.checked) {
+                onlineStoreText.innerHTML = '&nbsp;&nbsp; Sí.';
+            } else {
+                onlineStoreText.innerHTML = '&nbsp;&nbsp; No.';
+            }
+        });
+    } 
+    // else {
+    //     console.error("Element with id 'isActiveOnlineStore' not found.");
+    // }
+
 
     const labelImagenes = document.getElementById('imagenesLabel');
     const lblImgProducto = document.getElementById('imagenProductoLabel');

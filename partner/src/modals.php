@@ -311,7 +311,9 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="datosBancariosTiendaLabel">Datos bancarios</h5>
+                
+                <h5 class="modal-title fw-600 text-blue" id="datosBancariosTiendaLabel">Datos bancarios</h5>
+
                 <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
                     <i class="fa-solid fa-xmark fa-xl"></i>
                 </button>
@@ -320,6 +322,9 @@
             <form class="" action="procesa.php" method="post">
                 <div class="modal-body">
 
+                    <div class="text-center">
+                        Permite al cliente escanear el código QR para leer la información de pago
+                    </div>
                     <div id="qrcode" class="d-flex justify-content-center p-3"></div>
 
                     <label class="fw-600" for="">Banco: </label>
