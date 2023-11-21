@@ -427,7 +427,7 @@
 
                         <div class="row">
 
-                            <div class="col-lg-6 col-xl-6 mb-4">
+                            <div class="col-lg-6 col-xl-3 mb-4">
 
                                 <div class="card bg-success text-white h-100 gradient-red ">
                                     <div class="card-body ">
@@ -475,7 +475,44 @@
 
                             </div>
 
-
+                            <div class="col-lg-6 col-xl-3 mb-4">
+                                <div class="card bg-pattern-pdv text-white h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="me-3">                                                
+                                                <div class="text-white-75 small">Punto De Venta</div>
+                                                <div class="display-6 sombra-titulos-vendy fw-500">PDV</div>
+                                            </div>
+                                            <!-- <i class="feather-xl text-white-50" data-feather="calendar"></i> -->
+                                            <i class="fas fa-cash-register text-white-50 display-6 me-2 mt-2"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between small">
+                                        
+                                        <?php                                        
+                                            //var_dump($hasActivePayment['existePagoActivo']);                                            
+                                            if (isset($hasActivePayment) && $hasActivePayment['existePagoActivo'] == true)
+                                            {                                                                                                
+                                                ?> 
+                                                <a class="text-white stretched-link" href="pos.php">
+                                                    Ir ahora
+                                                </a>
+                                                <?php
+                                            }
+                                            else
+                                            {
+                                                
+                                                ?>                                                
+                                                <a style="cursor: pointer;" class="text-white stretched-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">
+                                                    Ir ahora
+                                                </a> 
+                                                <?php
+                                            }
+                                        ?>
+                                        <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                              
 
                             <!-- <div class="col-lg-6 col-xl-3 mb-4">
@@ -602,7 +639,7 @@
                                 <div class="card card-header-actions">
 
                                     <div class="card-header" id="moduloCaja">
-                                        <span id="caja" class="fs-1 fw-400 ">
+                                        <span id="caja" class="fs-2 fw-600 text-blue">
                                             <i class="fas fa-cash-register me-2"></i>Caja
                                         </span>
                                         <!-- <div class="dropdown no-caret">
@@ -616,7 +653,7 @@
                                                 <a class="dropdown-item" href="#!">Custom Range</a>
                                             </div>
                                         </div> -->
-                                        <div class="small">
+                                        <div class="">
                                             <?php
 
                                             $response = isTurnoCajaActivo($conn, $idTienda, $idUsuario);
@@ -629,7 +666,13 @@
                                                     // Mostrar mensaje y fecha de apertura
                                                     // echo "El último turno todavía está abierto desde " . $response['fechaApertura'] . ".";
                                                     ?>
-                                                    <a class="btn btn-outline-danger rounded-pill btn-sm" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalCierreTurnoCaja">
+                                                    <a class="btn btn-primary rounded-pill" class="text-decoration-none" href="pos.php">
+                                                        <!-- <i class="" data-feather="unlock"></i>  -->
+                                                        PDV
+                                                        <?php //echo date("d/m/Y H:i", strtotime($response['fechaApertura']));  ?>
+                                                    </a>
+
+                                                    <a class="btn btn-outline-danger rounded-pill" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalCierreTurnoCaja">
                                                         <i class="" data-feather="unlock"></i>
                                                         <?php //echo date("d/m/Y H:i", strtotime($response['fechaApertura']));  ?>
                                                     </a>

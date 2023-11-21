@@ -34,7 +34,7 @@
                             {
                                 ?>
                                 <a class="nav-link" href="pos.php">
-                                    POS
+                                    PDV
                                 </a>
                                 <?php
                             } 
@@ -43,7 +43,7 @@
                                 ?>
                                 <a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">
                                     <div class="nav-link-icon"><i class="fas fa-cash-register"></i></div>
-                                    POS <span class="badge bg-yellow ms-1 rounded-pill small"><i class="fa-solid fa-sm fa-star"></i></span>
+                                    PDV <span class="badge bg-yellow ms-1 rounded-pill small"><i class="fa-solid fa-sm fa-star"></i></span>
                                 </a>
                                 <?php
                             }
