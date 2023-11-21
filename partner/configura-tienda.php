@@ -197,184 +197,20 @@
                             include 'src/menuConfiguracion.php';
                         ?>
                         <hr class="mt-0 mb-4" />
-                        <div class="accordion" id="accordionExample">
+                        <div class="accordion col-6" id="accordionExample">
                             <div class="accordion-item shadow-sm">
                                 <h2 class="accordion-header " id="headingOne">
-                                  <button class="accordion-button bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <i class="fas fa-headset me-1"></i> Medios de contacto
-                                  </button>
+                                    <button class="accordion-button bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Resumen de tu tienda
+                                    </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body bg-pattern-white-75 opacity-1">
 
                                         <div class="row my-4 mx-2">
-
-                                                <?php
-
-                                                $fb_icon = false;
-                                                $ig_icon = false;
-                                                $wa_icon = false;
-                                                $yt_icon = false;
-                                                $tel_icon = false;
-                                                $email_icon = false;
-
-                                                // Itero el resultado para ver si tiene lo sig
-                                                if ($mediosContacto)
-                                                {
-                                                    foreach ($mediosContacto as $key => $contacto)
-                                                    {
-                                                        switch ($contacto['alias'])
-                                                        {
-                                                            case 'FACEBOOK':
-                                                                $fb_icon['data'] = $contacto['data'];
-                                                                $fb_icon['id']   = $contacto['id'];
-                                                                break;
-                                                            case 'INSTAGRAM':
-                                                                $ig_icon['data'] = $contacto['data'];
-                                                                $ig_icon['id']   = $contacto['id'];
-                                                                break;
-                                                            case 'WHATSAPP':
-                                                                $wa_icon['data'] = $contacto['data'];
-                                                                $wa_icon['id']   = $contacto['id'];
-                                                                break;
-                                                            case 'YOUTUBE':
-                                                                $yt_icon['data'] = $contacto['data'];
-                                                                $yt_icon['id']   = $contacto['id'];
-                                                                break;
-                                                            case 'TELEFONO':
-                                                                $tel_icon['data'] = $contacto['data'];
-                                                                $tel_icon['id']   = $contacto['id'];
-                                                                break;
-                                                            case 'EMAIL':
-                                                                $email_icon['data'] = $contacto['data'];
-                                                                $email_icon['id']   = $contacto['id'];
-                                                                break;
-                                                        }
-                                                    }
-                                                }
-                                                ?>
-
-                                                <div class="mb-3">
-                                                    <h1 class="font-poppins fw-300">Contacto</h1>
-                                                    <!-- Contacto -->
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover">
-                                                            <thead>
-                                                                <tr class="small fw-200 text-dark">
-                                                                    <td>Cuenta</td>
-                                                                    <td>Dato</td>
-                                                                    <td>Acciones</td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>
-                                                                        <i data-feather="phone" class="feather-lg text-orange"></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo isset($tel_icon['data']) ? $tel_icon['data'] : " - "; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalTelefonoTienda">
-                                                                            <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>
-                                                                        <i class="fa-xl far fa-envelope text-cyan"></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        <?php echo isset($email_icon['data']) ? $email_icon['data'] : " - "; ?>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalEmailTienda">
-                                                                            <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                        </button>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <!-- Contacto -->
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <h1 class="font-poppins fw-300">Social</h2>
-                                                    <!-- social icons -->
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover">
-                                                        <thead>
-                                                            <tr class="small fw-200 text-dark">
-                                                            <td>Cuenta</td>
-                                                            <td>Dato</td>
-                                                            <td>Acciones</td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-facebook text-blue"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($fb_icon['data']) ? $fb_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalFacebookTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-whatsapp text-green"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($wa_icon['data']) ? $wa_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalWhatsappTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                            <td>
-                                                                <i class="fa-xl fab fa-instagram text-pink"></i>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo isset($ig_icon['data']) ? $ig_icon['data'] : " - "; ?>
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalInstagramTienda">
-                                                                    <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                </button>
-                                                            </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fa-xl fab fa-youtube text-danger"></i>
-                                                                </td>
-                                                                <td>
-                                                                    <?php echo isset($yt_icon['data']) ? $yt_icon['data'] : " - "; ?>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-green rounded-pill btn-sm" name="button" data-bs-toggle="modal" data-bs-target="#modalYoutubeTienda">
-                                                                        <i class="fas fa-pencil-alt me-1"></i> Editar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-
-                                                        </tbody>
-                                                        </table>
-                                                    </div>                                                
-                                                    <!-- social icons -->
-                                                </div>
+                                            <?php
+                                                echo $_SESSION['nombreTienda'];
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

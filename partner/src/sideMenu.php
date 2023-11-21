@@ -77,7 +77,7 @@
                             ?><a style="cursor: pointer;" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalSeccionDePago">Reportes <span class="badge bg-yellow ms-1 rounded-pill"><i class="fa-solid fa-star fa-sm"></i></span></a><?php
                         }
                         
-                        if (isset($hasActivePayment) && ($hasActivePayment['existePagoActivo'] === true))
+                        if (isset($hasActivePayment) && ($hasActivePayment['existePagoActivo'] === true) && 1==5)
                         {
                             ?><a class="nav-link" href="mi-reputacion.php">Reputación</a><?php
                         }
