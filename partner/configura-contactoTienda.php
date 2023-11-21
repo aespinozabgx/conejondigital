@@ -292,7 +292,7 @@
                                                                 <?php echo isset($fb_icon['data']) ? "&nbsp;&nbsp;" . substr($fb_icon['data'], 0, 15) : ""; ?>
                                                             </button>
                                                         
-                                                            <button type="button" class="w-100 btn btn-lg rounded-pill btn-green mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalFacebookTienda">
+                                                            <button type="button" class="w-100 btn btn-lg rounded-pill btn-green mb-2" name="button" data-bs-toggle="modal" data-bs-target="#modalWhatsappTienda">
                                                                 <i class="fa-xl fab fa-whatsapp"></i>
                                                                 <?php echo isset($wa_icon['data']) ? "&nbsp;&nbsp;" . substr($wa_icon['data'], -10) . '&nbsp;&nbsp;' : ""; ?>
                                                             </button>

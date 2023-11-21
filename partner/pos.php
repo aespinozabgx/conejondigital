@@ -24,8 +24,11 @@
 
     if (empty($_SESSION['sucursalTienda']))
     {
-        //die("Selecciona la sucursal");
+        //die("Selecciona la sucursal");        
         $sucursales = getSucursalesTienda($conn, $idTienda);
+        // echo "<pre>";
+        // print_r($sucursales);
+        // die;
         if ($sucursales === false) 
         {
             //die("Abrir modal elegir sucursal");
@@ -597,7 +600,7 @@
                 <script>
                     $(document).ready(function() 
                     {
-                        //$('#modalSeleccionarSucursal').modal('show');
+                        $('#modalSeleccionarSucursal').modal('show');
                     });
                 </script>
                 <?php
