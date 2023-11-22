@@ -2155,16 +2155,26 @@
     if (isset($_POST['btnCrearPedido']))
     {
         //echo "Crear Pedido";
-        
+        echo "<pre>";
+        print_r($_POST);
+        //die;
 
         $camposEsperados = array(
             'idCliente',
             'metodoEnvioDinamico',
             'direccion',
-            'metodoDePago',
+            'idMetodoDePago',
             'idTienda',
             'precioEnvio'
         );
+
+        if ($_POST['btnCrearPedido'] == "PDV")
+        {
+            $camposEsperados = array(            
+                'idMetodoDePago',
+                'idTienda'
+            );
+        }
         
         $datosFaltantes = array();
         
@@ -2178,9 +2188,11 @@
         
         if (!empty($datosFaltantes)) 
         { 
-            // echo "Faltan los siguientes campos: " . implode(", ", $datosFaltantes);
+            echo "Faltan los siguientes campos: " . implode(", ", $datosFaltantes);
             exit(header('Location: ../pago.php?tienda=' . $_POST['idTienda'] . "&msg=datosFaltantesCrearPedido"));
         } 
+
+        //die;
 
         // Todos los campos esperados están presentes, puedes procesar los datos
         $idCliente = $_POST['idCliente'];
@@ -2324,14 +2336,14 @@
                     requiereEnvio,
                     precioEnvio,
                     idTipoEnvio,
-                    idDireccionEnvio,
+                    direccionEnvio,
                     fechaPago,
                     idMetodoDePago,
                     comprobantePago,
                     fechaCierrePedido,
                     idEstatusPedido,
                     subtotal,
-                    descuentoTienda,
+                    descuentoCodigoPromocional,
                     total,
                     isActive
                 )

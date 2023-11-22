@@ -2,7 +2,7 @@
 
     session_start();
     require '../app/php/conexion.php';
-    require '../app/php/funciones.php';
+    require 'php/funciones.php';
 
     if (isset($_SESSION['email'], $_SESSION['managedStore']))
     {
@@ -13,8 +13,6 @@
 
     $hasActivePayment = array();
     $hasActivePayment['existePagoActivo'] = true;
-    
-    $idTienda = "conejondigital";
 
 ?>
 <!DOCTYPE html>

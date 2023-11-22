@@ -3,8 +3,6 @@
     
     require '../app/php/conexion.php';
     require 'php/funciones.php';
-  
-    $_SESSION['managedStore'] = "conejondigital";
 
     // Validar si está configurada la tienda, si no hay redirecciona a al cofiguración
     if (!isset($_SESSION['managedStore']) || empty($_SESSION['managedStore']))

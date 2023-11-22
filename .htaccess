@@ -1,0 +1,12 @@
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !=/app
+RewriteCond %{REQUEST_URI} !=/app/
+RewriteCond %{REQUEST_URI} !=/partner
+RewriteCond %{REQUEST_URI} !=/partner/
+RewriteCond %{REQUEST_URI} !=/admin
+RewriteCond %{REQUEST_URI} !=/admin/
+RewriteCond %{REQUEST_URI} !=/assets
+RewriteCond %{REQUEST_URI} !=/assets/
+RewriteCond %{REQUEST_URI} !=/css
+RewriteCond %{REQUEST_URI} !=/css/ 
+RewriteRule ^([^/.]+)/?$ /perfil.php?tienda=$1 [NE,L,QSA]

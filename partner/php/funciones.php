@@ -711,6 +711,7 @@
         }
     }
 
+    
     function getSucursalesTienda($conn, $idTienda)
     {
         $sucursales = array();

@@ -550,7 +550,7 @@
             // Si la petición tiene éxito, procesar la lista de categorías
             var categorias = JSON.parse(xhr.responseText);
             //var select = document.getElementById('categorias-existentes');
-            //console.log(categorias);
+            console.log(categorias);
 
             var salidaCategorias = document.getElementById('salidaCategorias');
             var elemento = document.getElementById('categorias-existentes');
@@ -686,22 +686,27 @@
     if (categoriaInput) 
     {
         // Assign the event listener only if the element exists
-        categoriaInput.addEventListener('keyup', function() {
+        categoriaInput.addEventListener('keyup', function(event) 
+        {
+            // Convert input value to lowercase
             this.value = this.value.toLowerCase();
+
+            // Check if the input has more than 33 characters
+            if (this.value.length >= 33) 
+            {
+                // Prevent further characters from being added to the input
+                event.preventDefault();
+            }
+
+            // Check if the event object exists and the key is not a letter, number, or space
+            if (event && !/[a-zA-Z0-9 ]/.test(event.key)) 
+            {
+                // Prevent the character from being added to the input value
+                event.preventDefault();
+            }
         });
-
-        // Verificar si el carácter ingresado es una letra, un número o un espacio
-        if (!/[a-zA-Z0-9 ]/.test(event.key)) {
-            // Evitar que el carácter sea añadido al valor del input
-            event.preventDefault();
-        }
-
-        // Verificar si el input tiene más de 33 caracteres
-        if (this.value.length >= 33) {
-            // Evitar que se añadan más caracteres al input
-            event.preventDefault();
-        }
     }
+
 
     // Check if the element with id "requiereEnvio" exists
     const checkbox = document.getElementById('requiereEnvio');

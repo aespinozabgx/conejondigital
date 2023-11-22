@@ -1,4 +1,57 @@
 
+<!-- Inicio Modal Calcular cambio efectivo -->
+<div class="modal fade" id="modalCalcularCambioEfectivo" tabindex="-1" aria-labelledby="modalCalcularCambioEfectivo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0">
+      <div class="modal-header bg-white border-1 border-bottom">
+        <h5 class="modal-title text-primary fw-600" id=""><i class="fas fa-hand-holding-usd"></i> Pago en efectivo </h5>
+        <button type="button" class="btn btn-icon btn-outline-indigo btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+      <div class="modal-body bg-white text-gray border-0 rounded-bottom">
+          <!-- Formulario de registro de categorías -->
+          <form id="formCalcularCambio" action="procesa.php" method="post">
+              <div class="mb-3">
+
+                  <label class="small text-primary fw-500" for="">Total a cobrar:</label>
+                  <div class="input-group mb-3">
+                      <span class="input-group-text border border-2 shadow-none text-dark text-center fs-1 fw-500 " id="basic-addon1">$</span>
+                      <?php
+                          if (isset($_SESSION['total']))
+                          {
+                          ?>
+                          <input type="text" class="form-control border border-2 shadow-none text-dark text-center fs-1" id="totalCompra" autocomplete="off" value="<?php echo number_format($_SESSION['total'], 2); ?>" readonly required>
+                          <?php
+                          }
+                      ?>
+                  </div>
+
+                  <label class="small text-primary fw-500" for="">Total de efectivo recibido:</label>
+                  <div class="input-group mb-3">
+                      <span class="input-group-text border border-2 shadow-none text-dark text-center fs-1 fw-500 " id="basic-addon1">$</span>
+                      <input type="text" class="form-control border border-2 shadow-none text-dark text-center fs-1" placeholder="0.00" id="efectivoRecibido" autocomplete="off" pattern="\d*" required>
+                  </div>
+
+
+                  <p class="text-start fw-600 fs-2 text-danger" id="salidaEfectivoCaja"> </p>
+
+                  <label class="small text-primary fw-500" for="">Entregar al cliente:</label>
+                  <div class="input-group mb-3">
+                      <span class="input-group-text border border-2 border-danger shadow-none text-danger text-center fs-1 fw-500 " id="basic-addon1">$</span>
+                      <input type="text" class="form-control border border-2 bg-white border-danger shadow-none text-danger text-center fw-600 fs-1" placeholder="0.00" id="cambioEfectivo" autocomplete="off" readonly>
+                  </div>
+                  <div class="small text-danger mb-2 text-center fw-400 fs-6" id="labelCambioEfectivoATexto"></div>
+
+              </div>
+          </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Fin Modal Calcular cambio efectivo -->
+
 <!-- modal seleccionar sucursal Inicio-->
 <div class="modal fade" id="modalSeleccionarSucursal" tabindex="-1" aria-labelledby="modalSeleccionarSucursalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
@@ -803,43 +856,82 @@
     </div>
 </div>
 
+<!-- Modal Confirmar Pago -->
+<div class="modal fade" id="modalFinalizarPedidoPDV" tabindex="-1" aria-labelledby="modalFinalizarPedidoPDVLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-gray-600 fw-600">
+                                                            <i data-feather="user-plus" class="me-1 feather-lg"></i>
+                                                            Asignar cliente
+                                                        </h5>
+                                                        <button type="button" class="btn btn-icon border border-1 border-gray-600 btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                                            <i class="fa-solid fa-xmark fa-xl"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p class="fw-300">Se enviará el resumen del pedido al cliente, incluso si aún no tiene una cuenta <span class="fw-600">vendy</span>.</p>
+                                                        <div class="mb-3 text-dark">
+                                                            <label for="" class="text-primary fw-600 mb-1">Correo del cliente:</label>
+                                                            <input type="email" class="form-control text-center" name="idCliente" id="idCliente" placeholder="correo@ejemplo.com" value="" style="display: ;">
+                                                        </div>
+                                                        <div class="d-flex justify-content-end">
+                                                            <label class="form-check-label me-2 fw-200" style="cursor: pointer;" for="inputAsignarCliente">No asignar cliente</label>
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input" style="cursor: pointer;" type="checkbox" id="inputAsignarCliente" onchange="toggleClienteInput()">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" name="button" class="btn btn-light rounded-2 fw-500" data-bs-dismiss="modal">
+                                                            Cerrar
+                                                        </button>
+                                                        <button type="submit" class="btn btn-success fw-500 fs-6 rounded-2" onclick="return validaFormulario_pagoPos();" name="btnCrearPedido" value="PDV">
+                                                            Finalizar
+                                                            <i data-feather="check-circle" class="fa-fade me-1 ms-1 feather-lg"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Confirmar Pago -->
 
-<div class="modal fade" id="modalNuevaMascota" tabindex="-1" aria-labelledby="modalNuevaMascotaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fs-4 fw-600 text-primary" id="modalNuevaMascotaLabel"> <i class="fas fa-carrot me-1"></i> Registra tu cheñol</h5>
-                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                    <i class="fa-solid fa-xmark fa-xl"></i>
-                </button>
-            </div>
+            <div class="modal fade" id="modalNuevaMascota" tabindex="-1" aria-labelledby="modalNuevaMascotaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fs-4 fw-600 text-primary" id="modalNuevaMascotaLabel"> <i class="fas fa-carrot me-1"></i> Registra tu cheñol</h5>
+                            <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                                <i class="fa-solid fa-xmark fa-xl"></i>
+                            </button>
+                        </div>
 
-            <form class="" action="../app/procesa.php" method="post" enctype="multipart/form-data">
-                <div class="modal-body">
+                        <form class="" action="../app/procesa.php" method="post" enctype="multipart/form-data">
+                            <div class="modal-body">
 
-                    <div class="container"> 
-                        
-                        <label for="">Nombre:</label>
-                        <input type="text" class="form-control form-control-lg text-center fs-2 border-4 border-blue-soft shadow-none mb-2" placeholder="Cheñol" name="nombreMascota" id="" value="" required>
+                                <div class="container"> 
+                                    
+                                    <label for="">Nombre:</label>
+                                    <input type="text" class="form-control form-control-lg text-center fs-2 border-4 border-blue-soft shadow-none mb-2" placeholder="Cheñol" name="nombreMascota" id="" value="" required>
 
-                        <label for="">Agrega una foto:</label>
-                        <input type="file" class="form-control mb-2" name="fotoMascota" id="fotoMascota" required> 
+                                    <label for="">Agrega una foto:</label>
+                                    <input type="file" class="form-control mb-2" name="fotoMascota" id="fotoMascota" required> 
 
-                        <label for="">Fecha de nacimiento:</label>
-                        <input type="date" class="form-control mb-2" name="fechaNacimiento" id="fechaNacimiento" max="<?php echo date('Y-m-d'); ?>" required>
+                                    <label for="">Fecha de nacimiento:</label>
+                                    <input type="date" class="form-control mb-2" name="fechaNacimiento" id="fechaNacimiento" max="<?php echo date('Y-m-d'); ?>" required>
+
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-success" name="btnRegistraMascota">Guardar</button>
+                            </div>
+                        </form>
 
                     </div>
-
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-success" name="btnRegistraMascota">Guardar</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
+            </div>
 
 
 

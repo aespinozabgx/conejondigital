@@ -91,7 +91,7 @@
                 <h6 class="dropdown-header d-flex align-items-center">
                     <img class="dropdown-user-img" src="assets/img/illustrations/profiles/black.png" />
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name"><?php echo $_SESSION['nombre']; ?></div>
+                        <div class="dropdown-user-details-name"><?php echo '@' . $_SESSION['managedStore']; ?></div>
                         <div class="dropdown-user-details-email"><?php echo $_SESSION['email']; ?></div>
                     </div>
                 </h6>
@@ -120,6 +120,7 @@
                     <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                     Cerrar Sesión
                 </a> -->
+                
             </div>
         </li>
     </ul>

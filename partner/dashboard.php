@@ -97,7 +97,7 @@
     $hasActivePayment = validarPagoActivo($conn, $idTienda); 
 
     // echo "<pre>";
-    // var_dump($hasActivePayment);
+    // var_dump( $idTienda);
     // die; 
 ?>
 <!DOCTYPE html>
@@ -177,7 +177,7 @@
 
                                             <i data-feather="home" class="feather-xl me-1 mb-2 text-white-50"></i>
                                             <a class="display-6 text-white fw-200 sombra-titulos-vendy text-decoration-none">
-                                                <?php echo !empty($_SESSION['nombreTienda']) ? ucwords(strtolower($_SESSION['nombreTienda'])) : 'Dashboard'; ?>
+                                                <?php echo !empty($_SESSION['nombreTienda']) ? ucwords(strtolower($_SESSION['managedStore'])) : 'Dashboard'; ?>
                                             </a>
 
                                             <?php

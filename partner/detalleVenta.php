@@ -270,24 +270,42 @@
                                                                     <i class="fas fa-chevron-down"></i>
                                                                 </div>
                                                             </a>
-                                                            <div class="card-footer collapse" id="collapseDatosCliente">
+                                                            <div class="card-footer bg-white pt-4 p-2 rounded-2 shadow-sm text-dark collapse" id="collapseDatosCliente">
                                                                 <?php
 
                                                                     //$mediosContacto = getMediosContactoVendedor($conn, $datosPedido['idTienda']);
                                                                     $datosCliente = getDatosCliente($conn, $datosPedido['idCliente']);
 
-                                                                    if ($datosCliente == false)
+                                                                    // echo "<pre>";
+                                                                    // print_r($datosCliente);
+                                                                    // die;
+ 
+                                                                    if ($datosCliente == false) 
                                                                     {
                                                                         echo "No se registró un cliente.";
-                                                                    }
-                                                                    else
+                                                                    } 
+                                                                    else 
                                                                     {
-                                                                        echo "<span class='mb-2'>Nombre: " . ucwords(strtolower($datosCliente['nombre'])) . " " . ucwords(strtolower($datosCliente['paterno'])) . " " . ucwords(strtolower($datosCliente['materno'])) . "</span>";
-                                                                        echo "<br>";
-                                                                        echo "<span class='mb-2'><i class='fas fa-phone me-2'></i> <a class='text-decoration-none text-white text-underlined' href='tel: ". $datosCliente['telefono'] ."'><u>". $datosCliente['telefono'] ."</u></a></span>";
-                                                                        echo "<br>";
-                                                                        echo "<span class='mb-2'><i class='far fa-envelope me-2'></i> " . $datosPedido['idCliente']  . "</span>";
-                                                                    }
+                                                                    
+                                                                        $nombreCliente = ucwords(strtolower($datosCliente['nombre'] . ' ' . $datosCliente['paterno'] . ' ' . $datosCliente['materno']));
+                                                                        $telefonoCliente = $datosCliente['telefono'];
+                                                                        $emailCliente = $datosPedido['idCliente'];
+                                                                    
+                                                                        ?>
+                                                                        <span class="mb-2">Nombre: <?php echo $nombreCliente; ?></span><br>
+                                                                        <span class="mb-2">
+                                                                            <i class="fas fa-phone me-2"></i> 
+                                                                            <a class="text-decoration-none text-white text-underlined" href="tel:<?php echo $telefonoCliente; ?>">
+                                                                                <u>
+                                                                                    <?php echo $telefonoCliente; ?>
+                                                                                </u>
+                                                                            </a>
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="mb-2"><i class="far fa-envelope me-2"></i> <?php echo $emailCliente; ?></span>
+                                                                        <?php
+                                                                    } 
+                                                                    
                                                                 ?>
                                                             </div>
                                                         </div>
@@ -499,14 +517,15 @@
                                         <div class="card-body">
                                             <?php
 
-                                              // echo "<pre>";
-                                              // print_r($datosPedido);
+                                            //   echo "<pre>";
+                                            //   print_r($datosPedido);
+                                            //   die;
 
                                               //echo "<br><br>Direccion Pedido Detalle: <br><br>";
                                               $direccionPedido = false;
                                               if ($datosPedido['idTipoPedido'] != "PDV")
                                               {
-                                                  $direccionPedido = getDireccionPedidoDetalle($conn, $datosPedido['idTipoEnvio'], $datosPedido['idDireccionEnvio'], $datosPedido['idCliente'], $datosPedido['idTienda']);
+                                                  $direccionPedido = getDireccionPedidoDetalle($conn, $datosPedido['idTipoEnvio'], $datosPedido['direccionEnvio'], $datosPedido['idCliente'], $datosPedido['idTienda']);
                                                   // echo "<pre>";
                                                   // var_dump($direccionPedido);
                                                   // die;
@@ -682,8 +701,9 @@
                                                     </div>
 
                                                     <div class="col resText text-danger">
-                                                        - $ <?php echo number_format($datosPedido['descuentoTienda'], 2); ?>
+                                                        - $ <?php echo isset($datosPedido['descuentoTienda']) ? number_format($datosPedido['descuentoTienda'], 2) : '0.00'; ?>
                                                     </div>
+
 
                                                 </div>
                                             </div>

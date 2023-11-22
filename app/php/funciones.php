@@ -27,6 +27,301 @@
         }
     }    
 
+    function getReputacionTienda($conn, $tienda)
+    {
+        $idTienda = $tienda['idTienda'];
+        // Verificar la conexión
+        if (!$conn)
+        {
+            return false;
+        }
+
+        // Preparar el query
+        $sql = "SELECT
+                    AVG(reputacionTienda.calificacion) AS calificacion
+                FROM
+                    reputacionTienda
+                INNER JOIN pedidos ON reputacionTienda.idPedido = pedidos.idPedido
+                WHERE
+                    pedidos.isActive = 1 
+                AND    
+                    pedidos.idTienda = '$idTienda';";
+
+        // Ejecutar el query
+        $result = mysqli_query($conn, $sql);
+
+        // Verificar si se obtuvo algún resultado
+        if (mysqli_num_rows($result) == 0)
+        {
+            return false;
+        }
+
+        // Obtener el resultado como un array asociativo
+        $row = mysqli_fetch_assoc($result);
+
+        // Cerrar la conexión a la base de datos
+        // mysqli_close($conn);
+
+        // Verificar si se obtuvo una calificación nula
+        if (is_null($row['calificacion']))
+        {
+            return false;
+        }
+
+        // Devolver el array con la información
+        return $row;
+    }
+
+    function getMediosContactoVendedor($conn, $idTienda)
+    {
+        $sql = "SELECT
+                    contactoTiendas.*,
+                    CAT_mediosContacto.*
+                FROM
+                    contactoTiendas
+                INNER JOIN
+                    CAT_mediosContacto ON contactoTiendas.idMediosContacto = CAT_mediosContacto.idMediosContacto
+                WHERE
+                    contactoTiendas.idTienda = '$idTienda' AND contactoTiendas.isActive = 1
+                ORDER BY
+                    CAT_mediosContacto.alias
+                DESC";
+
+
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0)
+        {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result))
+            {
+
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getMetodosDePagoTienda($conn, $idTienda)
+    {
+        $query = "SELECT
+                    metodosDePagoTienda.*,
+                    CAT_metodoDePago.nombre,
+                    CAT_metodoDePago.icono,
+                    CAT_metodoDePago.hasOnlinePayment,
+                    CAT_metodoDePago.hasDeliveryPayment
+                FROM
+                    metodosDePagoTienda
+                INNER JOIN
+                    CAT_metodoDePago
+                ON
+                    metodosDePagoTienda.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
+                WHERE
+                    metodosDePagoTienda.idTienda = '$idTienda'
+                ORDER BY
+                    CAT_metodoDePago.nombre ASC";
+
+        $result = $conn->query($query);
+        $data = array();
+        if ($result->num_rows > 0)
+        {
+            while ($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function contarCarrito($idTienda)
+    {
+        $conteoProductos = 0;
+        $requiereEnvio   = false;
+
+        if (isset($_SESSION[$idTienda]))
+        {
+            foreach ($_SESSION[$idTienda] as $index => $value)
+            {
+                if ($_SESSION[$idTienda][$index]['unidadVenta'] == "Kilogramos")
+                {
+                    //echo "Kilos";
+                    $conteoProductos += 1;
+                }
+                else
+                {
+                    $conteoProductos += $_SESSION[$idTienda][$index]['stock'];
+                }
+                if (($_SESSION[$idTienda][$index]['requiereEnvio']+0) == 1)
+                {
+                    //echo "Suma<br>";
+                    $requiereEnvio = true;
+                }
+            }
+        }
+        return $conteoProductos;
+    }
+    
+    function getComentariosTienda($conn, $idTienda)
+    {
+        $sql = "SELECT reputacionTienda.*, usuarios.*, pedidos.idPedido
+                FROM reputacionTienda
+                INNER JOIN usuarios ON reputacionTienda.idCliente = usuarios.email
+                INNER JOIN pedidos ON reputacionTienda.idPedido = pedidos.idPedido
+                WHERE reputacionTienda.idTienda = '$idTienda' AND reputacionTienda.comentario IS NOT NULL
+                AND pedidos.isActive = 1
+                ORDER BY RAND()
+                LIMIT 5";
+
+
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result)
+        {
+            // Si hay un error en la ejecución de la consulta, se muestra un mensaje y se detiene la ejecución del script
+            die("Error al ejecutar la consulta: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            $comentarios = array();
+            while ($row = mysqli_fetch_assoc($result))
+            {
+            $comentarios[] = $row;
+            }
+            return $comentarios;
+            // echo "ok";
+        }
+        else
+        {
+            return false;
+            // echo "error";
+        }
+    }
+    
+    function validarPagoActivo($conn, $idTienda)
+    {
+        $query = "SELECT *
+                FROM payments
+                WHERE idTienda = ?
+                ORDER BY fechaInicioPlan DESC
+                LIMIT 1";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $idTienda);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 0)
+        {
+            // No hay pagos para esta tienda
+            return false;
+        }
+
+        $row = $result->fetch_assoc();
+
+        $fechaInicioUltimoPago = new DateTime($row['fechaInicioPlan']);
+        $fechaInicioUltimoPago->setTime(0, 0, 0);
+
+        $fechaFinUltimoPago = new DateTime($row['fechaFinPlan']);
+        $fechaFinUltimoPago->setTime(0, 0, 0);
+
+        $fechaActual = new DateTime();
+        $fechaActual->setTime(0, 0, 0);
+
+        $existePagoActivo = false;
+        if ($fechaActual >= $fechaInicioUltimoPago && $fechaActual <= $fechaFinUltimoPago)
+        {
+            $existePagoActivo = true;
+        }
+
+        $diasTranscurridos = $fechaInicioUltimoPago->diff($fechaActual)->format('%a');
+
+        $diasRestantes = 0;
+        if ($fechaFinUltimoPago > $fechaActual)
+        {
+            $diasRestantes = $fechaActual->diff($fechaFinUltimoPago)->format('%a');
+        }
+
+        $diasExpirado = 0;
+        if ($fechaActual > $fechaFinUltimoPago)
+        {
+            $diasExpirado = $fechaFinUltimoPago->diff($fechaActual)->format('%a');
+        }
+
+        return array(
+            'fechaInicioUltimoPago' => $fechaInicioUltimoPago,
+            'fechaFinUltimoPago' => $fechaFinUltimoPago,
+            'existePagoActivo' => $existePagoActivo,
+            'diasTranscurridos' => $diasTranscurridos,
+            'diasRestantes' => $diasRestantes,
+            'diasExpirado' => $diasExpirado
+        );
+    }
+
+
+    function getProductosTiendaPerfilPublico($conn, $idTienda, $limiteRegistros)
+    {
+        $sql = "
+            SELECT
+                productos.*,
+                imagenProducto.url,
+                categoriasTienda.nombre as nombreCategoria
+            FROM
+                productos
+            LEFT JOIN
+                imagenProducto ON productos.idProducto = imagenProducto.idProducto AND productos.idTienda = imagenProducto.idTienda AND imagenProducto.isPrincipal = 1
+            LEFT JOIN
+                categoriasTienda ON productos.idCategoria = categoriasTienda.idCategoria
+            WHERE
+                productos.idTienda = '$idTienda' AND productos.isActive = 1 AND productos.isActiveOnlineStore = 1
+            ORDER BY
+            categoriasTienda.nombre ASC, productos.nombre ASC;";
+
+        if ($limiteRegistros>1)
+        {
+            $sql .= " LIMIT $limiteRegistros;";
+        }
+
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0)
+        {
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    function getCategoriasConProductos($conn, $managedStore)
+    {   
+        $sql = "SELECT c.idCategoria, IFNULL(c.nombre, 'Sin categoria') AS nombre
+                FROM categoriasTienda c
+                LEFT JOIN (
+                    SELECT DISTINCT idCategoria
+                    FROM productos
+                    WHERE idTienda = ? AND isActive = 1
+                ) p ON c.idCategoria = p.idCategoria
+                WHERE c.idTienda = ? AND (p.idCategoria IS NOT NULL OR c.idCategoria IS NULL)
+                ORDER BY nombre ASC";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $managedStore, $managedStore);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        return $data;
+    }
+
     function getTiendasOwner($conn, $idUsuario)
     {
         $sql  = "SELECT * FROM tiendas WHERE administradoPor = ? AND isActive = 1";
