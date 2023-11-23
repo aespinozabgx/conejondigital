@@ -1,3 +1,50 @@
+<!-- Modal datos de pago -->
+<div class="modal fade" id="modalConfirmarPagoCliente" tabindex="-1" aria-labelledby="modalConfirmarPagoClienteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="modalConfirmarPagoClienteLabel"> Confirma el pago </h5>
+        <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+
+        <form class="" action="../app/procesa.php" method="post" enctype="multipart/form-data">
+            <div class="modal-body">
+
+                <p class="text-dark fw-400 fs-6">Carga tu comprobante de pago/transferencia</p>
+                <?php
+                    if (!isset($datosPedido['comprobantePago']))
+                    {
+                        ?>
+                        <p class="fw-200 small">(Sólo archivos jpg, png, jpeg o pdf.)</p>
+                        <input type="file" class="form-control border-2" name="fileToUpload" required>                      
+                        <?php
+                    }
+
+                    if (isset($datosPedido))
+                    {
+                        ?>
+                        <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>">
+                        <input type="hidden" name="idPedido"   value="<?php echo $idPedido; ?>">
+                        <?php
+                    }
+                ?> 
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-danger rounded-pill" data-bs-toggle="modal" data-bs-target="#modalDatosPago">
+                    <i class="me-1" data-feather='credit-card'></i> Pagar ahora
+                </button>
+                <button type="submit" class="btn btn-success" name="btnCargaComprobante">
+                    <i class="me-1" data-feather='upload-cloud'></i> Subir
+                </button>
+            </div>
+        </form>
+
+    </div>
+  </div>
+</div>
+<!-- Modal datos de pago Fin -->
 
 <!-- Modal Confirma envío vendedor -->
 <div class="modal fade" id="modalConfirmaEnvio" tabindex="-1" aria-labelledby="modalConfirmaEnvioLabel" aria-hidden="true">

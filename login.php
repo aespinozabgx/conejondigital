@@ -31,7 +31,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Inicia sesión</title>
-        <link href="app/css/styles.css?id=28" rel="stylesheet" />
+        <link href="app/css/styles.css" href="app/css/styles.css?id=28" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -44,6 +44,9 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bangers" rel="stylesheet">
         <style>
             
             .bgHueso
@@ -55,7 +58,7 @@
 
         </style>
     </head>
-    <body class="" style="background-image: url('rabbit.png'); background-size: 100px 100px; background-repeat: repeat;">
+    <body class="bg-dark">
         <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
                 <main>
@@ -63,34 +66,38 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <!-- Basic login form-->
-                                <div class="card bg-blue shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header justify-content-center text-center p-5">                                        
-                                        <div class="text-white f-poppins display-5 fw-500">
+                                <div class="card bg-pink shadow-lg border-3 rounded-lg mt-5">
+                                    <div class="card-header justify-content-center text-center p-4">
+                                        <div class="text-white sombra2-titulos-vendy f-bangers display-4 fw-00">
                                             Conejón Digital                                            
-                                        </div>
+                                        </div>                                        
                                     </div>
-                                    <div class="card-body p-4">
+                                    <div class="card-body px-4 pt-2">
                                         <!-- Login form-->
-                                        <form action="app/procesa.php" method="POST">
-                                            <div class="display-6 mb-2 text-white">Inicia sesión</div>
+                                        <div class="fs-2 fw-300 text-white mb-2">Inicia sesión</div>
+
+                                        <form action="app/procesa.php" method="POST">                                            
+                                        
                                             <div class="form-floating mb-3">
-                                                <input type="email" class="form-control fs-5" id="floatingInput" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
-                                                <label for="floatingInput">Correo Electrónico</label>
+                                                <input type="email" class="form-control fs-5 fw-400 text-center rounded-1" id="floatingInput" name="form_email" value="<?php echo isset($_GET['correo']) ? $_GET['correo'] : ''; ?>" type="email" placeholder="correo@dominio.com" required />
+                                                <label for="floatingInput" class="fw-300">Correo Electrónico</label>
                                             </div>
-                                            <div class="form-floating">
-                                                <input type="password" class="form-control fs-5" id="floatingPassword" name="form_password" type="password" placeholder="Contraseña" required autocomplete >
-                                                <label for="floatingPassword">Contraseña</label>
+                                        
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control fs-5 fw-400 text-center rounded-1" id="floatingPassword" name="form_password" type="password" placeholder="Contraseña" required autocomplete >
+                                                <label for="floatingPassword" class="fw-300">Contraseña</label>
                                             </div>  
                                             
                                             <input type="hidden" placeholder="Redirección" name="redirect" value="<?php echo $redirect; ?>">
 
                                             <!-- Form Group (login box)-->
-                                            <div class="mt-2 mb-0">
+                                            <div class="mt-2 mb-3" >
                                                 <!-- <a class="" href="auth-password-basic.html">Olvidé mi contraseña</a> -->
-                                                <button class="btn btn-outline-light btn-lg rounded-3 w-100 fw-600 fs-4 f-poppins" type="submit" name="btnLogin28">
+                                                <button class="btn btn-light rounded-pill text-center w-100 fw-400 fs-4" type="submit" name="btnLogin28">
                                                     Entrar
                                                 </button>
                                             </div>
+
                                         </form>
                                         <?php
                                             if (isset($urlMsg)) 
@@ -114,9 +121,10 @@
                                             }
                                         ?>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <div class="p-3 f-poppins fw-300">
-                                            <a href="registro.php" class="text-white">¿No tienes cuenta? Registrate GRATIS</a>
+                                    <div class="card-footer text-center" style="background-image: url('rabbit.png'); background-size: 200px 200px; background-repeat: repeat;">
+                                        <div class="p-3 f-poppins">
+                                            <!-- <a href="#" class="text-dark text-decoration-none">Olvidé mi cuenta</a> -->
+                                            <a href="registro.php" class="text-dark fs-6 fw-400 text-decoration-none">Registrarme</a>
                                         </div>
                                     </div>
 

@@ -204,7 +204,7 @@
                                                         <?php
                                                     }
                                                 }
-                                                else
+                                                elseif(1==2)
                                                 {
                                                     ?>
                                                     <a class="btn rounded-pill btn-outline-white" target="_blank" href="https://conejondigital.com/<?php echo $idTienda; ?>">
