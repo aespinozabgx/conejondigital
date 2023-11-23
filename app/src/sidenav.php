@@ -3,7 +3,8 @@
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <div class="sidenav-menu-heading">Menú</div>
-                <a class="nav-link" href="index.php">
+                
+                <a class="nav-link collapsed" href="index.php">
                     <div class="nav-link-icon"><i data-feather="home"></i></div>
                     Inicio
                 </a>                            
