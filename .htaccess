@@ -9,4 +9,6 @@ RewriteCond %{REQUEST_URI} !=/assets
 RewriteCond %{REQUEST_URI} !=/assets/
 RewriteCond %{REQUEST_URI} !=/css
 RewriteCond %{REQUEST_URI} !=/css/ 
+RewriteCond %{REQUEST_URI} !=/registroPartners
+RewriteCond %{REQUEST_URI} !=/registroPartners/ 
 RewriteRule ^([^/.]+)/?$ /perfil.php?tienda=$1 [NE,L,QSA]

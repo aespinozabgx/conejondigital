@@ -1542,28 +1542,36 @@
                                 
                                 
                                 $tiendasOwner = getTiendasOwner($conn, $row['email']);
-                                //echo $tiendasOwner[0]['idTienda'];
+                                
+                                // echo $tiendasOwner[0]['idTienda'];
                                 // echo $row['email'];
                                 // echo "<pre>";
                                 // var_dump($tiendasOwner);
-                                
+                                // die;
+
                                 if ($tiendasOwner !== false)
                                 {
-
+                                    $contadorTiendas = 0;
+                                    $contadorTiendas = count($tiendasOwner);
                                     $sucursales = getSucursalesTienda($conn, $tiendasOwner[0]['idTienda']);
+                                    
                                     //Actualizo el id de sesión actual con uno generado más reciente
                                     session_regenerate_id(true);
 
-
                                     // $_SESSION['username']   = $row['username']; // Comentada para validar que se consulte la tabla tiendas desde getTiendasOwner();
 
-                                    if (count($tiendasOwner)>1)
-                                    {
+                                    // EDIT 
+                                    // Crear funcion para elegir tienda                                    
+                                    //if (count($tiendasOwner)>1)
+                                    //{
                                         // Elegir tienda
                                         //echo "elegir tienda";
-                                    }
+                                    //}
 
-                                    if (count($tiendasOwner) == 1)
+                                    //if (count($tiendasOwner) == 1)
+                                     
+
+                                    if ($contadorTiendas > 0)
                                     {
                                         // Guardar tienda en sesión
                                         $_SESSION['username']     = $tiendasOwner[0]['idTienda'];
@@ -1577,7 +1585,7 @@
                                             {
                                                 if ($branch['isPrincipal'] == 1)
                                                 {
-                                                    $_SESSION['idSucursalVenta'] = $branch['idSucursal'];
+                                                    $_SESSION['idSucursalVenta']     = $branch['idSucursal'];
                                                     $_SESSION['nombreSucursalVenta'] = $branch['nombreSucursal'];
                                                 }
                                             }
@@ -1600,7 +1608,7 @@
                                         }
                                         else
                                         {
-                                            header('Location: index.php?msg=bienvenido');
+                                            header('Location: index.php?msg=bienvenidoNPL');
                                             exit;
                                         }
                                     }
@@ -1611,12 +1619,25 @@
                                         exit();
                                     }
                                 }
-                                else
+
+                                // Si No hay tiendas y es partner
+                                if (($_SESSION['isPartner'] == 1) && $tiendasOwner === false)
                                 {
-                                    // var_dump($preventLogin);
                                     header('Location: ../partner/setup_tienda.php');
                                     exit();
                                 }
+                                else
+                                {
+                                    header('Location: index.php?msg=bienvenidoNT');
+                                    exit;
+                                }
+                                
+                                // else
+                                // {
+                                //     // var_dump($preventLogin);
+                                //     header('Location: ../partner/setup_tienda.php');
+                                //     exit();
+                                // }
                                 
                             }
                             else 

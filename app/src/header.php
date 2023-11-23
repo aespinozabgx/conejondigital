@@ -103,7 +103,7 @@
                             <div class="dropdown-item-icon">
                                 <i data-feather="shopping-bag"></i>
                             </div>
-                            <span class="fs-6 fw-400 text-dark">Mi tienda <?php echo $_SESSION['managedStore']; ?></span>
+                            <span class="fs-6 fw-500 text-dark">Mi tienda @<?php echo $_SESSION['managedStore']; ?></span>
                         </a>
                         <?php
                     }

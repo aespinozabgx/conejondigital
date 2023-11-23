@@ -1,4 +1,112 @@
 
+<!-- Modal Confirma envío vendedor -->
+<div class="modal fade" id="modalConfirmaEnvio" tabindex="-1" aria-labelledby="modalConfirmaEnvioLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConfirmaEnvioLabel">Confirma el envío</h5>
+        <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+
+      <form action="procesa.php" method="post">
+
+
+          <div class="modal-body">
+
+
+            <div class="row mb-2 p-2">
+                <label for="paqueteria" class="fw-400 text-primary">Paquetería</label>
+                <input type="text" id="paqueteria" class="form-control" name="nombrePaqueteria" placeholder="(Opcional)">
+            </div>
+
+            <div class="row mb-2 p-2">
+                <label for="guia" class="fw-400 text-primary">Número de Guía</label>
+                <input type="text" id="guia" class="form-control" name="guiaEnvio" placeholder="(Opcional)">
+            </div>
+
+            <div class="row mb-2 p-2">
+                <label for="envio" class="fw-400 text-primary">Fecha Envío*</label>
+                <input type="date" id="envio" class="form-control" name="fechaEnvio" required>
+            </div>
+
+            <?php
+            if (isset($datosPedido))
+            {
+            ?>
+            <input type="hidden" name="idPedido"  value="<?php echo $idPedido; ?>" required>
+            <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>" required>
+            <?php
+            }
+            ?>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary" name="btnNotificarEnvio">Notificar Ahora</button>
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- Modal Confirma envío vendedor Fin -->
+
+<!-- modal nuevo envio Inicio-->
+<div class="modal fade" id="modalNuevoEnvio" tabindex="-1" aria-labelledby="modalNuevoEnvioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNuevoEnvioLabel">Nuevo envío</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+            <form class="" id="formNuevoEnvio" action="procesa.php" method="post">
+                <div class="modal-body">
+
+                    <!-- Form Group (email address)-->
+                    <div class="mb-3">
+                        <label class="small mb-1 text-primary fw-500" for="inputNombreEnvio">Nombre</label>
+                        <input class="form-control" type="text" id="inputNombreEnvio" name="nombreEnvio" placeholder="DHL Exprés, Envío inmediato, etc ..." value="" required />
+                    </div>
+
+                    <label class="small mb-1 text-primary fw-500" for="inputNombreEnvio">Precio</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">$</span>
+                        <input type="number" class="form-control" pattern="\d*" placeholder="0" name="precioEnvio" aria-label="Precio envio" aria-describedby="basic-addon1" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1 text-primary fw-500" for="inputNombreEnvio">Tipo de envío</label>
+                        <input class="form-control" type="text" value="A domicilio" readonly />
+                    </div>
+
+                    <!-- Form Group (Group Selection Checkboxes)-->
+                    <div class="mb-3">
+                        <label class="small mb-1 text-primary fw-500">Este envío acepta el pago:</label>
+                        <div class="form-check" style="cursor: pointer;">
+                            <input class="form-check-input" style="cursor: pointer;" id="onlineP" name="hasOnlinePayment" type="checkbox" value="1" />
+                            <label class="form-check-label" style="cursor: pointer;" for="onlineP">En línea</label>
+                        </div>
+                        <div class="form-check" style="cursor: pointer;">
+                            <input class="form-check-input" style="cursor: pointer;" id="deliveryP" name="hasDeliveryPayment" type="checkbox" value="1" />
+                            <label class="form-check-label" style="cursor: pointer;" for="deliveryP">En la entrega</label>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success" name="btnGuardarEnvio">Guardar envío</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- modal nuevo envio Fin -->
+
 <!-- Inicio Modal Calcular cambio efectivo -->
 <div class="modal fade" id="modalCalcularCambioEfectivo" tabindex="-1" aria-labelledby="modalCalcularCambioEfectivo" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">

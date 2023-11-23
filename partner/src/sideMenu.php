@@ -68,7 +68,7 @@
                             <?php
                         }
                         
-                        if (isset($hasActivePayment) && ($hasActivePayment['existePagoActivo'] === true))
+                        if (isset($hasActivePayment) && ($hasActivePayment['existePagoActivo'] === true) && 1==3)
                         {
                             ?><a class="nav-link" href="reportes.php">Reportes </a><?php
                         }

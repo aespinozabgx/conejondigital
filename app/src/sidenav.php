@@ -59,8 +59,21 @@
                 </a>
                 <?php
                 }
-                ?>
+                
 
+                if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == "1") 
+                {
+                    ?>
+                    <div class="sidenav-menu-heading">Tienda</div>
+                    <a class="nav-link collapsed text-orange" href="../partner/index.php">
+                        <div class="nav-link-icon text-orange">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <?php echo ucwords(strtolower(htmlentities($_SESSION['nombreTienda']))); ?>
+                    </a>
+                    <?php
+                }
+                ?>
 
             </div>
         </div>

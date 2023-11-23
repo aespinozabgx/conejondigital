@@ -9,9 +9,11 @@
         $idTienda = $_SESSION['managedStore'];
     }
 
+    $hasActivePayment = validarPagoActivo($conn, $idTienda);
+
     $enviosTienda    = getEnviosTiendaConfig($conn, $idTienda);
     $hasActivePickup = validarPickupTienda($conn, $idTienda);
-    $hasActivePayment = validarPagoActivo($conn, $idTienda);
+    
 ?>
 <!DOCTYPE html>
 <html lang="es">

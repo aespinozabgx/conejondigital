@@ -9,11 +9,12 @@
         $idTienda = $_SESSION['managedStore'];
     }
 
-    $enviosTienda  = getEnviosTiendaConfig($conn, $idTienda);
-    $hasActivePickup = validarPickupTienda($conn, $idTienda);
-    $hasActivePayment  = validarPagoActivo($conn, $idTienda);
-    $mediosContacto = getMediosContactoVendedor($conn, $idTienda);
-    $listMediosContactoDisponibles = getListadoMediosContactoDisponible($conn, $idTienda);
+    // $enviosTienda  = getEnviosTiendaConfig($conn, $idTienda);
+    // $hasActivePickup = validarPickupTienda($conn, $idTienda);
+    // $hasActivePayment  = validarPagoActivo($conn, $idTienda);
+    // $mediosContacto = getMediosContactoVendedor($conn, $idTienda);
+    // $listMediosContactoDisponibles = getListadoMediosContactoDisponible($conn, $idTienda);
+
     // echo "<pre>";
     // print_r($mediosContacto);
     // die;
