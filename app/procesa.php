@@ -898,16 +898,31 @@
         {
             $sql = "INSERT INTO usuarios (nombre, email, fechaRegistro, token) VALUES ('$nombreCliente', '$idCliente', '$fechaRegistro', '$tokenActivacion')";
         }
-        
+
+        // echo "$sql";
+        // die;
+
         // Ejecutar la consulta
-        if ($conn->query($sql) === TRUE) 
+        $stmt = $conn->prepare($sql);
+        if ($stmt !== false) 
         {
-            $flagEnviarEmail = true;
+            if ($stmt->execute() === TRUE) 
+            {
+                $flagEnviarEmail = true;
+            } else {
+                $flagEnviarEmail = false;
+                echo "Error: " . $stmt->error;
+            }
+            $stmt->close();
         } 
         else 
         {
             $flagEnviarEmail = false;
+            echo "Error en la preparación de la consulta: " . $conn->error;
         }
+
+        //var_dump($flagEnviarEmail);
+        //die;
 
         // Enviar email
         $tituloCorreo = "✨ Activa tu cuenta 🐇"; 
@@ -1317,18 +1332,29 @@
                     </table>
                 </body>
                 </html>';
-            
-        if (enviaEmail($emailActivacion, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo))
+        
+        //$res = enviaEmail($emailActivacion, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo);
+        //die;
+
+        if ($flagEnviarEmail)
         {
-            header("Location: ../activa-codigo.php?correo=" . $emailActivacion . "&msg=solicitaCodigoActivacion");
-            exit();
+            if (enviaEmail($emailActivacion, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo))
+            {
+                header("Location: ../activa-codigo.php?correo=" . $emailActivacion . "&msg=solicitaCodigoActivacion");
+                exit();
+            }
+            else
+            {
+                header("Location: ../registro.php?msg=errorRegistroVIP");
+                exit();
+            }
         }
         else
         {
-            header("Location: ../registro.php?idMascota=". $idMascota ."&msg=errorRegistroVIP");
+            header("Location: ../registro.php?msg=errorRegistroVIP");
             exit();
-        }     
-        
+        }
+
     }
 
     if (isset($_POST['btnActivarCuenta'])) 

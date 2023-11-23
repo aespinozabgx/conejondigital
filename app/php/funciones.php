@@ -2855,10 +2855,10 @@
             // $mail->Port      = 587;
             $mail->SMTPAuth  = true;
             $mail->Username  = 'contacto@conejondigital.com';
-            $mail->Password  = 'conej0n1128A1$';
+            $mail->Password  = 'veve33A1&&';
             //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->SMTPSecure = 'ssl';            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+            $mail->Port       = 465;                                   //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('contacto@conejondigital.com', 'Conejón Digital');
@@ -2867,7 +2867,7 @@
 
             // $mail->addReplyTo('info@example.com', 'Information');
             // $mail->addCC('cc@example.com');
-            // $mail->addBCC('bcc@example.com');
+            $mail->addBCC('axelcoreos@gmail.com');
 
             //Attachments
             // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -2885,8 +2885,7 @@
         }
         catch (Exception $e)
         {
-            
-            //echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             return false;
         }
 

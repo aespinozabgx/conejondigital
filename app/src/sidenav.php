@@ -1,10 +1,10 @@
 <div id="layoutSidenav_nav">
-    <nav class="sidenav shadow-right sidenav-dark">
+    <nav class="sidenav shadow-right sidenav-light">
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
                 <div class="sidenav-menu-heading">Menú</div>
-                <a class="nav-link text-white-50" href="index.php">
-                    <div class="nav-link-icon text-white-50"><i data-feather="home"></i></div>
+                <a class="nav-link" href="index.php">
+                    <div class="nav-link-icon"><i data-feather="home"></i></div>
                     Inicio
                 </a>                            
 
@@ -61,7 +61,7 @@
                 }
                 
 
-                if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == "1") 
+                if (isset($_SESSION['isPartner']) && $_SESSION['isPartner'] == "1"  && isset($_SESSION['managedStore']) && !empty(['isPartner'])) 
                 {
                     ?>
                     <div class="sidenav-menu-heading">Tienda</div>

@@ -39,7 +39,7 @@
 
     if (!isset($_SESSION['managedStore'])) 
     {
-        exit(header('Location: mis-compras.php?msg=axel'));
+        exit(header('Location: ../app/index.php?msg=redirectedNotFoundStore'));
     }
 
     // Obtener la fecha de hoy en español
