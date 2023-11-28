@@ -55,6 +55,34 @@
         }
     }
 
+    function getDatosPedidoMamaConeja($conn, $idPedido)
+    {
+        $sql = "SELECT * FROM tabla_gafetes WHERE idPedido = '$idPedido'";
+        
+        // Ejecutar el query
+        $result = mysqli_query($conn, $sql);
+    
+        // Verificar si se obtuvo algún resultado
+        if (!$result || mysqli_num_rows($result) == 0)
+        {
+            // No se obtuvieron resultados o hubo un error en la consulta
+            return false;
+        }
+    
+        // Obtener todos los resultados como un array asociativo
+        $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    
+        // Cerrar el resultado
+        mysqli_free_result($result);
+    
+        // Cerrar la conexión a la base de datos
+        // mysqli_close($conn);
+    
+        // Devolver el array con la información
+        return $rows;
+    }
+    
+
     function getTotalPedidosHoy($conn, $idTienda)
     {
         $dia = date("d");

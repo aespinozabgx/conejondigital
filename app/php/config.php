@@ -8,7 +8,7 @@
 
     //  1 Localhost
     //  0 Web
-    $isConexionLocal = 1;
+    $isConexionLocal = 0;
     $isServidorPruebas = 0;
     $preventLogin = false;
 
@@ -17,7 +17,7 @@
     if ($isConexionLocal)
     {
         $dominio = "http://localhost/apps/conejondigital/";
-        $dominio = "http://192.168.0.4/apps/conejondigital";
+        $dominio = "http://192.168.0.4/apps/conejondigital/";
         $urlActivacion = $dominio;
     }
     else
@@ -25,6 +25,5 @@
         $dominio = "https://conejondigital.com/";        
         $urlActivacion = $dominio;
     } 
-    
-    $precioPlaquita = 250;
+     
 ?>

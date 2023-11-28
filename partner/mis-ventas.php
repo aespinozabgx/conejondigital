@@ -144,7 +144,24 @@
                                                   echo "<td class='text-center'> $ " . number_format($row['total'], 2) . "</td>";
                                                   ?>
                                                   <td>
-                                                      <?php echo ($row["estatusPedido"] == "Entregado") ? ' <span class="btn btn-success btn-sm rounded-pill">Entregado <i class="far fa-check-circle ms-1"></i></span> ' : $row["estatusPedido"]; ?>
+                                                    <?php 
+
+                                                        switch ($row["estatusPedido"]) 
+                                                        {
+                                                            case 'Entregado':
+                                                                echo '<span class="btn btn-success btn-sm rounded-pill">Entregado <i class="far fa-check-circle ms-1"></i></span>';
+                                                                break;
+
+                                                            case 'Pago Confirmado':
+                                                                echo '<span class="btn btn-blue btn-sm">Pago confirmado <i class="far fa-check-circle ms-1"></i></span>';
+                                                                break;
+                                                            
+                                                            default:
+                                                                echo $row["estatusPedido"];
+                                                                break;
+                                                        }
+                                                        
+                                                        ?>
                                                   </td>
                                                   <?php
 

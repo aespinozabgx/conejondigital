@@ -32,8 +32,17 @@
     $datosPedido = getDatosPedido($conn, $idPedido, $idTienda);      
     $detallesProducto = getProductosComprados($conn, $datosPedido['idPedido'], $datosPedido['idTienda']);
 
+    // Valido si es mamá coneja sólo para sacar los pedidos especiales
+    // LANYARD
+    if ($_SESSION['managedStore'] == "mamaconeja")
+    {
+        $productosMamaConeja = getDatosPedidoMamaConeja($conn, $idPedido);
+    }
+
+
     // echo "<pre>";
-    // print_r($detallesProducto);
+    // print_r($productosMamaConeja);
+    
     // die;
 ?>
 <!DOCTYPE html>
@@ -358,7 +367,7 @@
                                                           else
                                                           {
                                                               ?>
-                                                              <!-- <div class="mb-2">Método de pago: <span class="border-2 border-bottom border-primary"><?php echo $datosPedido['nombreMetodoPago']; ?></span></div> -->
+                                                              <!-- <div class="mb-2">Método de pago: <span class="border-2 border-bottom border-primary"><?php //echo $datosPedido['nombreMetodoPago']; ?></span></div> -->
 
                                                               <span class="badge bg-green-soft text-dark">
                                                                   <i class="far fa-check-circle"></i>
@@ -369,17 +378,19 @@
 
                                                           if (!empty($datosPedido['comprobantePago']))
                                                           {
-                                                              ?>
-                                                              <div class="gallery-container d-flex " id="gallery-container">
-                                                                  <a
+                                                            ?>
+                                                                <div class="gallery-container d-flex " id="gallery-container">
+                                                                    <a
                                                                     data-lg-size="1400-1400" style="cursor: pointer;"
-                                                                    class="gallery-item text-decoration-none"
-                                                                    data-src="verifica/usr_docs/<?php echo $datosPedido['idTienda']; ?>/pedidos/<?php echo $datosPedido['idPedido']; ?>/<?php echo $datosPedido['comprobantePago']; ?>"
+                                                                    class="gallery-item text-decoration-none fs-6 p-3 fw-500"
+                                                                    data-src="<?php echo $dominio; ?>app/users/<?php echo $emailCliente; ?>/pedidos/<?php echo $datosPedido['idPedido']; ?>/<?php echo $datosPedido['comprobantePago']; ?>"
                                                                     data-sub-html="<h4>Comprobante de pago</h4>">
-                                                                        <i class="fas fa-receipt me-1"></i> Ver Comprobante
-                                                                  </a>
-                                                              </div>
-                                                              <?php
+                                                                        <img class="border border-2 rounded-2 img-fluid mb-2" style="height: 200px;" src="<?php echo $dominio; ?>app/users/<?php echo $emailCliente; ?>/pedidos/<?php echo $datosPedido['idPedido']; ?>/<?php echo $datosPedido['comprobantePago']; ?>" alt="">
+                                                                        <br>
+                                                                        <i class="fas fa-search me-1"></i>  Ver Comprobante
+                                                                    </a>
+                                                                </div>
+                                                            <?php
                                                           }
                                                         ?>
                                                     </div>
@@ -645,6 +656,18 @@
                                                         </table>
                                                     </div>
                                                     <?php
+                                                }
+
+                                                if (!empty($productosMamaConeja))
+                                                {
+                                                    // var_dump($productosMamaConeja);
+                                                    // echo $dominio;
+                                                    foreach ($productosMamaConeja as $indice => $productoMC)
+                                                    {
+                                                        ?>
+                                                        <img src="<?php echo $dominio; ?>app/users/<?php echo $emailCliente; ?>/pedidos/<?php echo $datosPedido['idPedido']; ?>/<?php echo $productoMC['nombre_archivo']; ?>" alt="">
+                                                        <?php
+                                                    }
                                                 }
                                             ?>
                                         </div>
