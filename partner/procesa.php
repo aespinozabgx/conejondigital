@@ -2052,6 +2052,128 @@
         }
 
     }
+    
+    if (isset($_POST['btnNotificarPagoPendiente']))
+    {
+        // echo "Notifica Envio<br><br>";
+        
+        // Captar datos        
+        $fechaEnvioNotificacion = date("Y-m-d H:i:s");
+        $idPedido      = $_POST['idPedido'];
+        $correoCliente = $_POST['idCliente'];
+        //$correoCliente = "aespinozabgx@gmail.com";
+        $idResponsable = $_SESSION['email'];
+        $mensaje       = $_POST['mensaje'];
+        
+        // Enviar correo electrónico
+        $emailRecipiente = $correoCliente;
+        $nombreRecipiente = $correoCliente;  // Puedes personalizar esto según tus necesidades
+        $tituloCorreo = "Pago pendiente | Conejón Digital";
+ 
+        $cuerpoMail = 
+        '<!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Conejón Digital</title>
+        </head>
+        <body style="text-align: center; background-color: #f4f4f4;">
+    
+            <div style="width: 80%; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    
+                <a style="padding: 10px;" target="_blank" href="https://conejondigital.com/partner/assets/mailmasivo/notifica_pago/notificapago.html">No puedo ver el correo completo</a>
+    
+                <div>
+                    <a href="https://conejondigital.com/app/detalle-compra.php?id='. $idPedido .'" target="_blank">
+                        <img src="https://conejondigital.com/partner/assets/mailmasivo/notifica_pago/NOTIFICACIONPAGO.jpg" alt="Imagen 1" style="max-width: 100%; height: auto; margin: 0 auto; display: block;">
+                    </a>
+                </div>
+                <br>
+                <div style="width: 500px; margin: 0 auto;">
+                    <h1>Pedido ' . $idPedido . '</h1>                
+                    <h2>
+                    <a href="https://conejondigital.com/app/detalle-compra.php?id='. $idPedido .'" target="_blank">
+                        Ir al detalle del pedido
+                    </a>
+                    </h2>
+                </div>
+    
+            </div>
+    
+        </body>
+        </html>';
+    
+
+        $cuerpoCorreo = $cuerpoMail;
+
+        // echo $emailRecipiente . "<br>";
+        // echo $nombreRecipiente . "<br>";
+        // echo $tituloCorreo . "<br>";
+        // echo $cuerpoCorreo . "<br>";
+
+        // die;
+
+        if (enviaEmail($emailRecipiente, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo)) 
+        {
+            // Si el correo se envió con éxito, registrar en la base de datos
+            $sql = "INSERT INTO notificaciones_pago (fechaEnvioNotificacion, idPedido, correoCliente, idResponsable, mensaje) 
+                    VALUES ('$fechaEnvioNotificacion', '$idPedido', '$correoCliente', '$idResponsable', '$mensaje')";
+
+            if ($conn->query($sql) === TRUE) 
+            {
+                // Éxito al registrar en la base de datos
+                header("Location: detalleVenta.php?id=$idPedido&msg=exitoNotificacionPago");
+                exit();
+            } 
+            else 
+            {
+                // Error al registrar en la base de datos
+                echo "Error al registrar en la base de datos: " . $conn->error;
+            }
+        } 
+        else 
+        {
+            // Si el correo no se envió, redirigir a detalleVenta.php
+            header("Location: detalleVenta.php?id=$idPedido&msg=errorNotificacionPago");
+            exit();
+        }
+
+        // Validar datos
+
+        // Enviar email
+        // Validar envío y guardar registro de notificación (Hora de envío, idResponsable, idTienda)
+        // Notificar que no se envió
+        //
+         
+        
+
+        if (isset($_POST['guiaEnvio']) || isset($_POST['nombrePaqueteria']))
+        {
+            if (isset($_POST['guiaEnvio'], $_POST['nombrePaqueteria']))
+            {
+                $guiaEnvio        = $_POST['guiaEnvio'];
+                $nombrePaqueteria = $_POST['nombrePaqueteria'];
+            }
+        }
+
+        $guardaEnvio = guardarEnvio($conn, $guiaEnvio, $nombrePaqueteria, $fechaEnvio, $idPedido, $idCliente);
+
+        if ($guardaEnvio !== false)
+        {
+            $emailRecipiente  = $idCliente;
+            $nombreRecipiente = $idCliente;
+            $tituloCorreo     = "Pedido enviado";
+            $cuerpoCorreo     = plantillaPedidoEnviado($idPedido);
+            enviaEmail($emailRecipiente, $nombreRecipiente, $tituloCorreo, $cuerpoCorreo);
+            exit(header('Location: detalleVenta.php?id=' . $idPedido . "&msg=envioRegistrado"));
+        }
+        else
+        {
+            exit(header('Location: detalleVenta.php?id=' . $idPedido . "&msg=errorEnvio"));
+        }
+
+    }
 
     if (isset($_POST['btnNotificarEnvio']))
     {
@@ -2094,7 +2216,7 @@
 
     if (isset($_POST['btnConfirmarPago']))
     {
-        if (isset($_SESSION['managedStore'], $_POST['idVenta'], $_POST['fechaPago']))
+        if (isset($_SESSION['managedStore'], $_POST['idVenta'], $_POST['fechaPago'], $_POST['idCliente']))
         {
             //echo "Confirmar Pago";
 
@@ -2134,12 +2256,12 @@
 
             if ($registraComprobante !== false)
             {
-                exit(header('Location: ../app/detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=pagoConfirmado"));
+                exit(header('Location: detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=pagoConfirmado"));
                 // echo "pagoConfirmado";
             }
             else
             {
-                exit(header('Location: ../app/detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=errorPagoConfirmado"));
+                exit(header('Location: detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=errorPagoConfirmado"));
                 // echo "errorPagoConfirmado";
             }
 
@@ -2148,7 +2270,7 @@
         else
         {
 
-            exit(header('Location: ../app/detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=faltanDatos"));
+            exit(header('Location: detalleVenta.php?id=' . $_POST['idVenta'] . "&msg=faltanDatos"));
             // echo "faltanDatos";
         }
     }

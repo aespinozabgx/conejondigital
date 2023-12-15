@@ -26,7 +26,8 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
-        <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
         <link rel="<stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.1/datatables.min.css"/>
         <style type="text/css">
@@ -106,14 +107,17 @@
                                   <tbody>
                                       <?php
                                         $sql = "SELECT
-                                                    pedidos.*,
-                                                    CAT_estatusPedido.nombre AS estatusPedido
+                                                    *
                                                 FROM
                                                     pedidos
-                                                INNER JOIN CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
                                                 WHERE
-                                                    pedidos.idTienda = '$idTienda' AND pedidos.isActive = 1
-                                                ORDER BY pedidos.fechaPedido DESC";
+                                                    pedidos.idTienda = '$idTienda' 
+                                                AND 
+                                                pedidos.isActive = 1
+                                                ORDER BY 
+                                                    pedidos.idCliente ASC, 
+                                                    pedidos.idEstatusPedido DESC, 
+                                                    pedidos.fechaPedido DESC";
 
                                         $result = mysqli_query($conn, $sql);
 
@@ -143,24 +147,46 @@
                                                   echo "<td><span class='fw-300'>" . date("d/m/Y · ", strtotime($row["fechaPedido"])) . "</span><span class='fw-500'>" . date("H:i", strtotime($row["fechaPedido"])) . " hrs</span></td>";
                                                   echo "<td class='text-center'> $ " . number_format($row['total'], 2) . "</td>";
                                                   ?>
-                                                  <td>
+                                                  <td class="text-center">
                                                     <?php 
-
-                                                        switch ($row["estatusPedido"]) 
-                                                        {
-                                                            case 'Entregado':
-                                                                echo '<span class="btn btn-success btn-sm rounded-pill">Entregado <i class="far fa-check-circle ms-1"></i></span>';
-                                                                break;
-
-                                                            case 'Pago Confirmado':
-                                                                echo '<span class="btn btn-blue btn-sm">Pago confirmado <i class="far fa-check-circle ms-1"></i></span>';
-                                                                break;
-                                                            
-                                                            default:
-                                                                echo $row["estatusPedido"];
-                                                                break;
-                                                        }
                                                         
+                                                        // var_dump($row["idEstatusPedido"]);
+                                                        $idEstatus           = $row["idEstatusPedido"];
+                                                        $fechaValidacionPago = $row["fechaValidacionPago"];
+                                                        $validacionPago      = $row["validacionPago"];
+                                                        $comprobantePago     = $row["comprobantePago"];
+                                                        $idPedido            = $row["idPedido"];
+                                                        // var_dump($idEstatus);
+                                                        // echo "<br>";                                                        
+
+                                                        if ($idEstatus == "EP-1" && $comprobantePago == NULL && $validacionPago == NULL && $fechaValidacionPago == NULL) {
+                                                            echo '<a class="btn btn-dark border-1 border-dark rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Pedido Recibido
+                                                                  </a>';
+                                                        } elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == NULL && $fechaValidacionPago == NULL) {
+                                                            echo '<a class="btn w-100 btn-yellow rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Validación de pago
+                                                                  </a>';
+                                                        } elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == 1 && $fechaValidacionPago != NULL) {
+                                                            echo '<a class="btn w-100 btn-danger rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Envío pendiente
+                                                                  </a>';
+                                                        } elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == 0 && $fechaValidacionPago != NULL) {
+                                                            echo '<a class="btn w-100 btn-yellow rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Pago Devuelto
+                                                                  </a>';
+                                                        } elseif (($idEstatus == "EP-3" && $comprobantePago != NULL && $validacionPago == 1 && $fechaValidacionPago != NULL)) {
+                                                            echo '<a class="btn w-100 btn-blue rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Enviado
+                                                                  </a>';
+                                                        } elseif ($idEstatus == "EP-4") {
+                                                            echo '<a class="btn w-100 btn-success rounded-pill" href="detalleVenta.php?id=' . $idPedido . '">
+                                                                    Entregado
+                                                                  </a>';
+                                                        } else {
+                                                            // Manejo para el caso en que no se cumple ninguna condición
+                                                        }
+
                                                         ?>
                                                   </td>
                                                   <?php
@@ -169,7 +195,7 @@
                                                   // echo "<td>" . $row["estatusPedido"] . "</td>";
                                                   ?>
                                                   <td class='text-center'>
-                                                      <a class="btn btn-primary btn-sm rounded-pill" href="detalleVenta.php?id=<?php echo $row['idPedido']; ?>">
+                                                      <a class="btn btn-outline-success rounded-pill" href="detalleVenta.php?id=<?php echo $row['idPedido']; ?>">
                                                           <i class="far fa-eye me-1"></i> Ver
                                                       </a>
                                                   </td>
@@ -185,7 +211,7 @@
                                   </tbody>
                               </table>
                                 </div>
-                                <script src='https://cdn.datatables.net/v/bs-3.3.6/jqc-1.12.3/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.12/af-2.1.2/b-1.2.2/b-colvis-1.2.2/b-html5-1.2.2/b-print-1.2.2/cr-1.3.2/fc-3.2.2/fh-3.1.2/kt-2.1.3/r-2.1.0/rr-1.1.2/sc-1.4.2/se-1.2.0/datatables.min.js'></script>
+                                <!-- <script src='https://cdn.datatables.net/v/bs-3.3.6/jqc-1.12.3/jszip-2.5.0/pdfmake-0.1.18/dt-1.10.12/af-2.1.2/b-1.2.2/b-colvis-1.2.2/b-html5-1.2.2/b-print-1.2.2/cr-1.3.2/fc-3.2.2/fh-3.1.2/kt-2.1.3/r-2.1.0/rr-1.1.2/sc-1.4.2/se-1.2.0/datatables.min.js'></script> -->
                                 <!-- <script  src="js/scriptDT.js"></script> -->
                             </div>
                         </div>
@@ -223,7 +249,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        d<script src="js/datatables/datatables-mis-articulos.js?id=28"></script>
+        <script src="js/datatables/datatables-mis-articulos.js?id=3333"></script>
     </body>
 </html>
 <?php

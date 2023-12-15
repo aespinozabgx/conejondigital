@@ -42,8 +42,13 @@
 
     // echo "<pre>";
     // print_r($productosMamaConeja);
-    
     // die;
+
+    $idEstatusPedido     = $datosPedido['idEstatusPedido'];
+    $validacionPago      = $datosPedido['validacionPago'];
+    $fechaValidacionPago = $datosPedido['fechaValidacionPago'];
+    $comprobantePago     = $datosPedido['comprobantePago'];    
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -63,6 +68,8 @@
         <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- Gallery -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/lightgallery@2.0.0-beta.4/css/lightgallery.css'>
@@ -72,69 +79,69 @@
 
         <style type="text/css">
 
-          .imagenProducto
-          {
-              height: 128px;
-          }
+        .imagenProducto
+        {
+            height: 128px;
+        }
 
-          .flotante
-          {
-              position:fixed;
-              bottom:15px;
-              right:15px;
-              margin:0;
-              padding:10px;
-          }
+        .flotante
+        {
+            position:fixed;
+            bottom:15px;
+            right:15px;
+            margin:0;
+            padding:10px;
+        }
 
-          .circle
-          {
-              transition: 0.5s;
-          }
+        .circle
+        {
+            transition: 0.5s;
+        }
 
-          .circle:hover
-          {
-              transition: 0.5s;
-              transform: scale(1.3);
-          }
+        .circle:hover
+        {
+            transition: 0.5s;
+            transform: scale(1.3);
+        }
 
-          /**Desktop Query*/
-          @media only screen and (min-width: 768px)
-          {
+        /**Desktop Query*/
+        @media only screen and (min-width: 768px)
+        {
             .resText
             {
-              font-size: 13px;
+            font-size: 13px;
             }
             .resTextTotal
             {
-              font-size: 15px;
+            font-size: 15px;
             }
-          }
+        }
 
-          /*Tablet Query*/
-          @media only screen and (min-width: 481px) and (max-width:768px)
-          {
+        /*Tablet Query*/
+        @media only screen and (min-width: 481px) and (max-width:768px)
+        {
             .resText
             {
-              font-size: 13px;
+            font-size: 13px;
             }
             .resTextTotal
             {
-              font-size: 15px;
+            font-size: 15px;
             }
-          }
+        }
 
-          /*Mobile Query*/
-          @media only screen and (max-width:480px)
-          {
+        /*Mobile Query*/
+        @media only screen and (max-width:480px)
+        {
             .resText
             {
-              font-size: 16px;
+            font-size: 16px;
             }
             .resTextTotal
             {
-              font-size: 18px;
+            font-size: 18px;
             }
-          }
+        }
 
         </style>
     </head>
@@ -195,12 +202,12 @@
                                                 
                                                 <div class="dropdown-menu dropdown-menu-start animated--fade-in-up shadow" aria-labelledby="dropdownMenuButton">
                                                     
-                                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDevoluciones" style="cursor: pointer;">
+                                                    <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDevoluciones" style="cursor: pointer;">
                                                         <div class="dropdown-item-icon">
                                                             <i class="text-gray-500" data-feather="minus-circle"></i>
                                                         </div>
                                                         Devolución
-                                                    </a>
+                                                    </a> -->
 
                                                     
                                                     <!-- <a class="dropdown-item" href="#!">
@@ -211,13 +218,72 @@
                                                         <div class="dropdown-item-icon"><i class="text-gray-500" data-feather="minus-circle"></i></div>
                                                         Delete Tasks
                                                     </a> -->
+                                                    
 
                                                 </div>
-
-                                            </div>
-                                        
+                                            </div>                                                                                
                                     </div>
                                     
+                                    <div>                                         
+                                        <?php
+                                            
+                                                $datosPedido['idEstatusPedido'];
+
+                                            
+                                            $idEstatus           = $datosPedido["idEstatusPedido"];
+                                            $fechaValidacionPago = $datosPedido["fechaValidacionPago"];
+                                            $validacionPago      = $datosPedido["validacionPago"];
+                                            $comprobantePago     = $datosPedido["comprobantePago"];
+                                            
+                                            if ($idEstatus == "EP-1" && $comprobantePago == NULL && $validacionPago == NULL && $fechaValidacionPago == NULL) 
+                                            {
+                                                echo '<div class="shadow  align-middle mb-3 fw-600 btn btn-dark rounded-pill">
+                                                Pedido Recibido
+                                                </div> <span class="text-yellow">En espera de pago</span>
+                                                ';
+                                            } 
+                                            elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == NULL && $fechaValidacionPago == NULL) 
+                                            {
+                                                echo '<div class=" shadow mb-3 fw-600 btn btn-yellow rounded-pill">
+                                                    <i class="fas fa-exclamation-triangle me-1"></i>
+                                                    Validación de pago                                                            
+                                                </div>';
+                                            } 
+                                            elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == 1 && $fechaValidacionPago != NULL) 
+                                            {
+                                                echo '<div class=" shadow mb-3 fw-600 btn btn-danger rounded-pill">
+                                                Envío pendiente
+                                                <i class="fas fa-exclamation-triangle ms-1"></i>
+                                                </div>';
+                                            } 
+                                            elseif ($idEstatus == "EP-2" && $comprobantePago != NULL && $validacionPago == 0 && $fechaValidacionPago != NULL) 
+                                            {
+                                                echo '<div class=" shadow mb-3 fw-600 btn btn-yellow rounded-pill">
+                                                Pago Devuelto
+                                                <i class="fas fa-exclamation-triangle ms-1"></i>
+                                                </div>';
+                                            } 
+                                            elseif (($idEstatus == "EP-3" && $comprobantePago != NULL && $validacionPago == 1 && $fechaValidacionPago != NULL)) 
+                                            {
+                                                echo '<div class=" shadow mb-3 fw-600 btn btn-blue rounded-pill">
+                                                    <i class="fas fa-truck me-1"></i>
+                                                    Enviado
+                                                </div>';
+                                            } 
+                                            elseif ($idEstatus == "EP-4") 
+                                            {
+                                                echo '<div class=" shadow mb-3 fw-600 btn btn-success rounded-pill">
+                                                Entregado
+                                                <i class="fas fa-circle-check ms-1"></i>
+                                                </div>';
+                                            } 
+                                            else
+                                            {
+                                                echo "33";
+                                            }
+
+                                        ?> 
+                                    </div>
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb px-2 py-1 rounded rounded-2 bg-transparent small">
                                             <li class="breadcrumb-item"><a href="dashboard.php"><?php echo "@".$_SESSION['managedStore']; ?></a></li>
@@ -267,19 +333,19 @@
                                                       }
                                                     ?>
                                                     <p>
-                                                        <i class="fas fa-calendar-day me-1 text-muted"></i> Lo <b>vendiste</b> el <span><?php echo date("d/m/Y · H:i", strtotime($datosPedido['fechaPedido'])); ?> hrs.</span>
+                                                        <i class="fas fa-calendar-day me-1 text-muted"></i> <b>Vendido</b> el <span><?php echo date("d/m/Y · H:i", strtotime($datosPedido['fechaPedido'])); ?> hrs.</span>
                                                         <span class="rounded-pill border p-2 fw-600 border-1 small border-primary"><?php echo $tipoPedido; ?></span>
                                                     </p>
                                                     <div class="col-lg-8 col-12 mb-2">
                                                         <div class="card bg-blue text-white card-collapsable">
 
-                                                            <a class="card-header text-decoration-none text-white collapsed" href="#collapseDatosCliente" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseDatosCliente">
+                                                            <a class="card-header text-decoration-none text-white " href="#collapseDatosCliente" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseDatosCliente">
                                                                 Datos del cliente
                                                                 <div class="card-collapsable-arrow">
                                                                     <i class="fas fa-chevron-down"></i>
                                                                 </div>
                                                             </a>
-                                                            <div class="card-footer bg-white pt-4 p-2 rounded-2 shadow-sm text-dark collapse" id="collapseDatosCliente">
+                                                            <div class="card-footer bg-white pt-4 p-2 rounded-2 shadow-sm text-dark show" id="collapseDatosCliente">
                                                                 <?php
 
                                                                     //$mediosContacto = getMediosContactoVendedor($conn, $datosPedido['idTienda']);
@@ -301,15 +367,26 @@
                                                                         $emailCliente = $datosPedido['idCliente'];
                                                                     
                                                                         ?>
-                                                                        <span class="mb-2">Nombre: <?php echo $nombreCliente; ?></span><br>
-                                                                        <span class="mb-2">
-                                                                            <i class="fas fa-phone me-2"></i> 
-                                                                            <a class="text-decoration-none text-white text-underlined" href="tel:<?php echo $telefonoCliente; ?>">
-                                                                                <u>
-                                                                                    <?php echo $telefonoCliente; ?>
-                                                                                </u>
-                                                                            </a>
-                                                                        </span>
+                                                                        <span class="mb-2">                                                                        
+                                                                            <i class="fas fa-user me-2"></i> 
+                                                                            <?php echo $nombreCliente; ?>
+                                                                        </span> 
+                                                                        
+                                                                        <?php
+                                                                            if(!empty($telefonoCliente))
+                                                                            {
+                                                                                ?>
+                                                                                <span class="mb-2">
+                                                                                    <i class="fas fa-phone me-2"></i> 
+                                                                                    <a class="text-decoration-none text-white text-underlined" href="tel:<?php echo $telefonoCliente; ?>">
+                                                                                        <u>
+                                                                                            <?php echo $telefonoCliente; ?>
+                                                                                        </u>
+                                                                                    </a>
+                                                                                </span>
+                                                                                <?php
+                                                                            }
+                                                                        ?>
                                                                         <br>
                                                                         <span class="mb-2"><i class="far fa-envelope me-2"></i> <?php echo $emailCliente; ?></span>
                                                                         <?php
@@ -329,55 +406,72 @@
                                                 </div>
                                                 <div class="timeline-item-content">
                                                     <p class="fw-bold text-dark" href="#!">Pago</p>
-                                                    <div class="">
-                                                        <!-- <div class="mb-3 fw-600 text-blue h6">
-                                                            Método Seleccionado:
-
-                                                        </div> -->
-
+                                                    <div class="">                                                    
                                                         <?php
-                                                          if (empty($datosPedido['fechaPago']))
-                                                          {
-                                                              ?>
-                                                              <p class="mb-1">
-                                                                  <span class="badge bg-warning text-white">
-                                                                      <i class="fas fa-exclamation-triangle me-1"></i> Pago en espera
-                                                                  </span>
-                                                              </p>
-                                                              <hr class="mx-5 text-gray-400">
-                                                              <?php
-                                                          }
+                                                            
+                                                            // Validar si hay un comprobante de pago 
+                                                            
+                                                            if ($fechaValidacionPago == NULL && $validacionPago != 1 && $comprobantePago == NULL)
+                                                            {
+                                                                ?>
+                                                                <div class="row d-flex justify-content-center">
+                                                                    
+                                                                    <div class="col-8">
+                                                                        <div class="btn bg-warning text-white fs-6 fa-fade rounded-pill me-1 mb-1 w-100" style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6;">
+                                                                            <i class="fas fa-exclamation-triangle me-2"></i> Pago en espera
+                                                                        </div> 
+                                                                    </div>
 
-                                                          if (empty($datosPedido['fechaPago']))
-                                                          {
-                                                              ?>
-                                                              <div class=" " role="group" aria-label="Basic example">
-                                                                  <!-- <button class="btn btn-outline-primary" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalMostrarMetodoDePago">
-                                                                      <i class="me-2" data-feather="dollar-sign"></i>
-                                                                      Pagar
-                                                                  </button> -->
-                                                                  <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>">
-                                                                  <button class="btn btn-primary rounded-3" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalConfirmarPago">
-                                                                      Confirmar pago
-                                                                      <i class="ms-2" data-feather="check-circle"></i>
-                                                                  </button>
-                                                              </div>
-                                                              <?php
-                                                          }
-                                                          else
-                                                          {
-                                                              ?>
-                                                              <!-- <div class="mb-2">Método de pago: <span class="border-2 border-bottom border-primary"><?php //echo $datosPedido['nombreMetodoPago']; ?></span></div> -->
+                                                                    <hr class="my-3 px-1">
 
-                                                              <span class="badge bg-green-soft text-dark">
-                                                                  <i class="far fa-check-circle"></i>
-                                                                  Confirmado el <?php echo date("d/m/Y · h:i", strtotime($datosPedido['fechaPago'])) . " hrs."; ?>
-                                                              </span>
-                                                              <?php
-                                                          }
+                                                                    <!-- <button class="btn btn-outline-primary" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalMostrarMetodoDePago">
+                                                                        <i class="me-2" data-feather="dollar-sign"></i>
+                                                                        Pagar
+                                                                    </button> -->
 
-                                                          if (!empty($datosPedido['comprobantePago']))
-                                                          {
+                                                                    <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>">
+                                                                    
+                                                                    <div class="col-8">
+                                                                        <button class="btn btn-dark border-2 fs-6 rounded-pill me-1 mb-1 w-100 shadow-none" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalConfirmarPago">
+                                                                            <i class="me-2" data-feather="check-square"></i>  
+                                                                            Confirmar pago                                                                       
+                                                                        </button>
+                                                                    </div>
+                                                                    
+                                                                    <div class="col-8">                                                                    
+                                                                        <button class="btn btn-outline-dark border-2 fs-6 rounded-pill me-1 mb-1 w-100 shadow-none" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalSolicitarPagoCliente">
+                                                                            <i class="me-2" data-feather="send"></i>  
+                                                                            Solicitar pago al cliente                                                                     
+                                                                        </button>
+                                                                    </div>
+
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                ?>
+                                                                
+                                                                <div class="mb-2 fw-600 text-gray-600">
+                                                                    Método Seleccionado:
+                                                                    <span class="fw-300 text-dark"><?php echo $datosPedido['idMetodoDePago']; ?></span>
+                                                                </div>                                                            
+                                                                
+                                                                <div class="mb-2 fw-600 text-gray-600">
+                                                                    Comprobante cargado el: 
+                                                                    <span class="text-dark fw-300 mb-1">
+                                                                        <i class="far fa-calendar ms-1"></i>
+                                                                        <?php echo date("d/m/Y · h:i", strtotime($datosPedido['fechaPago'])) . " hrs."; ?>
+                                                                    </span>                                                                    
+                                                                </div>
+                                                                
+                                                                
+                                                                <?php
+                                                            }
+
+                                                            //if (!empty($datosPedido['comprobantePago']))
+                                                            if (  $comprobantePago != NULL ) 
+                                                            {
                                                             ?>
                                                                 <div class="gallery-container d-flex " id="gallery-container">
                                                                     <a
@@ -389,9 +483,28 @@
                                                                         <br>
                                                                         <i class="fas fa-search me-1"></i>  Ver Comprobante
                                                                     </a>
+                                                                </div>        
+                                                                                                                                
+                                                                <div class="btn rounded-pill w-100 btn-warning mb-1 mt-1">
+                                                                    <i class="fas fa-exclamation-triangle me-1"></i> Reportar pago
                                                                 </div>
+
+                                                                <?php
+                                                                if ($validacionPago != 1) 
+                                                                {
+                                                                    ?>
+                                                                    <div class="">
+                                                                        <button class="btn btn-dark border-2 fs-6 rounded-pill me-1 mb-1 w-100 shadow-none" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalConfirmarPago">
+                                                                            <i class="me-2" data-feather="check-square"></i>  
+                                                                            Validar pago                                                                    
+                                                                        </button>
+                                                                    </div>
+                                                                    <?php
+                                                                }
+                                                                ?>
+
                                                             <?php
-                                                          }
+                                                            }
                                                         ?>
                                                     </div>
                                                 </div>
@@ -403,7 +516,7 @@
                                                     <div class="timeline-item-marker-indicator bg-success"></div>
                                                 </div>
                                                 <div class="timeline-item-content">
-                                                    <p class="fw-bold text-dark" href="#!">Envío/Recolección</p>
+                                                    <p class="fw-bold text-dark" href="#!">Envío</p>
                                                     <div class="p-0 col-lg-8 col-12">
                                                         <?php
                                                             if ($datosPedido['idTipoPedido'] == "PDV")
@@ -416,35 +529,57 @@
                                                                 <?php
                                                             }
                                                             else
-                                                            {
-                                                                if (!isset($datosPedido['fechaEnvio']) && $datosPedido['idEstatusPedido'] == "EP-1" && !isset($datosPedido['fechaPago']))
+                                                            {                                                                                                                            
+
+                                                                if ($idEstatusPedido == "EP-1" && $validacionPago == NULL && $fechaValidacionPago == NULL && !isset($datosPedido['fechaEnvio']) && !isset($datosPedido['fechaPago']))
                                                                 {
                                                                   ?>
-                                                                  <div class="btn btn-outline-danger btn-sm">
+                                                                  <div class="btn btn-danger-soft rounded-pill">
                                                                       Pendiente de pago
                                                                   </div>
                                                                   <?php
                                                                 }
-                                                                elseif (!isset($datosPedido['fechaEnvio']) && isset($datosPedido['fechaPago']) && $datosPedido['idEstatusPedido'] == "EP-2")
+                                                                elseif ($idEstatusPedido == "EP-2" && $validacionPago == 1 && $fechaValidacionPago != NULL && $comprobantePago != NULL )
                                                                 {
                                                                   ?>
 
                                                                   Avísale al cliente cuando el pedido esté listo para su recolección en la sucursal indicada o que ya has enviado el paquete.
-
                                                                   <br>
                                                                   <button class="btn btn-success mb-2 mt-3 rounded-pill" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalConfirmaEnvio">
                                                                       <i class="far fa-paper-plane me-1"></i> Notificar al cliente
                                                                   </button>
                                                                   <?php
                                                                 }
+                                                                elseif ($idEstatusPedido == "EP-2" && $validacionPago == NULL && $fechaValidacionPago == NULL && $comprobantePago != NULL) 
+                                                                {                         
+                                                                    ?>
+                                                                    <div class="btn btn-danger-soft rounded-pill">
+                                                                        <i class="fa-regular fa-clock me-1"></i> Validación de pago pendiente 
+                                                                    </div>
+                                                                    <?php                                                                
+                                                                }
                                                                 elseif (isset($datosPedido['fechaEnvio']) && isset($datosPedido['fechaPago']) && ($datosPedido['idEstatusPedido'] == "EP-3" || $datosPedido['idEstatusPedido'] == "EP-4"))
                                                                 {
                                                                     ?>
-                                                                    <span class="badge bg-danger-soft text-dark">
-                                                                      <i class="far fa-check-circle me-1"></i>
-                                                                      Enviado/Recolección: <?php echo date("d/m/Y ·", strtotime($datosPedido['fechaEnvio'])) . ""; ?>
+                                                                    <span class="btn btn-success rounded-pill">
+                                                                      <i class="far fa-check-circle me-2"></i>
+                                                                        <?php
+                                                                            if ($datosPedido['idTipoPedido'] != "PDV")
+                                                                            {
+                                                                                echo "Listo para recolección";
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                echo "Enviado";
+                                                                            }                                                                    
+                                                                        ?>
                                                                     </span>
+                                                                    
                                                                     <?php
+                                                                    if (!empty($datosPedido['fechaEnvio'])) 
+                                                                    {
+                                                                        echo "Desde el " . date("d/m/Y", strtotime($datosPedido['fechaEnvio'])) . ""; 
+                                                                    }
                                                                 }
                                                                 else
                                                                 {
@@ -472,24 +607,27 @@
                                                             if ($datosPedido['idEstatusPedido']=="EP-4" && isset($datosPedido['fechaEnvio']) && isset($datosPedido['fechaCierrePedido']))
                                                             {
                                                                 ?>
-                                                                <span class="badge bg-success-soft text-dark">
-                                                                    <i class="far fa-check-circle me-1"></i>
-                                                                    Pedido Cerrado <?php echo date("d/m/Y · h:i", strtotime($datosPedido['fechaCierrePedido'])) . " hrs."; ?>
-                                                                </span>
+                                                                <div class="rounded-pill btn btn-pink">
+                                                                    <i class="far fa-check-circle me-2"></i>
+                                                                    Pedido Cerrado el
+                                                                    <span class="fw-600 ms-1">
+                                                                        <?php echo date("d/m/Y · h:i", strtotime($datosPedido['fechaCierrePedido'])) . " hrs."; ?>
+                                                                    </span>                                                                                                                                        
+                                                                </div>
                                                                 <?php
                                                             }
                                                             elseif ($datosPedido['idEstatusPedido']=="EP-3" && isset($datosPedido['fechaEnvio']) && !isset($datosPedido['fechaCierrePedido']))
                                                             {
                                                                 ?>
-                                                                <button class="btn btn-pink btn-sm mb-2" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalCerrarPedido">
-                                                                    Cerrar pedido
+                                                                <button class="btn btn-pink mb-2 rounded-pill fa-beat" style="--fa-beat-scale: 0.9;" type="button" name="button" data-bs-toggle="modal" data-bs-target="#modalCerrarPedido">
+                                                                    Cerrar pedido <i class="fas fa-box ms-1"></i>
                                                                 </button>
                                                                 <?php
                                                             }
                                                             elseif (($datosPedido['idEstatusPedido']=="EP-2" || $datosPedido['idEstatusPedido']=="EP-1") && !isset($datosPedido['fechaEnvio']) && !isset($datosPedido['fechaCierrePedido']))
                                                             {
                                                                 ?>
-                                                                <div class="btn btn-outline-danger btn-sm">
+                                                                <div class="btn btn-danger-soft rounded-pill">
                                                                     Pendiente de envío
                                                                 </div>
                                                                 <?php
@@ -534,6 +672,7 @@
 
                                               //echo "<br><br>Direccion Pedido Detalle: <br><br>";
                                               $direccionPedido = false;
+
                                               if ($datosPedido['idTipoPedido'] != "PDV")
                                               {
                                                   $direccionPedido = getDireccionPedidoDetalle($conn, $datosPedido['idTipoEnvio'], $datosPedido['direccionEnvio'], $datosPedido['idCliente'], $datosPedido['idTienda']);
@@ -548,26 +687,26 @@
                                                   {
                                                       // echo $direccionPedido['msg'];
 
-                                                      echo "<p class='m-2'>";
-                                                          echo (isset($direccionPedido['msg']) ? $direccionPedido['msg'] : "");
-                                                          echo "<br>";
-                                                          if (isset($direccionPedido['alias'], $direccionPedido['direccion']))
-                                                          {
-                                                              echo "<span class='fw-700 text-green'>";
-                                                              echo (isset($direccionPedido['alias']) ? $direccionPedido['alias'].": " : "");
-                                                              echo "</span>";
+                                                        echo "<p class='m-2'>";
+                                                        echo (isset($direccionPedido['msg']) ? $direccionPedido['msg'] : "");
+                                                        echo "<br>";
+                                                        if (isset($direccionPedido['alias'], $direccionPedido['direccion']))
+                                                        {
+                                                            echo "<span class='fw-700 text-green'>";
+                                                            echo (isset($direccionPedido['alias']) ? $direccionPedido['alias'].": " : "");
+                                                            echo "</span>";
 
-                                                              echo "<span class='fw-700 text-gray-600'>";
-                                                              echo (isset($direccionPedido['direccion']) ? $direccionPedido['direccion'] : "");
-                                                              echo "</span>";
-                                                          }
-                                                      echo "</p>";
+                                                            echo "<span class='fw-700 text-gray-600'>";
+                                                            echo (isset($direccionPedido['direccion']) ? $direccionPedido['direccion'] : "");
+                                                            echo "</span>";
+                                                        }
+                                                        echo "</p>";
                                                   }
                                               }
                                               else
                                               {
                                                   echo "Este pedido no requiere envío, si necesitas ayuda contacta al vendedor.";
-                                              }
+                                              } 
 
                                               //var_dump($direccionPedido);
                                             ?>
@@ -665,7 +804,29 @@
                                                     foreach ($productosMamaConeja as $indice => $productoMC)
                                                     {
                                                         ?>
-                                                        <img src="<?php echo $dominio; ?>app/users/<?php echo $emailCliente; ?>/pedidos/<?php echo $datosPedido['idPedido']; ?>/<?php echo $productoMC['nombre_archivo']; ?>" alt="">
+
+                                                        <div class="mb-3">
+                                                            <div class="text-primary fw-500 fs-2 mb-2">
+                                                                Fotografía
+                                                            </div>                                                     
+                                                            <a href="<?php echo $dominio; ?>app/gafetes/users/<?php echo $emailCliente; ?>/<?php echo $productoMC['nombre_archivo']; ?>">
+                                                                <img class="rounded-img" src="<?php echo $dominio; ?>app/gafetes/users/<?php echo $emailCliente; ?>/<?php echo $productoMC['nombre_archivo']; ?>" alt="">
+                                                                Descargar
+                                                            </a>
+                                                        </div>
+                                                        
+
+                                                        <div class="mb-3">
+                                                            <div class="text-primary fw-500 fs-2 mb-2">
+                                                                Diseño Seleccionado
+                                                            </div>
+
+                                                            <a href="<?php echo $dominio; ?>app/assets/img/gafete/disenos/<?php echo $productoMC['diseno']; ?>">
+                                                                <img class="rounded-img" src="<?php echo $dominio; ?>app/assets/img/gafete/disenos/<?php echo $productoMC['diseno']; ?>" alt="">
+                                                                Descargar
+                                                            </a>
+                                                        </div>                                                            
+
                                                         <?php
                                                     }
                                                 }
@@ -754,7 +915,7 @@
                                         <!-- <i class="text-muted" data-feather="info" data-bs-toggle="tooltip" data-bs-placement="left" title="After submitting, your post will be published once it is approved by a moderator."></i> -->
                                     </div>
                                     <div class="card-body">
-                                        <div class="display-4">
+                                        <div class="fs-1 text-center">
                                             <?php 
 
                                                 $comentario = hasCalificacionPedido($conn, $idPedido);
@@ -770,7 +931,7 @@
                                                     echo "Pendiente";
                                                 }                                                
                                             ?>                                            
-                                        </div>
+                                        </div>                                                                           
 
                                         <?php
                                         if (isset($comentario['comentario'])) 
@@ -796,7 +957,7 @@
                                         }
                                         ?>
 
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>

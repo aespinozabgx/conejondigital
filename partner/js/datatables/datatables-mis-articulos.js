@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', event => {
              paging: true,
              searchable: true,
              language: {
-                 url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+                url: "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
              }
         });
 

@@ -32,9 +32,9 @@
     
     $categoriasConProducto = getCategoriasConProductos($conn, $idTienda);
 
-    echo "<pre>";
-    print_r($categoriasConProducto);
-    die("Fin");
+    // echo "<pre>";
+    // print_r($categoriasConProducto);
+    // die("Fin");
 
     $productos     = getProductosTiendaPerfilPublico($conn, $idTienda, 0);
 
@@ -48,10 +48,10 @@
 
     $sucursales = getSucursalesTienda($conn, $idTienda);
 
-    echo "<pre>";
-    print_r($productos);
-    var_dump($productos);
-    die;
+    // echo "<pre>";
+    // print_r($productos);
+    // var_dump($productos);
+    // die;
 
 ?>
 <!DOCTYPE html>

@@ -1758,6 +1758,7 @@
     function registraComprobante($conn, $nombreComprobante, $idPedido, $idCliente, $fechaPago, $hasFile)
     {
 
+        $fechaValidacionPago = date("Y-m-d H:i:s");
 
         if (is_bool($hasFile) && $hasFile == true)
         {
@@ -1765,7 +1766,9 @@
             $sql = "UPDATE pedidos SET
                         idEstatusPedido = 'EP-2',
                         fechaPago = '$fechaPago',
-                        comprobantePago = '$nombreComprobante'
+                        comprobantePago = '$nombreComprobante',
+                        validacionPago = '1',
+                        fechaValidacionPago = '$fechaValidacionPago'
                     WHERE
                         idPedido  = '$idPedido'
                     AND
@@ -1776,7 +1779,9 @@
             // Registra datos del pedido sin comprobante de pago
             $sql = "UPDATE pedidos SET
                         idEstatusPedido = 'EP-2',
-                        fechaPago = '$fechaPago'
+                        fechaPago = '$fechaPago',                        
+                        validacionPago = '1',
+                        fechaValidacionPago = '$fechaValidacionPago'
                     WHERE
                         idPedido = '$idPedido'
                     AND
@@ -2181,12 +2186,11 @@
     function getDatosPedido($conn, $idPedido, $idTienda)
     {
         $sql = "SELECT
-                    CAT_estatusPedido.*,
+                     
                     pedidos.*,
                     CAT_metodoDePago.nombre AS nombreMetodoPago
                 FROM
-                    pedidos
-                INNER JOIN CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
+                    pedidos 
                 LEFT JOIN CAT_metodoDePago ON pedidos.idMetodoDePago = CAT_metodoDePago.idMetodoDePago
                 WHERE
                     pedidos.idPedido = '$idPedido' AND pedidos.idTienda = '$idTienda' AND pedidos.isActive = 1;";
@@ -2367,8 +2371,8 @@
                 }
             </style>
         </head>
-        <body style="background-color: #315d4e; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-        <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #315d4e;" width="100%">
+        <body style="background-color: #FFF; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+        <table border="0" cellpadding="0" cellspacing="0" class="nl-container" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fff;" width="100%">
         <tbody>
         <tr>
         <td>
@@ -2423,7 +2427,7 @@
             $data .= $idPedido;
             $data .='" style="height:56px;width:180px;v-text-anchor:middle;" arcsize="9%" stroke="false" fillcolor="#4f7eef"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:18px"><![endif]-->
 
-            <a href="https://conejondigital.com/app/detalleCompra.php?id=';
+            <a href="https://conejondigital.com/app/detalle-compra.php?id=';
 
             $data .= $idPedido;
             $data .= '" style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#4f7eef;border-radius:5px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:10px;padding-bottom:10px;font-family:Oswald, Arial, Helvetica Neue, Helvetica, sans-serif;font-size:18px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
@@ -2446,60 +2450,7 @@
         </tr>
         </tbody>
         </table>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto;" width="100%">
-        <tbody>
-        <tr>
-        <td>
-        <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto; background-color: #26c565; color: #000000; background-repeat: no-repeat; border-radius: 0; width: 650px;" width="650">
-        <tbody>
-        <tr>
-        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-left: 10px; padding-right: 10px; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="50%">
-        <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tr>
-        <td class="pad" style="padding-bottom:5px;padding-left:20px;padding-right:20px;padding-top:45px;text-align:center;width:100%;">
-        <h1 style="margin: 0; color: #ffffff; direction: ltr; font-family: Oswald, Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 28px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: left; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">Crea tu tienda en línea</span></h1>
-        </td>
-        </tr>
-        </table>
-        <table border="0" cellpadding="0" cellspacing="0" class="paragraph_block block-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-        <tr>
-        <td class="pad" style="padding-bottom:20px;padding-left:20px;padding-right:10px;padding-top:10px;">
-        <div style="color:#ffffff;direction:ltr;font-family:"Cabin", Arial, "Helvetica Neue", Helvetica, sans-serif;font-size:14px;font-weight:400;letter-spacing:0px;line-height:150%;text-align:left;mso-line-height-alt:21px;">
-        <p style="margin: 0;">Administra tu inventario, vende en tienda física con la función punto de venta, estadísticas de tu negocio y mucho más.</p>
-        </div>
-        </td>
-        </tr>
-        </table>
-        <table border="0" cellpadding="0" cellspacing="0" class="button_block block-5" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tr>
-        <td class="pad" style="padding-left:20px;padding-right:20px;text-align:left;padding-bottom:20px;">
-        <div align="left" class="alignment">
-        <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://conejondigital.com/#registro" style="height:44px;width:152px;v-text-anchor:middle;" arcsize="19%" stroke="false" fillcolor="#dbe430"><w:anchorlock/><v:textbox inset="0px,0px,0px,0px"><center style="color:#000000; font-family:Arial, sans-serif; font-size:16px"><![endif]-->
-            <a href="https://conejondigital.com/#registro" style="text-decoration:none;display:inline-block;color:#000000;background-color:#dbe430;border-radius:8px;width:auto;border-top:0px solid transparent;font-weight:400;border-right:0px solid transparent;border-bottom:0px solid transparent;border-left:0px solid transparent;padding-top:10px;padding-bottom:10px;font-family:Oswald, Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;text-align:center;mso-border-alt:none;word-break:keep-all;" target="_blank">
-                    <span style="padding-left:25px;padding-right:25px;font-size:16px;display:inline-block;letter-spacing:normal;">
-                            <span dir="ltr" style="word-break: break-word; line-height: 24px;">
-                                    CREAR MI TIENDA
-                            </span>
-                    </span>
-            </a>
-        <!--[if mso]></center></v:textbox></v:roundrect><![endif]-->
-        </div>
-        </td>
-        </tr>
-        </table>
-        </td>
-        <td class="column column-2" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="50%">
-        <table border="0" cellpadding="0" cellspacing="0" class="image_block block-3" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-        <tr>
-        <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;padding-top:25px;">
-        <div align="center" class="alignment" style="line-height:10px"><img alt="Back to School" src="https://vendy.click/app/assets/img/mail/tienda-ejemplo.png" style="display: block; height: auto; border: 0; width: 146px; max-width: 100%;" title="Back to School" width="146"/></div>
-        </td>
-        </tr>
-        </table>
-        </td>
-        </tr>
-        </tbody>
-        </table>
+         
         </td>
         </tr>
         </tbody>

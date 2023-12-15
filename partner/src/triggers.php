@@ -246,6 +246,29 @@
                     </script>";
                 break;
                 
+                case 'exitoNotificacionPago':
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Exito',
+                                text: 'Usuario notificado correctamente',
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonText: 'Entendido',
+                            });
+                        </script>";
+                break;
+                
+                case 'errorNotificacionPago':
+                    echo "<script>
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al notificar al usuario, inténtalo nuevamente.',
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonText: 'Entendido',
+                            });
+                        </script>";
+                break;
 
                 case 'altaExitosa':
                 echo "<script>

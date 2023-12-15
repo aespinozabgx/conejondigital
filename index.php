@@ -231,17 +231,8 @@
                                         
                                         <img src="app/assets/img/banners/landing.jpg" class="img-fluid rounded-3 shadow-sm mb-5" alt="">
                                         <!-- <div class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">El CONEJÓN NAVIDEÑO 2023<br></div> -->
-                                        <span class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">Comenzamos en... </span>
-                                        
-                                        <div id="countdown">
-                                            <ul class="" style="color: #c7f50e;">
-                                              <li class="f-bangers"><span id="days" class="display-4"></span>Días</li>
-                                              <li class="f-bangers"><span id="hours" class="display-4"></span>Horas</li>
-                                              <li class="f-bangers"><span id="minutes" class="display-4"></span>Minutos</li>
-                                              <li class="f-bangers"><span id="seconds" class="display-4"></span>Segundos</li>
-                                            </ul>
-                                        </div>
-
+                                        <span class="display-3 f-bangers fw-400 text-uppercase text-white mb-2">9 y 10 de Diciembre!</span>
+                                                                                 
                                     </div>
                                 </div>
                             </div>
@@ -311,18 +302,7 @@
                                     Registrarme
                                 </a>
 
-                            </div>
-
-                            <div class="text-center">
-                                <div id="countdown">
-                                    <ul class="f-poppins" style="color: #c7f50e;">
-                                      <li class="f-bangers"><span id="days"></span>Días</li>
-                                      <li class="f-bangers"><span id="hours"></span>Horas</li>
-                                      <li class="f-bangers"><span id="minutes"></span>Minutos</li>
-                                      <li class="f-bangers"><span id="seconds"></span>Segundos</li>
-                                    </ul>
-                                </div>
-                            </div>
+                            </div>                        
 
                         </div>
                         <div class="svg-border-angled text-white" style="color:;">

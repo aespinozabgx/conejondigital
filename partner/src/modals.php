@@ -1,3 +1,167 @@
+<!-- Modal solicitar Pago Cliente -->
+<div class="modal fade" id="modalSolicitarPagoCliente" tabindex="-1" aria-labelledby="solicitarPagoClienteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="solicitarPagoClienteLabel">Solicitar pago al cliente</h5>
+                <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fa-solid fa-xmark fa-xl"></i>
+                </button>
+            </div>
+
+            <form action="procesa.php" method="post">
+                <div class="modal-body"> 
+
+                    <div class="mb-2 p-2">
+                        <div class="text-dark">
+                            Enviaremos una notificación de pago al email del cliente
+                        </div>                        
+                        
+                        <!-- <div class="mb-2">
+                            <label for="envio" class="fw-400 text-primary">Mensaje: *</label>
+                            <textarea name="mensaje" class="form-control fs-6" id="" cols="30" rows="4">Aún no recibimos la confirmación de tu pago, carga tu comprobante de pago y nuestro equipo enviará tu pedido lo antes posible. 📦😃</textarea>
+                        </div> -->
+                                                
+                        <!-- <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">
+                                Incluir métodos de pago
+                            </label>
+                        </div> -->
+                    </div>
+
+                    <?php
+                        if (isset($datosPedido))
+                        {
+                            ?>
+                            <input type="hidden" name="idPedido"  value="<?php echo $idPedido; ?>" required>
+                            <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>" required>
+                            <?php
+                        }
+                    ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" name="btnNotificarPagoPendiente">
+                        <i class="fas fa-paper-plane me-2"></i> Notificar Ahora
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal solicitar Pago Cliente Fin -->
+
+<!-- Modal datos de pago -->
+<div class="modal fade" id="modalCerrarPedido" tabindex="-1" aria-labelledby="modalCerrarPedidoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCerrarPedidoLabel">Cerrar pedido</h5>
+              <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                  <i class="fa-solid fa-xmark fa-xl"></i>
+              </button>
+            </div>
+
+            <form class="" action="procesa.php" method="post">
+                <div class="modal-body">
+                    <div class="form-check">
+
+
+                      <div class="mb-2">
+                        Contactar a tu cliente para saber cómo llegó su paquete ayudará a tu reputación, asegurate de brindar un excelente servicio.
+                      </div>
+                      <p class="m-4" style="cursor: pointer;">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required title="Debes confirmar esta casilla">
+                          <label class="form-check-label" for="flexCheckDefault" style="cursor: pointer;">
+                              El paquete ha sido entregado.
+                          </label>
+                      </p>
+                    </div>
+                </div>
+
+                <?php
+                if(isset($datosPedido, $idPedido))
+                {
+                ?>
+                <input type="hidden" name="idPedido" value="<?php echo $idPedido;?>">
+                <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>">
+                <input type="hidden" name="idTienda" value="<?php echo $datosPedido['idTienda']; ?>">
+                <?php
+                }
+                ?>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-pink" name="btnConfirmarCierre">
+                      Procesar Cierre
+                      <i class="fas fa-arrow-alt-circle-right ms-2  "></i>
+                  </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Modal datos de pago Fin -->
+
+<!-- Modal datos de pago -->
+<div class="modal fade" id="modalConfirmarPago" tabindex="-1" aria-labelledby="modalConfirmarPagoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="modalConfirmarPagoLabel"> Confirma el pago </h5>
+        <button type="button" class="btn btn-icon btn-outline-primary btn-sm" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-xmark fa-xl"></i>
+        </button>
+      </div>
+
+      <form class="" action="procesa.php" method="post" enctype="multipart/form-data">
+          <div class="modal-body">
+
+
+
+              <?php
+                if (!isset($datosPedido['comprobantePago']))
+                {
+                  ?>
+                      Comprobante de pago
+                      <p class="fw-200 small">Sólo archivos jpg, png, jpeg o pdf.</p>
+                      <input type="file" class="form-control my-3" name="fileToUpload" required>
+                      <br>
+                  <?php
+                }
+              ?>
+
+              <label for="fechaPago" class="mb-2">Fecha de pago: *</label>
+              <input type="date" class="form-control mb-2" id="fechaPago" name="fechaPago" required>
+              <?php
+              if (isset($datosPedido, $idPedido))
+              {
+              ?>
+              <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>">
+              <input type="hidden" name="idVenta"   value="<?php echo $idPedido; ?>">
+              <?php
+              }
+              ?>
+              <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" role="switch" id="validaPago" required>
+                  <label class="form-check-label align-center" for="validaPago">
+                      <small>He validado el pago</small>
+                  </label>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" name="btnConfirmarPago">Confirmar ahora</button>
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- Modal datos de pago Fin -->
+
 <!-- Modal datos de pago -->
 <div class="modal fade" id="modalConfirmarPagoCliente" tabindex="-1" aria-labelledby="modalConfirmarPagoClienteLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -63,28 +227,28 @@
           <div class="modal-body">
 
 
-            <div class="row mb-2 p-2">
+            <div class="mb-2 p-2">
                 <label for="paqueteria" class="fw-400 text-primary">Paquetería</label>
-                <input type="text" id="paqueteria" class="form-control" name="nombrePaqueteria" placeholder="(Opcional)">
+                <input type="text" id="paqueteria" class="form-control text-center fs-6" name="nombrePaqueteria" placeholder="(Opcional)">
             </div>
 
-            <div class="row mb-2 p-2">
+            <div class="mb-2 p-2">
                 <label for="guia" class="fw-400 text-primary">Número de Guía</label>
-                <input type="text" id="guia" class="form-control" name="guiaEnvio" placeholder="(Opcional)">
+                <input type="text" id="guia" class="form-control text-center fs-6" name="guiaEnvio" placeholder="(Opcional)">
             </div>
 
-            <div class="row mb-2 p-2">
-                <label for="envio" class="fw-400 text-primary">Fecha Envío*</label>
-                <input type="date" id="envio" class="form-control" name="fechaEnvio" required>
+            <div class="mb-2 p-2">
+                <label for="envio" class="fw-400 text-primary">Fecha de envío*</label>
+                <input type="date" id="envio" class="form-control text-center fs-6" name="fechaEnvio" required>
             </div>
 
             <?php
             if (isset($datosPedido))
             {
-            ?>
-            <input type="hidden" name="idPedido"  value="<?php echo $idPedido; ?>" required>
-            <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>" required>
-            <?php
+                ?>
+                <input type="hidden" name="idPedido"  value="<?php echo $idPedido; ?>" required>
+                <input type="hidden" name="idCliente" value="<?php echo $datosPedido['idCliente']; ?>" required>
+                <?php
             }
             ?>
           </div>

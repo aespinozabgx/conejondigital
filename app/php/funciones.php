@@ -820,11 +820,10 @@
     function getDatosPedido($conn, $idPedido, $idCliente)
     {
         $sql = "SELECT
-                    pedidos.*,
-                    CAT_estatusPedido.nombre AS estatusEnvio
+                    pedidos.*
+                     
                 FROM
-                    pedidos
-                INNER JOIN CAT_estatusPedido ON pedidos.idEstatusPedido = CAT_estatusPedido.idEstatus
+                    pedidos 
                 WHERE
                     pedidos.idCliente = '$idCliente' AND pedidos.idPedido = '$idPedido' AND pedidos.isActive = 1";
 

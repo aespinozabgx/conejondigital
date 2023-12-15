@@ -19,22 +19,24 @@
         $idUsuario = $_SESSION['email'];
     }
 
-    // var_dump(empty($_SESSION['sucursalTienda']));
+    // echo "<pre>";
+    // print_r(($_SESSION));
     // die;
 
-    if (empty($_SESSION['sucursalTienda']))
+    if (empty($_SESSION['idSucursalVenta']))
     {
+        //exit(header('Location: dashboard.php?msg=requiereAbrirTurnoCajax'));
         //die("Selecciona la sucursal");        
         $sucursales = getSucursalesTienda($conn, $idTienda);
-        // echo "<pre>";
-        // print_r($sucursales);
-        // die;
+        echo "<pre>";
+        print_r($sucursales);
+        die;
         if ($sucursales === false) 
         {
             //die("Abrir modal elegir sucursal");
             exit(header('Location: dashboard.php?msg=requiereAbrirTurnoCaja'));
         }
-    }
+    } 
 
     $totalPedido = 0;
     $totalAPagar = 0;
@@ -172,17 +174,18 @@
 
                         <div class="row mb-3 my-2">
                             <div class="col-12 text-end">
-                              <!-- <a class="btn bg-white fw-600 text-dark fs-6 shadow-sm rounded-pill" href="#"><i class="feather-lg me-1" data-feather="filter"></i> Filtrar</a> -->
+                                <!-- FILTRAR BUSQUEDA -->
+                              <a class="btn bg-white fw-600 text-dark fs-6 shadow-sm rounded-pill" href="#"><i class="feather-lg me-1" data-feather="filter"></i> Filtrar</a>
                             </div>
                         </div>
 
-                        <div class="mb-2 mt-5">
+                        <div class="mb-2 mt-3">
 
                             <div id="salida" class="row mb-2 m-1"></div>
-                            <div class="row mb-2">
                                 <?php
                                     if ($productos !== false && $response['estatus'] !== false)
                                     {
+                                        echo '<div class="row mb-2">';
                                         echo '<p class="mb-4 fw-300 fs-5">Productos sugeridos</p>';
                                         // output data of each row
                                         
@@ -277,9 +280,26 @@
                                             </div>
                                             <?php
                                         }
+                                        echo '</div>';
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="rounded-2 p-2 bg-pattern-ama2">
+                                                <div class="card-body text-center">
+                                                    <div class="text-dark fs-4">Aún no hay productos en la tienda</div>
+                                                    <div class="mt-2">
+                                                        <a class="btn btn-blue shadow" href="nuevo-articulo.php<zz<">
+                                                            Nuevo registro
+                                                        </a>
+                                                    </div>
+                                                </div>                                            
+                                            </div>
+                                        </div>
+                                        <?php
                                     }
                                 ?>
-                            </div>
 
                         </div>
 

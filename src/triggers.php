@@ -35,7 +35,7 @@
                     });
                 </script>";
         break;
-
+        
         case 'expositorYaRegistrado':
             echo "<script>
                     Swal.fire({

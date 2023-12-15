@@ -67,7 +67,7 @@ function enviaEmail($destinatarios, $tituloCorreo, $cuerpoCorreo)
     $mail->addReplyTo('contacto@conejondigital.com', 'Conejón Digital');
     
     // Configuración del correo
-    $mail->setFrom('tu_correo', 'Tu Nombre');
+    $mail->setFrom('contacto@conejondigital.com', 'Conejón Digital');
     $mail->Subject = $tituloCorreo;
     $mail->Body = $cuerpoCorreo;
     $mail->isHTML(true);                        
@@ -93,49 +93,50 @@ function enviaEmail($destinatarios, $tituloCorreo, $cuerpoCorreo)
 
 // Obtener la lista de correos
 $listaCorreos = obtenerListaCorreos($conn);
+
 // $listaCorreos[0]['email'] = "axelcoreos@gmail.com";
 // $listaCorreos[0]['nombre'] = "Axel";
+
+// $listaCorreos[1]['email'] = "aespinozabgx@gmail.com";
+// $listaCorreos[1]['nombre'] = "Axel Espinoza";
+
+// $listaCorreos[2]['email'] = "antbgx@gmail.com";
+// $listaCorreos[2]['nombre'] = "Ant";
 
 // Dividir la lista de correos en lotes de 99
 $lotes = array_chunk($listaCorreos, 99);
 
-// echo "<pre>";
-// print_r($lotes);
-// die;
+echo "<pre>";
+print_r($lotes);
+die;
  
 function construirCuerpoCorreo() 
-{
-    $enlace = 'https://conejondigital.com/app/disenaGafete.php';
+{ 
 
     $html = '<!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Correo Masivo</title>
-        </head>
-        <body style="text-align: center;">
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Conejon Navideno 2023</title>
+    </head>
+    <body style="text-align: center;">
 
-            <h1 style="font-family: verdana;">Consigue tu acceso personalizado!</h1>
+        <a style="padding: 10px;" target="_blank" href="https://conejondigital.com/partner/assets/mailmasivo/faltan3dias/correoconejon.html">No puedo ver el correo completo</a>
 
-            <div>
-                <a href="' . $enlace . '" target="_blank">
-                    <img src="https://conejondigital.com/partner/assets/mailmasivo/acceso.png" alt="Imagen 1" style="max-width: 100%; height: auto; margin: 0 auto; display: block;">
-                </a>
+        <div>
+            <a href="https://conejondigital.com/" target="_blank">
+                <img src="https://conejondigital.com/partner/assets/mailmasivo/faltan3dias/1.png" alt="Conejon navideno" style="max-width: 100%; height: auto; margin: 0 auto; display: block;">
+            </a>
 
-                <a href="' . $enlace . '" target="_blank">
-                    <img src="https://conejondigital.com/partner/assets/mailmasivo/loquiero.png" alt="Imagen 2" style="max-width: 60%; height: auto; margin: 0 auto; display: block;">
-                </a>
-                <a href="' . $enlace . '" target="_blank">
-                    <img src="https://conejondigital.com/partner/assets/mailmasivo/proceso.png" alt="Imagen 3" style="max-width: 100%; height: auto; margin: 0 auto; display: block;">
-                </a>
-                <a href="' . $enlace . '" target="_blank">
-                    <img src="https://conejondigital.com/partner/assets/mailmasivo/loquiero.png" alt="Imagen 4" style="max-width: 60%; height: auto; margin: 0 auto; display: block;">
-                </a>
-            </div>       
+            <a href="https://conejondigital.com/" target="_blank">
+                <img src="https://conejondigital.com/partner/assets/mailmasivo/faltan3dias/2.png" alt="Conejon navideno" style="max-width: 60%; height: auto; margin: 0 auto; display: block;">
+            </a>
 
-        </body>
-        </html>';
+        </div>       
+
+    </body>
+    </html>';
 
     return $html;
 }
@@ -149,8 +150,8 @@ $cuerpoCorreo = construirCuerpoCorreo();
 // Configurar y enviar el correo para cada lote
 foreach ($lotes as $lote) 
 {
-    $tituloCorreo = "Conejón Navideño 2023 🎄";  // Puedes cambiar esto según tus necesidades
-    $cuerpoCorreo = "Cuerpo del Correo";  // Puedes cambiar esto según tus necesidades
+    $tituloCorreo = "¡Faltan 3 días! 🎄🐇 Para el Conejón Navideño 2023 🎄";  // Puedes cambiar esto según tus necesidades
+    //$cuerpoCorreo = "Cuerpo del Correo";  // Puedes cambiar esto según tus necesidades
     enviaEmail($lote, $tituloCorreo, construirCuerpoCorreo());
 }
 

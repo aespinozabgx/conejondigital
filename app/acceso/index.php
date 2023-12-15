@@ -369,7 +369,7 @@
                                 </div>
                             </div> 
 
-                            <div class="card shadow border-0 rounded-4 mb-5">
+                            <!-- <div class="card shadow border-0 rounded-4 mb-5">
                                 <div class="card-body p-4 mt-2">
                                     <div class="row align-items-center gx-4">
                                         
@@ -399,7 +399,7 @@
                                         
                                     </div>
                                 </div>
-                            </div> 
+                            </div>  -->
 
                         </section>
  

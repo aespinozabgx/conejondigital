@@ -24,6 +24,18 @@
                       myModal.show();                      
                     </script>";
           break;
+
+          
+          case 'errorCredencialesInvalidas':
+            echo "<script>
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Error',
+                      text: 'Credenciales inválidas, intenta reestablecer tu contraseña.',
+                    });
+                  </script>";
+            break;
+        
       }
   }
 ?>
